@@ -1,0 +1,10 @@
+
+[Desktop Entry]
+Type=Application
+Name=Agenda
+Comment=What's to be done
+GenericName=TodoList
+Exec=agenda
+Icon=appointment-new
+Terminal=false
+Categories=Utility;
