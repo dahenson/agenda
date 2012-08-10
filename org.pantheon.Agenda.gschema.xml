@@ -1,0 +1,14 @@
+<schemalist>
+	<schema path="/org/pantheon/Agenda/" id="org.pantheon.Agenda" gettext-domain="agenda">
+		<key name="width" type="i">
+			<default>350</default>
+			<summary>Window Width</summary>
+			<description>Width of the window.</description>
+		</key>
+		<key name="height" type="i">
+			<default>430</default>
+			<summary>Window Height</summary>
+			<description>Height of the window.</description>
+		</key>
+	</schema>
+</schemalist>
