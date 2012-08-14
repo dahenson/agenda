@@ -71,7 +71,6 @@ include(ValaPrecompile)
 vala_precompile(VALA_C
         src/Agenda.vala
         src/AgendaWindow.vala
-        src/AgendaSettings.vala
 PACKAGES
         gtk+-3.0
         granite
@@ -86,10 +85,4 @@ add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -
 add_executable(agenda ${VALA_C})
 
 install (TARGETS agenda RUNTIME DESTINATION bin)
-
-#
-# GSettings Schema
-#
-include(GSettings)
-add_schema("org.pantheon.Agenda.gschema.xml")
 

@@ -1,3 +1,22 @@
+/***
+  BEGIN LICENSE
+
+  Copyright (C) 2011-2012 Dane Henson <dane.henson@gmail.com>
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Lesser General Public License version 3, as
+  published    by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranties of
+  MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
+  PURPOSE.  See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program.  If not, see <http://www.gnu.org/licenses>
+
+  END LICENSE
+***/
+
 using Gtk;
 using Granite;
 using Granite.Widgets;
@@ -20,8 +39,6 @@ namespace Agenda {
             DRAGHANDLE,
             N_COLUMNS
         }
-        
-        private State state = new State();  // The last state of the program (currently just width and height)
         
         Paths paths;
         File list_file;
@@ -56,7 +73,6 @@ namespace Agenda {
             
             load_list ();
             setup_ui ();
-            load_state ();
             
         }
         
@@ -209,17 +225,6 @@ namespace Agenda {
             task_entry.grab_focus ();
         }
 
-        void load_state () {
-            set_default_size (state.width, state.height);   // Restore window geometry
-        }
-
-        void save_state () {
-            Gtk.Allocation alloc;
-            get_allocation (out alloc);     // get_size() is a lie.
-            state.width = alloc.width;      // set the window width
-            state.height = alloc.height;    // set the window height
-        }
-
         void add_task (string task) {
             if (task == "") {    // if a task_entry is empty, don't add the task
                 return;
@@ -279,7 +284,6 @@ namespace Agenda {
         }
         
         void destroy_handler () {   // Handles exiting (i.e. clicking the 'X' on the window or pressing <Esc>)
-            save_state ();
             Gtk.main_quit ();
         }
 
