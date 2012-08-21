@@ -108,7 +108,6 @@ namespace Agenda {
         void setup_ui () {
 
             set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
-            destroy.connect (destroy_handler);          // see destroy_handler() method
 
             // setup tree_view
             tree_view.name = "TaskList";
@@ -162,7 +161,7 @@ namespace Agenda {
             tree_view.append_column (column);
             
             // setup the DRAGHANDLE column
-            column = new TreeViewColumn.with_attributes ("Drag", draghandle, "stock_id", Columns.DRAGHANDLE);
+            column = new TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
             tree_view.append_column (column);
             tree_view.model = task_list;
 
@@ -170,7 +169,7 @@ namespace Agenda {
             task_entry.name = "TaskEntry";
             task_entry.max_length = 50;
             task_entry.hexpand = true;
-            task_entry.secondary_icon_name = "add";
+            task_entry.secondary_icon_name = "list-add-symbolic";
 
 
             // Method for when the task entry is activated
@@ -232,7 +231,7 @@ namespace Agenda {
             
             TreeIter iter;
             task_list.append (out iter);
-            task_list.set (iter, Columns.TOGGLE, false, Columns.TEXT, task, Columns.STRIKETHROUGH, false, Columns.DRAGHANDLE, Stock.JUSTIFY_FILL);
+            task_list.set (iter, Columns.TOGGLE, false, Columns.TEXT, task, Columns.STRIKETHROUGH, false, Columns.DRAGHANDLE, "view-list-symbolic");
             update ();
             list_to_file ();
             task_entry.set_text("");        // clear the entry box
@@ -282,10 +281,5 @@ namespace Agenda {
                 error ("Error: %s\n", e.message);
             }
         }
-        
-        void destroy_handler () {   // Handles exiting (i.e. clicking the 'X' on the window or pressing <Esc>)
-            Gtk.main_quit ();
-        }
-
     }
 }
