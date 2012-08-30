@@ -85,4 +85,4 @@ add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -
 add_executable(agenda ${VALA_C})
 
 install (TARGETS agenda RUNTIME DESTINATION bin)
-
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/agenda.desktop DESTINATION share/applications)

@@ -155,7 +155,7 @@ namespace Agenda {
             // setup the TEXT column
             text.ypad = 6;                              // set vertical padding between rows
             text.editable = true;
-            //text.ellipsize = Pango.EllipsizeMode.END;   // show ellipses at the end of a truncated task, instead of scrolling
+            
             column = new TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
             column.expand = true;                       // the text column should fill the whole width of the column
             tree_view.append_column (column);
