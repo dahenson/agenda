@@ -63,7 +63,7 @@ namespace Agenda {
             /*
              *  Initialize the GUI components
              */
-            agenda_welcome = new Welcome ("No Tasks!", "(way to go)");
+            agenda_welcome = new Welcome (N_("No Tasks!"), N_("(way to go)"));
             task_list = new ListStore (Columns.N_COLUMNS, typeof(bool), typeof(string), typeof(bool), typeof(string));
             scrolled_window = new ScrolledWindow (null, null);
             task_entry = new HintedEntry (HINT_STRING);
