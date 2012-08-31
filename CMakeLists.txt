@@ -49,6 +49,7 @@ add_definitions(-include config.h)
 #
 # i18n
 #
+add_subdirectory(po)
 
 #
 # Agenda
