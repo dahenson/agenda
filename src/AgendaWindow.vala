@@ -191,9 +191,19 @@ namespace Agenda {
                     if (active)
                         task_list.remove (iter);
                         update ();
-                        list_to_file ();
                     return false;
                 });
+            });
+            
+            // Method for when a row is removed from the task_list or the list is reordered
+            task_list.row_deleted.connect ((path, iter) => {
+                /*
+                 *  When a row is dragged and dropped, a new row is inserted, then populated,
+                 *  then the old row is deleted.  This way, we write the new order to the file
+                 *  every time it gets reordered through DND.  This also takes care of the
+                 *  toggled row, since it is removed and the row_deleted signal is emitted.
+                 */
+                list_to_file ();
             });
             
             
