@@ -51,7 +51,7 @@ namespace Agenda {
         private TreeView tree_view;
         private ScrolledWindow scrolled_window;
         private HintedEntry task_entry;
-        private Box vbox;
+        private Gtk.Grid grid;
 
         public AgendaWindow () {    // Constructor
         
@@ -67,7 +67,7 @@ namespace Agenda {
             task_list = new ListStore (Columns.N_COLUMNS, typeof(bool), typeof(string), typeof(bool), typeof(string));
             scrolled_window = new ScrolledWindow (null, null);
             task_entry = new HintedEntry (HINT_STRING);
-            vbox = new Box (Orientation.VERTICAL, 12);
+            grid = new Gtk.Grid ();
             tree_view = new TreeView ();
             
             
@@ -219,12 +219,14 @@ namespace Agenda {
             scrolled_window.set_policy (PolicyType.NEVER, PolicyType.AUTOMATIC);
             scrolled_window.add (tree_view);
             
-            vbox.margin = 12;        // elementary HIG states that widgets should be spaced 12px from the window border
-            vbox.expand = true;      // expand the box to fill the whole window
-            vbox.pack_start (agenda_welcome, true, true, 0);
-            vbox.pack_start (scrolled_window, true, true, 0);
-            vbox.pack_end (task_entry, false, false, 0);
-            this.add (vbox);
+            agenda_welcome.expand = true;
+            
+            grid.margin = 12;        // elementary HIG states that widgets should be spaced 12px from the window border
+            grid.expand = true;      // expand the box to fill the whole window
+            grid.attach (agenda_welcome, 0, 0, 1, 1);
+            grid.attach (scrolled_window, 0, 1, 1, 1);
+            grid.attach (task_entry, 0, 2, 1, 1);
+            this.add (grid);
             task_entry.grab_focus ();
         }
 
