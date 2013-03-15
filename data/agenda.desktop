@@ -8,3 +8,4 @@ Exec=agenda
 Icon=appointment-new
 Terminal=false
 Categories=Utility;
+Keywords=Todo;Tasks
