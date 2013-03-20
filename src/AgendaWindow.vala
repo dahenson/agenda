@@ -40,7 +40,7 @@ namespace Agenda {
             N_COLUMNS
         }
         
-        Paths paths;
+        //Paths paths;
         File list_file;
         
         /*
@@ -78,10 +78,10 @@ namespace Agenda {
         
         void load_list () {
             
-            paths.initialize ("agenda", Build.PKGDATADIR);              // initialize directory paths for agenda
-            paths.ensure_directory_exists (paths.user_data_folder);     // make sure the user specific agenda data directory exists
+            Granite.Services.Paths.initialize ("agenda", Build.PKGDATADIR);              // initialize directory paths for agenda
+            Granite.Services.Paths.ensure_directory_exists (Granite.Services.Paths.user_data_folder);     // make sure the user specific agenda data directory exists
             
-            list_file = paths.user_data_folder.get_child ("tasks");
+            list_file = Granite.Services.Paths.user_data_folder.get_child ("tasks");
             
             if ( !list_file.query_exists () ) {                 // If the file doesn't exist, try to create it
                 try {
@@ -113,7 +113,8 @@ namespace Agenda {
             tree_view.name = "TaskList";
             tree_view.headers_visible = false;          // disable headers
             tree_view.enable_search = false;            // disable live search
-            tree_view.expand = true;                    // make it fill the container
+            tree_view.hexpand = true;                    // make it fill the container
+            tree_view.valign = Gtk.Align.START;
             tree_view.reorderable = true;               // make it reorderable (drag and drop)
             
             /*
@@ -163,6 +164,7 @@ namespace Agenda {
             task_entry.name = "TaskEntry";
             task_entry.max_length = 50;
             task_entry.hexpand = true;
+            task_entry.valign = Gtk.Align.END;
             task_entry.secondary_icon_name = "list-add-symbolic";
 
 
@@ -216,6 +218,7 @@ namespace Agenda {
 
             
             // setup the scrolled window and add tree_view
+            scrolled_window.expand = true;
             scrolled_window.set_policy (PolicyType.NEVER, PolicyType.AUTOMATIC);
             scrolled_window.add (tree_view);
             
@@ -223,6 +226,7 @@ namespace Agenda {
             
             grid.margin = 12;        // elementary HIG states that widgets should be spaced 12px from the window border
             grid.expand = true;      // expand the box to fill the whole window
+            grid.row_homogeneous = false;
             grid.attach (agenda_welcome, 0, 0, 1, 1);
             grid.attach (scrolled_window, 0, 1, 1, 1);
             grid.attach (task_entry, 0, 2, 1, 1);
