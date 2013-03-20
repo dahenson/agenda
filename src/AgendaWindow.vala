@@ -17,11 +17,6 @@
   END LICENSE
 ***/
 
-using Gtk;
-using Granite;
-using Granite.Widgets;
-using Granite.Services;
-
 namespace Agenda {
     
     const int MIN_WIDTH = 350;
@@ -40,20 +35,22 @@ namespace Agenda {
             N_COLUMNS
         }
         
-        //Paths paths;
         File list_file;
         
-        /*
+        /**
          *  These are the GUI components
          */
-        private Welcome agenda_welcome;
-        private ListStore task_list;
-        private TreeView tree_view;
-        private ScrolledWindow scrolled_window;
-        private HintedEntry task_entry;
-        private Gtk.Grid grid;
+        private Granite.Widgets.Welcome     agenda_welcome; // The Welcome screen when there are no tasks
+        private Gtk.ListStore               task_list;      // Stores tasks for accessing by a TreeView
+        private Gtk.TreeView                tree_view;      // TreeView to display tasks
+        private Gtk.ScrolledWindow          scrolled_window;// Container for the treeview
+        private Granite.Widgets.HintedEntry task_entry;     // Entry that accepts tasks
+        private Gtk.Grid                    grid;           // Container for everything
 
-        public AgendaWindow () {    // Constructor
+        /**
+         *  AgendaWindow Constructor
+         */
+        public AgendaWindow () {
         
             this.app = app;
             this.title = "Agenda";      // Set the window title
@@ -63,22 +60,31 @@ namespace Agenda {
             /*
              *  Initialize the GUI components
              */
-            agenda_welcome = new Welcome (N_("No Tasks!"), N_("(way to go)"));
-            task_list = new ListStore (Columns.N_COLUMNS, typeof(bool), typeof(string), typeof(bool), typeof(string));
-            scrolled_window = new ScrolledWindow (null, null);
-            task_entry = new HintedEntry (HINT_STRING);
-            grid = new Gtk.Grid ();
-            tree_view = new TreeView ();
+            agenda_welcome  = new Granite.Widgets.Welcome (N_("No Tasks!"), N_("(way to go)"));
+            task_list       = new Gtk.ListStore (
+                                                    Columns.N_COLUMNS,
+                                                    typeof(bool),
+                                                    typeof(string),
+                                                    typeof(bool),
+                                                    typeof(string)
+                                                );
+            scrolled_window = new Gtk.ScrolledWindow (null, null);
+            task_entry      = new Granite.Widgets.HintedEntry (HINT_STRING);
+            grid            = new Gtk.Grid ();
+            tree_view       = new Gtk.TreeView ();
             
             
-            load_list ();
-            setup_ui ();
+            load_list ();   // Load the list from file
+            setup_ui ();    // Set up the GUI
             
         }
         
+        /*
+         *  Loads the list from a file, or creates a new list if one doesn't exist.
+         */
         void load_list () {
             
-            Granite.Services.Paths.initialize ("agenda", Build.PKGDATADIR);              // initialize directory paths for agenda
+            Granite.Services.Paths.initialize ("agenda", Build.PKGDATADIR);     // initialize directory paths for agenda
             Granite.Services.Paths.ensure_directory_exists (Granite.Services.Paths.user_data_folder);     // make sure the user specific agenda data directory exists
             
             list_file = Granite.Services.Paths.user_data_folder.get_child ("tasks");
@@ -105,20 +111,25 @@ namespace Agenda {
             
         }
 
+        /**
+         *  Builds all of the widgets and arranges them in the window.
+         */
         void setup_ui () {
 
             set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
 
-            // setup tree_view
-            tree_view.name = "TaskList";
-            tree_view.headers_visible = false;          // disable headers
-            tree_view.enable_search = false;            // disable live search
-            tree_view.hexpand = true;                    // make it fill the container
-            tree_view.valign = Gtk.Align.START;
-            tree_view.reorderable = true;               // make it reorderable (drag and drop)
+            /*
+             *  Set up tree_view
+             */
+            tree_view.name              = "TaskList";
+            tree_view.headers_visible   = false;            // disable headers
+            tree_view.enable_search     = false;            // disable live search
+            tree_view.hexpand           = true;             // make it fill the container
+            tree_view.valign            = Gtk.Align.START;  // Align at the beginning of the parent container
+            tree_view.reorderable       = true;             // make it reorderable (drag and drop)
             
             /*
-             * Attempt to set the treeview and welcome background transparent.
+             * Attempt to set the tree_view and welcome background transparent.
              * Code taken from Tom Beckmann's Agenda implementation.
              * lp:~tombeckmann/+junk/agenda
              *
@@ -138,34 +149,36 @@ namespace Agenda {
             /*
              *   Set up the TreeView with the necessary columns
              */
-            var column = new TreeViewColumn ();
-            var text = new CellRendererText ();         // CellRendererText to display the task description
-            var toggle = new CellRendererToggle ();     // CellRendererToggle for checking it off the list
-            var draghandle = new CellRendererPixbuf (); // CellRendererPixbuf to draw a pretty icon to make reordering easier
+            var column      = new Gtk.TreeViewColumn ();        // Used for generating Columns
+            var text        = new Gtk.CellRendererText ();      // CellRendererText to display the task description
+            var toggle      = new Gtk.CellRendererToggle ();    // CellRendererToggle for checking it off the list
+            var draghandle  = new Gtk.CellRendererPixbuf ();    // CellRendererPixbuf to draw a pretty icon to make reordering easier
             
             // setup the TOGGLE column
-            column = new TreeViewColumn.with_attributes ("Toggle", toggle, "active", Columns.TOGGLE);
+            column = new Gtk.TreeViewColumn.with_attributes ("Toggle", toggle, "active", Columns.TOGGLE);
             tree_view.append_column (column);
 
             // setup the TEXT column
             text.ypad = 6;                              // set vertical padding between rows
             text.editable = true;
             
-            column = new TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
+            column = new Gtk.TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
             column.expand = true;                       // the text column should fill the whole width of the column
             tree_view.append_column (column);
             
             // setup the DRAGHANDLE column
-            column = new TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
+            column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
             tree_view.append_column (column);
             tree_view.model = task_list;
 
-            // setup the task entry
-            task_entry.name = "TaskEntry";
-            task_entry.max_length = 50;
-            task_entry.hexpand = true;
-            task_entry.valign = Gtk.Align.END;
-            task_entry.secondary_icon_name = "list-add-symbolic";
+            /*
+             *  Set up the task entry
+             */
+            task_entry.name                 = "TaskEntry";          // Name
+            task_entry.max_length           = 50;                   // Maximum character length
+            task_entry.hexpand              = true;                 // Horizontally Expand
+            task_entry.valign               = Gtk.Align.END;        // Align at the bottom of the parent container
+            task_entry.secondary_icon_name  = "list-add-symbolic";  // Add the 'plus' icon on the right side of the entry
 
 
             // Method for when the task entry is activated
@@ -182,8 +195,8 @@ namespace Agenda {
 
             // Method for when a task is toggled (completed)
             toggle.toggled.connect ((toggle, path) => {
-                var tree_path = new TreePath.from_string (path);
-                TreeIter iter;
+                var tree_path = new Gtk.TreePath.from_string (path);
+                Gtk.TreeIter iter;
                 task_list.get_iter (out iter, tree_path);
                 task_list.set (iter, Columns.TOGGLE, !toggle.active, Columns.STRIKETHROUGH, !toggle.active);
 
@@ -199,11 +212,12 @@ namespace Agenda {
             
             // Method for when a row is removed from the task_list or the list is reordered
             task_list.row_deleted.connect ((path, iter) => {
-                /*
-                 *  When a row is dragged and dropped, a new row is inserted, then populated,
-                 *  then the old row is deleted.  This way, we write the new order to the file
-                 *  every time it gets reordered through DND.  This also takes care of the
-                 *  toggled row, since it is removed and the row_deleted signal is emitted.
+                /**
+                 *  When a row is dragged and dropped, a new row is inserted,
+                 *  then populated, then the old row is deleted.  This way, we
+                 *  write the new order to the file every time it gets reordered
+                 *  through DND.  This also takes care of the toggled row, since
+                 *  it is removed and the row_deleted signal is emitted.
                  */
                 list_to_file ();
             });
@@ -217,9 +231,11 @@ namespace Agenda {
             });
 
             
-            // setup the scrolled window and add tree_view
+            /**
+             *  Set up the scrolled window and add tree_view
+             */
             scrolled_window.expand = true;
-            scrolled_window.set_policy (PolicyType.NEVER, PolicyType.AUTOMATIC);
+            scrolled_window.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
             scrolled_window.add (tree_view);
             
             agenda_welcome.expand = true;
@@ -234,12 +250,17 @@ namespace Agenda {
             task_entry.grab_focus ();
         }
 
+        /**
+         *  Add a task to the list.
+         *
+         *  @param task the task to be added to the list
+         */
         void add_task (string task) {
             if (task == "") {    // if a task_entry is empty, don't add the task
                 return;
             }
             
-            TreeIter iter;
+            Gtk.TreeIter iter;
             task_list.append (out iter);
             task_list.set (iter, Columns.TOGGLE, false, Columns.TEXT, task, Columns.STRIKETHROUGH, false, Columns.DRAGHANDLE, "view-list-symbolic");
             update ();
@@ -247,28 +268,41 @@ namespace Agenda {
             task_entry.set_text("");        // clear the entry box
         }
         
-        public void update () {        // if the task list is empty, show the welcome screen
-            TreeIter iter;
+        /**
+         *  Updates the window to show the welcome screen if the list is empty.
+         */
+        public void update () {
+            Gtk.TreeIter iter;
             
-            if ( !task_list.get_iter_first (out iter) ) // get_iter_first returns false if there are no items in the list
+            // get_iter_first returns false if there are no items in the list
+            if ( !task_list.get_iter_first (out iter) )
                 show_welcome ();
             else
                 hide_welcome ();
         }
         
-        void show_welcome () {      // simply hides the scrolled_window and shows the welcome screen
+        /**
+         *  Hides the scrolled_window (task list) and shows the Welcome screen
+         */
+        void show_welcome () {
             scrolled_window.hide ();
             agenda_welcome.show ();
         }
         
-        void hide_welcome () {      // simply hides the welcome screen and shows the scrolled_window
+        /**
+         *  Hides the Welcome screen and shows the scrolled_window (task list)
+         */
+        void hide_welcome () {
             agenda_welcome.hide ();
             scrolled_window.show ();
         }
         
+        /**
+         *  Writes the list to a file.
+         */
         public void list_to_file () {
         
-            TreeIter iter;
+            Gtk.TreeIter iter;
             bool valid = task_list.get_iter_first (out iter);
             
             try {
