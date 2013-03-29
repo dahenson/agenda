@@ -1,7 +1,7 @@
 Source: agenda-tasks
 Section: utils
 Priority: optional
-Maintainer: Cody Garver <cody@elementaryos.org>
+Maintainer: Dane Henson <dane@elementaryos.org>
 Build-Depends: cmake (>= 2.6),
                debhelper (>= 7.0.50~),
                libgranite-dev,
