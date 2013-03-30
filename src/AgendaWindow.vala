@@ -44,7 +44,7 @@ namespace Agenda {
         private Gtk.ListStore               task_list;      // Stores tasks for accessing by a TreeView
         private Gtk.TreeView                tree_view;      // TreeView to display tasks
         private Gtk.ScrolledWindow          scrolled_window;// Container for the treeview
-        private Granite.Widgets.HintedEntry task_entry;     // Entry that accepts tasks
+        private Gtk.Entry                   task_entry;     // Entry that accepts tasks
         private Gtk.Grid                    grid;           // Container for everything
 
         /**
@@ -69,7 +69,7 @@ namespace Agenda {
                                                     typeof(string)
                                                 );
             scrolled_window = new Gtk.ScrolledWindow (null, null);
-            task_entry      = new Granite.Widgets.HintedEntry (HINT_STRING);
+            task_entry      = new Gtk.Entry ();
             grid            = new Gtk.Grid ();
             tree_view       = new Gtk.TreeView ();
             
@@ -175,6 +175,7 @@ namespace Agenda {
              *  Set up the task entry
              */
             task_entry.name                 = "TaskEntry";          // Name
+            task_entry.placeholder_text     = HINT_STRING;
             task_entry.max_length           = 50;                   // Maximum character length
             task_entry.hexpand              = true;                 // Horizontally Expand
             task_entry.valign               = Gtk.Align.END;        // Align at the bottom of the parent container
@@ -187,7 +188,7 @@ namespace Agenda {
 
             // Method for editing tasks
             text.edited.connect ( (path, edited_text) => {
-                Gtk.TreeIter iter;
+                    Gtk.TreeIter iter;
                 task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
                 task_list.set (iter, 1, edited_text);
                 list_to_file ();
