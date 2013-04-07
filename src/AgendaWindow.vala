@@ -129,24 +129,6 @@ namespace Agenda {
             tree_view.reorderable       = true;             // make it reorderable (drag and drop)
             
             /*
-             * Attempt to set the tree_view and welcome background transparent.
-             * Code taken from Tom Beckmann's Agenda implementation.
-             * lp:~tombeckmann/+junk/agenda
-             *
-             */
-            var transp_css = new Gtk.CssProvider ();
-            try {
-                transp_css.load_from_data ("GtkTreeView{background-color:@transparent;} .view:selected:focused{color:@text_color;}", -1);
-            } catch (Error e) { warning (e.message); }
-            tree_view.get_style_context ().add_provider (transp_css, 20000);
-            
-            transp_css = new Gtk.CssProvider ();
-            try {
-                transp_css.load_from_data ("GtkEventBox{background-color:@transparent;} .view:selected:focused{color:@text_color;}", -1);
-            } catch (Error e) { warning (e.message); }
-            agenda_welcome.get_style_context ().add_provider (transp_css, 20000);
-            
-            /*
              *   Set up the TreeView with the necessary columns
              */
             var column      = new Gtk.TreeViewColumn ();        // Used for generating Columns
