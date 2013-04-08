@@ -137,6 +137,7 @@ namespace Agenda {
             var draghandle  = new Gtk.CellRendererPixbuf ();    // CellRendererPixbuf to draw a pretty icon to make reordering easier
             
             // setup the TOGGLE column
+            toggle.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes ("Toggle", toggle, "active", Columns.TOGGLE);
             tree_view.append_column (column);
 
@@ -149,6 +150,7 @@ namespace Agenda {
             tree_view.append_column (column);
             
             // setup the DRAGHANDLE column
+            draghandle.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
             tree_view.append_column (column);
             tree_view.model = task_list;
@@ -223,13 +225,14 @@ namespace Agenda {
             
             agenda_welcome.expand = true;
             
-            grid.margin = 12;        // elementary HIG states that widgets should be spaced 12px from the window border
             grid.expand = true;      // expand the box to fill the whole window
             grid.row_homogeneous = false;
             grid.attach (agenda_welcome, 0, 0, 1, 1);
             grid.attach (scrolled_window, 0, 1, 1, 1);
             grid.attach (task_entry, 0, 2, 1, 1);
             this.add (grid);
+            
+            task_entry.margin = 12;
             task_entry.grab_focus ();
         }
 
