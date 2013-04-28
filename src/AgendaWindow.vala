@@ -195,6 +195,16 @@ namespace Agenda {
                 });
             });
             
+            /**
+             *  Unselect everything when not focused on the treeview.
+             */
+            tree_view.focus_out_event.connect ((e) => {
+                Gtk.TreeSelection selected;
+                selected = tree_view.get_selection ();
+                selected.unselect_all ();
+                return false;
+            });
+            
             // Method for when a row is removed from the task_list or the list is reordered
             task_list.row_deleted.connect ((path, iter) => {
                 /**
@@ -207,14 +217,7 @@ namespace Agenda {
                 list_to_file ();
             });
             
-            
-            // Method for when the user presses <Escape>, destroy the window
-            this.key_press_event.connect ( (e) => {
-                if (e.keyval == Gdk.Key.Escape)
-                    this.destroy ();
-                return false;
-            });
-
+            this.key_press_event.connect (key_down_event);
             
             /**
              *  Set up the scrolled window and add tree_view
@@ -234,6 +237,18 @@ namespace Agenda {
             
             task_entry.margin = 12;
             task_entry.grab_focus ();
+        }
+        
+        /**
+         *  Key Press Events
+         */
+        public bool key_down_event (Gdk.EventKey e) {
+            switch (e.keyval) {
+                case Gdk.Key.Escape:
+                    this.destroy ();
+                    break;
+            }
+            return false;
         }
 
         /**
