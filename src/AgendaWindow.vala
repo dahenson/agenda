@@ -21,7 +21,7 @@ namespace Agenda {
     
     const int MIN_WIDTH = 350;
     const int MIN_HEIGHT = 430;
-    const string HINT_STRING = N_("Add a new task...");
+    const string HINT_STRING = N_("Add a new task");
 
     public class AgendaWindow : Granite.Widgets.LightWindow {
     
