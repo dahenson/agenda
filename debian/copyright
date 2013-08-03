@@ -10,6 +10,10 @@ Files: debian/*
 Copyright: 2013 Cody Garver <cody@elementaryos.org>
 License: GPL-3.0+
 
+Files: data/icons/*
+Copyright: 2013 Daniel Foré <daniel@elementaryos.org>
+License: GPL-3.0+
+
 License: GPL-3.0+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
