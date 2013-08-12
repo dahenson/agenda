@@ -56,7 +56,7 @@ namespace Agenda {
             this.title = "Agenda";      // Set the window title
             this.resizable = false;     // Window is not resizable
             this.set_keep_above (true); // Window stays on top of other windows
-            
+
             /*
              *  Initialize the GUI components
              */
