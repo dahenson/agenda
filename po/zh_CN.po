@@ -1,0 +1,30 @@
+# Chinese (Simplified) translation for agenda-tasks
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the agenda-tasks package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: agenda-tasks\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-08-31 15:55-0500\n"
+"PO-Revision-Date: 2012-09-16 16:02+0000\n"
+"Last-Translator: Wang Dianjin <Unknown>\n"
+"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-05 06:07+0000\n"
+"X-Generator: Launchpad (build 16863)\n"
+
+#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:29
+msgid "Add a new task..."
+msgstr "添加一条新任务..."
+
+#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:66
+msgid "No Tasks!"
+msgstr "无任务！"
+
+#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:66
+msgid "(way to go)"
+msgstr "(加油)"
