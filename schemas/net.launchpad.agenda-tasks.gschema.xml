@@ -1,0 +1,5 @@
+<schemalist>
+	<schema id="net.launchpad.agenda-tasks" path="/net/launchpad/agenda-tasks/" gettext-domain="agenda">
+		
+	</schema>
+</schemalist>
