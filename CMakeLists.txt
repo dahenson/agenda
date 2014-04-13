@@ -52,6 +52,11 @@ add_definitions(-include config.h)
 add_subdirectory(po)
 
 #
+# dconf
+#
+add_subdirectory(schemas)
+
+#
 # Agenda
 #
 find_package(PkgConfig)
@@ -72,6 +77,7 @@ include(ValaPrecompile)
 vala_precompile(VALA_C
         src/Agenda.vala
         src/AgendaWindow.vala
+        src/Settings.vala
 PACKAGES
         gtk+-3.0
         granite
