@@ -58,19 +58,7 @@ namespace Agenda {
             this.resizable = false;     // Window is not resizable
             this.set_keep_above (true); // Window stays on top of other windows
 
-            /*
-             *   Restore window position
-             */
-            var position = settings.get_value ("window-position");
-            if (position.n_children () == 2) {
-                var x = (int32) position.get_child_value (0);
-                var y = (int32) position.get_child_value (1);
-                
-                this.move (x, y);
-            }
-            else {
-                this.window_position = Gtk.WindowPosition.CENTER;
-            }
+            restore_window_position ();
 
             /*
              *  Initialize the GUI components
@@ -255,12 +243,33 @@ namespace Agenda {
         }
 
         /**
+         *  Restore window position.
+         */
+        public void restore_window_position () {
+            var position = settings.get_value ("window-position");
+
+            if (position.n_children () == 2) {
+                var x = (int32) position.get_child_value (0);
+                var y = (int32) position.get_child_value (1);
+                
+                debug ("Moving window to coordinates");
+                this.move (x, y);
+            }
+            else {
+                debug ("Moving window to the centre of the screen");
+                this.window_position = Gtk.WindowPosition.CENTER;
+            }
+        }
+
+        /**
          *   Save window position.
          */
         public void save_window_position () {
-            int x, y;
-           
+            int x, y;   // Coordinates
+            
+            debug ("Getting window coordinates");
             this.get_position (out x, out y);
+            debug ("Saving window position in the form of [x, y] coordinates");
             settings.set_value ("window-position", new int[] { x, y });
         }
 
