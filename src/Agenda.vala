@@ -25,7 +25,6 @@ namespace Agenda {
     public class Agenda : Granite.Application {
 
         private AgendaWindow window = null;
-        public Settings settings;
 
         construct {
 
@@ -56,11 +55,10 @@ namespace Agenda {
                 window.present (); // present window if app is already open
                 return;
             }
-            
-            settings = new Settings ();
 
             window = new AgendaWindow ();
             window.set_application (this);
+            window.delete_event.connect(window.main_quit);
             window.show_all ();
             window.update ();
         }
