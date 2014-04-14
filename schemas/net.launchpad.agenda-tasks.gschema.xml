@@ -1,5 +1,7 @@
 <schemalist>
 	<schema id="net.launchpad.agenda-tasks" path="/net/launchpad/agenda-tasks/" gettext-domain="agenda">
-		
+        <key name="window-position" type="ai">
+            <default>[]</default>
+        </key>
 	</schema>
 </schemalist>

@@ -26,6 +26,7 @@ namespace Agenda {
     public class AgendaWindow : Granite.Widgets.LightWindow {
     
         public static Granite.Application app { get; private set; }
+        private Settings settings = new Settings ("net.launchpad.agenda-tasks");
 
         private enum Columns {
             TOGGLE,
@@ -56,7 +57,20 @@ namespace Agenda {
             this.title = "Agenda";      // Set the window title
             this.resizable = false;     // Window is not resizable
             this.set_keep_above (true); // Window stays on top of other windows
-            this.window_position = Gtk.WindowPosition.CENTER;
+
+            /*
+             *   Restore window position
+             */
+            var position = settings.get_value ("window-position");
+            if (position.n_children () == 2) {
+                var x = (int32) position.get_child_value (0);
+                var y = (int32) position.get_child_value (1);
+                
+                this.move (x, y);
+            }
+            else {
+                this.window_position = Gtk.WindowPosition.CENTER;
+            }
 
             /*
              *  Initialize the GUI components
@@ -239,14 +253,34 @@ namespace Agenda {
             task_entry.margin = 12;
             task_entry.grab_focus ();
         }
-        
+
+        /**
+         *   Save window position.
+         */
+        public void save_window_position () {
+            int x, y;
+           
+            this.get_position (out x, out y);
+            settings.set_value ("window-position", new int[] { x, y });
+        }
+
+        /**
+         *   Save position and quit from the program.
+         */
+        public bool main_quit () {
+            save_window_position ();
+            this.destroy ();
+
+            return false;
+        }           
+
         /**
          *  Key Press Events
          */
         public bool key_down_event (Gdk.EventKey e) {
             switch (e.keyval) {
                 case Gdk.Key.Escape:
-                    this.destroy ();
+                    main_quit ();
                     break;
             }
             return false;
