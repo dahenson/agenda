@@ -35,7 +35,7 @@ namespace Agenda {
             DRAGHANDLE,
             N_COLUMNS
         }
-        
+
         File list_file;
         
         /**
