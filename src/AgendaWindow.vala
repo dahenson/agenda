@@ -63,7 +63,7 @@ namespace Agenda {
             /*
              *  Initialize the GUI components
              */
-            agenda_welcome  = new Granite.Widgets.Welcome (N_("No Tasks!"), N_("(Add a new task below)"));
+            agenda_welcome  = new Granite.Widgets.Welcome (N_("No Tasks!"), N_("(way to go)"));
             task_list       = new Gtk.ListStore (
                                                     Columns.N_COLUMNS,
                                                     typeof(bool),
@@ -267,34 +267,28 @@ namespace Agenda {
         /**
          *  Delete striketrough items.
          */
-        public void delete_rows () {
-            
+        public void delete_finished_tasks () { 
             Gtk.TreeIter iter;
             bool valid  = task_list.get_iter_first (out iter);
             bool active;
 
-            while (valid) {
-                
+            while (valid) { 
                 task_list.get (iter, Columns.TOGGLE, out active);
 
                 if (active) {
                     task_list.remove (iter);
                     valid = task_list.get_iter_first (out iter);
-                }
-                else {
+                } else {
                     valid = task_list.iter_next (ref iter);
-                }
-                    
+                }    
             }
-
         }
 
         /**
          *  Quit from the program.
          */
         public bool main_quit () {
-
-            delete_rows ();
+            delete_finished_tasks ();
             save_window_position ();
             this.destroy ();
 
