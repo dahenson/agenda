@@ -175,7 +175,7 @@ namespace Agenda {
 
             // Method for editing tasks
             text.edited.connect ( (path, edited_text) => {
-                    Gtk.TreeIter iter;
+                Gtk.TreeIter iter;
                 task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
                 task_list.set (iter, 1, edited_text);
                 list_to_file ();
@@ -187,17 +187,8 @@ namespace Agenda {
                 Gtk.TreeIter iter;
                 task_list.get_iter (out iter, tree_path);
                 task_list.set (iter, Columns.TOGGLE, !toggle.active, Columns.STRIKETHROUGH, !toggle.active);
-
-                Timeout.add (250, () => {
-                    bool active; //check if it's still active
-                    task_list.get (iter, 0, out active);
-                    if (active)
-                        task_list.remove (iter);
-                        update ();
-                    return false;
-                });
             });
-            
+
             /**
              *  Unselect everything when not focused on the treeview.
              */
@@ -262,7 +253,7 @@ namespace Agenda {
         }
 
         /**
-         *   Save window position.
+         *  Save window position.
          */
         public void save_window_position () {
             int x, y;   // Coordinates
@@ -274,9 +265,36 @@ namespace Agenda {
         }
 
         /**
-         *   Save position and quit from the program.
+         *  Delete striketrough items.
+         */
+        public void delete_rows () {
+            
+            Gtk.TreeIter iter;
+            bool valid  = task_list.get_iter_first (out iter);
+            bool active;
+
+            while (valid) {
+                
+                task_list.get (iter, Columns.TOGGLE, out active);
+
+                if (active) {
+                    task_list.remove (iter);
+                    valid = task_list.get_iter_first (out iter);
+                }
+                else {
+                    valid = task_list.iter_next (ref iter);
+                }
+                    
+            }
+
+        }
+
+        /**
+         *  Quit from the program.
          */
         public bool main_quit () {
+
+            delete_rows ();
             save_window_position ();
             this.destroy ();
 
