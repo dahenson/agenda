@@ -267,7 +267,11 @@ namespace Agenda {
         /**
          *  Delete striketrough items.
          */
-        public void delete_finished_tasks () { 
+        public void delete_finished_tasks () {
+            /*
+             * Iterate through the task list and remove "active",
+             * or checked off, entries.
+             */
             Gtk.TreeIter iter;
             bool valid  = task_list.get_iter_first (out iter);
             bool active;
