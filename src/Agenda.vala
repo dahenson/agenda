@@ -33,7 +33,7 @@ namespace Agenda {
 
             app_years = "2012";
             application_id = "net.launchpad.agenda";
-            app_icon = "application-default-icon";
+            app_icon = "agenda";
             app_launcher = "agenda.desktop";
 
             main_url = "https://code.launchpad.net/agenda";
