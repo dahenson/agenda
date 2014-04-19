@@ -329,7 +329,6 @@ namespace Agenda {
             update ();
             list_to_file ();
             task_entry.set_text("");        // clear the entry box
-
             settings.set_boolean ("first-time", false);
         }
         
