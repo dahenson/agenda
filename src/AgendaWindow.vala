@@ -65,7 +65,8 @@ namespace Agenda {
             /*
              *  Initialize the GUI components
              */
-            agenda_welcome  = new Granite.Widgets.Welcome (N_("No Tasks!"), first ? N_("(add a new task below)") : N_("(way to go)"));
+            agenda_welcome  = new Granite.Widgets.Welcome (N_("No Tasks!"), 
+                                                           first ? N_("(add one below)") : N_("(way to go)"));
             task_list       = new Gtk.ListStore (
                                                     Columns.N_COLUMNS,
                                                     typeof(bool),
