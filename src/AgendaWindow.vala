@@ -60,10 +60,13 @@ namespace Agenda {
 
             restore_window_position ();
 
+            var first = settings.get_boolean ("first-time");
+
             /*
              *  Initialize the GUI components
              */
-            agenda_welcome  = new Granite.Widgets.Welcome (N_("No Tasks!"), N_("(way to go)"));
+            agenda_welcome  = new Granite.Widgets.Welcome (N_("No Tasks!"), 
+                                                           first ? N_("(add one below)") : N_("(way to go)"));
             task_list       = new Gtk.ListStore (
                                                     Columns.N_COLUMNS,
                                                     typeof(bool),
@@ -327,6 +330,7 @@ namespace Agenda {
             update ();
             list_to_file ();
             task_entry.set_text("");        // clear the entry box
+            settings.set_boolean ("first-time", false);
         }
         
         /**
