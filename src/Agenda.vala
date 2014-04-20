@@ -31,15 +31,15 @@ namespace Agenda {
             program_name = "Agenda";
             exec_name = "agenda";
 
-            app_years = "2012";
+            app_years = "2012-2014";
             application_id = "net.launchpad.agenda";
             app_icon = "agenda";
             app_launcher = "agenda.desktop";
 
-            main_url = "https://code.launchpad.net/agenda";
-            bug_url = "https://bugs.launchpad.net/agenda";
-            help_url = "https://code.launchpad.net/agenda";
-            translate_url = "https://translations.launchpad.net/agenda";
+            main_url = "https://code.launchpad.net/agenda-tasks";
+            bug_url = "https://bugs.launchpad.net/agenda-tasks";
+            help_url = "https://code.launchpad.net/agenda-tasks";
+            translate_url = "https://translations.launchpad.net/agenda-tasks";
         
             about_authors = {"Dane Henson <dane.henson@gmail.com>, Tom Beckmann <tombeckmann@online.de>"};
             about_documenters = {"Dane Henson <dane.henson@gmail.com, Tom Beckmann <tombeckmann@online.de>"};
