@@ -38,10 +38,10 @@ namespace Agenda {
 
             main_url = "https://code.launchpad.net/agenda-tasks";
             bug_url = "https://bugs.launchpad.net/agenda-tasks";
-            help_url = "https://code.launchpad.net/agenda-tasks";
+            help_url = "https://answers.launchpad.net/agenda-tasks";
             translate_url = "https://translations.launchpad.net/agenda-tasks";
         
-            about_authors = {"Dane Henson <dane.henson@gmail.com>, Tom Beckmann <tombeckmann@online.de>"};
+            about_authors = {"Dane Henson <dane.henson@gmail.com>, Tom Beckmann <tombeckmann@online.de>, Fabio Zaramella <ffabio.96.x@gmail.com>"};
             about_documenters = {"Dane Henson <dane.henson@gmail.com, Tom Beckmann <tombeckmann@online.de>"};
             about_artists = {"Harvey Cabaguio, Sergey Davidoff"};
             about_comments = "Development release, not all features implemented";
