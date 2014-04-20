@@ -31,20 +31,23 @@ namespace Agenda {
             program_name = "Agenda";
             exec_name = "agenda";
 
-            app_years = "2012";
-            application_id = "net.launchpad.agenda";
+            app_years = "2012-2014";
+            application_id = "net.launchpad.agenda-tasks";
             app_icon = "agenda";
             app_launcher = "agenda.desktop";
 
-            main_url = "https://code.launchpad.net/agenda";
-            bug_url = "https://bugs.launchpad.net/agenda";
-            help_url = "https://code.launchpad.net/agenda";
-            translate_url = "https://translations.launchpad.net/agenda";
+            main_url = "https://launchpad.net/agenda-tasks";
+            bug_url = "https://bugs.launchpad.net/agenda-tasks";
+            help_url = "https://answers.launchpad.net/agenda-tasks";
+            translate_url = "https://translations.launchpad.net/agenda-tasks";
         
-            about_authors = {"Dane Henson <dane.henson@gmail.com>, Tom Beckmann <tombeckmann@online.de>"};
-            about_documenters = {"Dane Henson <dane.henson@gmail.com, Tom Beckmann <tombeckmann@online.de>"};
-            about_artists = {"Harvey Cabaguio, Sergey Davidoff"};
-            about_comments = "Development release, not all features implemented";
+            about_authors = {"Dane Henson <dane.henson@gmail.com>",
+                             "Tom Beckmann <tombeckmann@online.de>",
+                             "Fabio Zaramella <ffabio.96.x@gmail.com>"};
+            about_documenters = {"Dane Henson <dane.henson@gmail.com",
+                                 "Tom Beckmann <tombeckmann@online.de>"};
+            about_artists = {"Harvey Cabaguio", "Sergey Davidoff"};
+            about_comments = "A simple, slick, speedy, no-nonsense task manager.";
             about_translators = "";
             about_license_type = Gtk.License.GPL_3_0;
         }
