@@ -54,6 +54,11 @@ namespace Agenda {
         public AgendaWindow () {
 
             Object (use_header_bar: 1);
+            this.title = "Agenda";      // Set the window title
+            this.resizable = false;     // Window is not resizable
+            this.set_keep_above (true); // Window stays on top of other windows
+            this.set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
+
             restore_window_position ();
 
             var first = settings.get_boolean ("first-time");
@@ -117,11 +122,6 @@ namespace Agenda {
          *  Builds all of the widgets and arranges them in the window.
          */
         void setup_ui () {
-
-            this.title = "Agenda";      // Set the window title
-            this.resizable = false;     // Window is not resizable
-            this.set_keep_above (true); // Window stays on top of other windows
-            this.set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
 
             /*
              *  Set up tree_view
