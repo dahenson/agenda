@@ -19,11 +19,11 @@
 
 namespace Agenda {
     
-    const int MIN_WIDTH = 350;
-    const int MIN_HEIGHT = 430;
+    const int MIN_WIDTH = 425;
+    const int MIN_HEIGHT = 505;
     const string HINT_STRING = N_("Add a new task");
 
-    public class AgendaWindow : Granite.Widgets.LightWindow {
+    public class AgendaWindow : Gtk.Dialog {
     
         public static Granite.Application app { get; private set; }
         private Settings settings = new Settings ("net.launchpad.agenda-tasks");
@@ -52,12 +52,9 @@ namespace Agenda {
          *  AgendaWindow Constructor
          */
         public AgendaWindow () {
-        
-            this.app = app;
-            this.title = "Agenda";      // Set the window title
-            this.resizable = false;     // Window is not resizable
-            this.set_keep_above (true); // Window stays on top of other windows
 
+            Object (use_header_bar: 1);
+            
             restore_window_position ();
 
             var first = settings.get_boolean ("first-time");
@@ -122,6 +119,9 @@ namespace Agenda {
          */
         void setup_ui () {
 
+            title = "Agenda";      // Set the window title
+            resizable = false;     // Window is not resizable
+            set_keep_above (true); // Window stays on top of other windows
             set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
 
             /*
@@ -230,9 +230,12 @@ namespace Agenda {
             grid.attach (agenda_welcome, 0, 0, 1, 1);
             grid.attach (scrolled_window, 0, 1, 1, 1);
             grid.attach (task_entry, 0, 2, 1, 1);
-            this.add (grid);
             
-            task_entry.margin = 12;
+            Gtk.Box content = get_content_area () as Gtk.Box;
+            content.add (grid);
+            
+            task_entry.margin_left = 10;
+            task_entry.margin_right = 10;
             task_entry.grab_focus ();
         }
 
