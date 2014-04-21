@@ -54,7 +54,6 @@ namespace Agenda {
         public AgendaWindow () {
 
             Object (use_header_bar: 1);
-            
             restore_window_position ();
 
             var first = settings.get_boolean ("first-time");
@@ -119,10 +118,10 @@ namespace Agenda {
          */
         void setup_ui () {
 
-            title = "Agenda";      // Set the window title
-            resizable = false;     // Window is not resizable
-            set_keep_above (true); // Window stays on top of other windows
-            set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
+            this.title = "Agenda";      // Set the window title
+            this.resizable = false;     // Window is not resizable
+            this.set_keep_above (true); // Window stays on top of other windows
+            this.set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
 
             /*
              *  Set up tree_view
@@ -231,8 +230,7 @@ namespace Agenda {
             grid.attach (scrolled_window, 0, 1, 1, 1);
             grid.attach (task_entry, 0, 2, 1, 1);
             
-            Gtk.Box content = get_content_area () as Gtk.Box;
-            content.add (grid);
+            ((Gtk.Container) get_content_area ()).add (grid);
             
             task_entry.margin_left = 10;
             task_entry.margin_right = 10;
