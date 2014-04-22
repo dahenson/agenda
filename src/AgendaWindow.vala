@@ -57,6 +57,7 @@ namespace Agenda {
             this.title = "Agenda";      // Set the window title
             this.resizable = false;     // Window is not resizable
             this.set_keep_above (true); // Window stays on top of other windows
+            this.type_hint = Gdk.WindowTypeHint.NORMAL;      // restore normal open/close animation
             this.set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
 
             restore_window_position ();
