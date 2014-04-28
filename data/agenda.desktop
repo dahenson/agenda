@@ -9,3 +9,8 @@ Icon=agenda
 Terminal=false
 Categories=Utility;
 Keywords=Todo;Tasks
+Actions=About;
+
+[Desktop Action About]
+Name=About Agenda
+Exec=agenda -a
