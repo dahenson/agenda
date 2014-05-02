@@ -24,8 +24,7 @@ namespace Agenda {
     const string HINT_STRING = N_("Add a new task");
 
     public class AgendaWindow : Gtk.Dialog {
-    
-        public static Granite.Application app { get; private set; }
+
         private Settings settings = new Settings ("net.launchpad.agenda-tasks");
 
         private enum Columns {
