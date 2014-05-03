@@ -19,13 +19,17 @@
 
 namespace Agenda {
     
-    const int MIN_WIDTH = 350;
-    const int MIN_HEIGHT = 430;
+    /**
+     *  The dimensions now are greater than when it was a LightWindow
+     *  becouse sizing for dialogs is different and these new measures
+     *  make it possible to have a window as big as the previous one.
+     */
+    const int MIN_WIDTH = 425;
+    const int MIN_HEIGHT = 505;
     const string HINT_STRING = N_("Add a new task");
 
-    public class AgendaWindow : Granite.Widgets.LightWindow {
-    
-        public static Granite.Application app { get; private set; }
+    public class AgendaWindow : Gtk.Dialog {
+
         private Settings settings = new Settings ("net.launchpad.agenda-tasks");
 
         private enum Columns {
@@ -52,11 +56,13 @@ namespace Agenda {
          *  AgendaWindow Constructor
          */
         public AgendaWindow () {
-        
-            this.app = app;
+
+            Object (use_header_bar: 1);
             this.title = "Agenda";      // Set the window title
             this.resizable = false;     // Window is not resizable
             this.set_keep_above (true); // Window stays on top of other windows
+            this.type_hint = Gdk.WindowTypeHint.NORMAL;      // restore normal open/close animation
+            this.set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
 
             restore_window_position ();
 
@@ -82,6 +88,17 @@ namespace Agenda {
             
             load_list ();   // Load the list from file
             setup_ui ();    // Set up the GUI
+            
+            /*
+             *  Allow moving the window
+             */
+            this.button_press_event.connect ( (e) => {
+                if (e.button == 1) {
+                    this.begin_move_drag ((int) e.button, (int) e.x_root, (int) e.y_root, e.time);
+                    return true;
+                }
+                return false;
+            });
             
         }
         
@@ -121,8 +138,6 @@ namespace Agenda {
          *  Builds all of the widgets and arranges them in the window.
          */
         void setup_ui () {
-
-            set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
 
             /*
              *  Set up tree_view
@@ -230,9 +245,11 @@ namespace Agenda {
             grid.attach (agenda_welcome, 0, 0, 1, 1);
             grid.attach (scrolled_window, 0, 1, 1, 1);
             grid.attach (task_entry, 0, 2, 1, 1);
-            this.add (grid);
             
-            task_entry.margin = 12;
+            ((Gtk.Container) get_content_area ()).add (grid);
+            
+            task_entry.margin_left = 10;
+            task_entry.margin_right = 10;
             task_entry.grab_focus ();
         }
 
