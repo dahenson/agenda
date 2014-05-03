@@ -7,7 +7,7 @@ GenericName=TodoList
 Exec=agenda
 Icon=agenda
 Terminal=false
-Categories=Utility;
+Categories=Utility;Office;
 Keywords=Todo;Tasks
 Actions=About;
 
