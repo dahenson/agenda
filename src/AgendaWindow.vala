@@ -327,6 +327,20 @@ namespace Agenda {
                 case Gdk.Key.Escape:
                     main_quit ();
                     break;
+                case Gdk.Key.Delete:
+                    if (!task_entry.has_focus) {
+                        Gtk.TreeIter iter;
+                        Gtk.TreeSelection tree_selection;
+                        bool current_state;
+                        
+                        tree_selection = tree_view.get_selection ();
+                        tree_selection.get_selected (null, out iter);
+                        task_list.get (iter, 0, out current_state);
+                        
+                        task_list.set (iter, Columns.TOGGLE, !current_state, Columns.STRIKETHROUGH, !current_state);   
+                        update ();
+                    }
+                    break;
             }
             return false;
         }
