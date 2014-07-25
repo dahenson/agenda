@@ -42,6 +42,19 @@ namespace Agenda {
 
         File list_file;
         
+        private const string STYLE = "
+
+            GraniteWidgetsWelcome {
+                background-color: shade (#FFF, 0.96);
+            }
+
+            GtkTreeView row {
+                background-color: shade (#FFF, 0.96);
+                color: #333;
+            }
+
+        ";
+
         /**
          *  These are the GUI components
          */
@@ -65,6 +78,11 @@ namespace Agenda {
             set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
 
             get_header_bar ().get_style_context ().remove_class ("header-bar");
+
+            var css_provider = load_css ();
+            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default(),
+                                                      css_provider,
+                                                      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             restore_window_position ();
 
@@ -252,7 +270,20 @@ namespace Agenda {
             
             task_entry.margin_left = 10;
             task_entry.margin_right = 10;
-            task_entry.grab_focus ();
+
+            // OPINION: It's better not to put focus on startup becaouse in this way user can see the hint
+            //task_entry.grab_focus ();
+        }
+
+        public Gtk.CssProvider load_css () {
+            var provider = new Gtk.CssProvider ();
+            try {
+                provider.load_from_data (STYLE, STYLE.length);
+            } catch (Error e) {
+                warning ("loading css: %s", e.message);
+            }     
+  
+            return provider;
         }
 
         /**

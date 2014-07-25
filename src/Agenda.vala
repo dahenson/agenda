@@ -70,7 +70,7 @@ namespace Agenda {
         }
 
     	public static int main (string[] args) {
-	        	
+	        
             /* Initiliaze gettext support */
             Intl.setlocale (LocaleCategory.ALL, Intl.get_language_names ()[0]);
             Intl.textdomain (Build.GETTEXT_PACKAGE);
