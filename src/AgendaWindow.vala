@@ -271,7 +271,7 @@ namespace Agenda {
             task_entry.margin_left = 10;
             task_entry.margin_right = 10;
 
-            // OPINION: It's better not to put focus on startup becaouse in this way user can see the hint
+            // OPINION: It's better not to put focus on startup because in this way user can see the hint
             //task_entry.grab_focus ();
         }
 
