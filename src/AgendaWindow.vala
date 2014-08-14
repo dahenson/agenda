@@ -389,9 +389,8 @@ namespace Agenda {
                         tree_selection = tree_view.get_selection ();
                         tree_selection.get_selected (null, out iter);
                         
-                        tree_view.set_cursor (task_list.get_path (iter), tree_view.get_column (Columns.TEXT), true);
- 
-                        update ();
+                        // Prevent task toggle on spacebar press event
+                        task_list.set (iter, Columns.TOGGLE, true, Columns.STRIKETHROUGH, false);
                     }
                     break;
             }
