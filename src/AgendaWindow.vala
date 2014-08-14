@@ -2,6 +2,7 @@
   BEGIN LICENSE
 
   Copyright (C) 2011-2012 Dane Henson <dane.henson@gmail.com>
+
   This program is free software: you can redistribute it and/or modify it
   under the terms of the GNU Lesser General Public License version 3, as
   published    by the Free Software Foundation.
@@ -388,7 +389,8 @@ namespace Agenda {
                         tree_selection = tree_view.get_selection ();
                         tree_selection.get_selected (null, out iter);
                         
-                        task_list.set (iter, Columns.TOGGLE, true, Columns.STRIKETHROUGH, true);   
+                        tree_view.set_cursor (task_list.get_path (iter), tree_view.get_column (Columns.TEXT), true);
+ 
                         update ();
                     }
                     break;
