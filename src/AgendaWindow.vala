@@ -25,7 +25,7 @@ namespace Agenda {
      *  becouse sizing for dialogs is different and these new measures
      *  make it possible to have a window as big as the previous one.
      */
-    const int MIN_WIDTH = 425;
+    const int MIN_WIDTH = 430;
     const int MIN_HEIGHT = 505;
     const string HINT_STRING = N_("Add a new task");
 
