@@ -34,5 +34,5 @@ msgid "(way to go)"
 msgstr ""
 
 #: ../src/AgendaWindow.vala:191
-msgid "(way to go)"
+msgid "This task is empty, edit it or delete it."
 msgstr ""

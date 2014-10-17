@@ -24,8 +24,8 @@ namespace Agenda {
      *  becouse sizing for dialogs is different and these new measures
      *  make it possible to have a window as big as the previous one.
      */
-    const int MIN_WIDTH = 430;
-    const int MIN_HEIGHT = 510;
+    const int MIN_WIDTH = 440;
+    const int MIN_HEIGHT = 520;
     const string HINT_STRING = N_("Add a new task");
 
     public class AgendaWindow : Gtk.Dialog {
