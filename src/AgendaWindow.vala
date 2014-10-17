@@ -26,7 +26,7 @@ namespace Agenda {
      */
     const int MIN_WIDTH = 425;
     const int MIN_HEIGHT = 505;
-    const string HINT_STRING = N_("Add a new task");
+    const string HINT_STRING = _("Add a new task");
 
     public class AgendaWindow : Gtk.Dialog {
 
@@ -42,7 +42,7 @@ namespace Agenda {
 
         File list_file;
         
-        private const string STYLE = "
+        private const string STYLE = """
 
             GraniteWidgetsWelcome {
                 background-color: shade (#FFF, 0.96);
@@ -53,7 +53,7 @@ namespace Agenda {
                 color: #333;
             }
 
-        ";
+        """;
 
         /**
          *  These are the GUI components
@@ -91,8 +91,8 @@ namespace Agenda {
             /*
              *  Initialize the GUI components
              */
-            agenda_welcome  = new Granite.Widgets.Welcome (N_("No Tasks!"), 
-                                                           first ? N_("(add one below)") : N_("(way to go)"));
+            agenda_welcome  = new Granite.Widgets.Welcome (_("No Tasks!"), 
+                                                           first ? _("(add one below)") : _("(way to go)"));
             task_list       = new Gtk.ListStore (
                                                     Columns.N_COLUMNS,
                                                     typeof(bool),

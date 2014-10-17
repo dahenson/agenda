@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-31 15:55-0500\n"
+"POT-Creation-Date: 2014-10-16 21:09-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:29
-msgid "Add a new task..."
+#: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:29
+msgid "Add a new task"
 msgstr ""
 
-#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:66
+#: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:94
 msgid "No Tasks!"
 msgstr ""
 
-#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:66
+#: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:95
+msgid "(add one below)"
+msgstr ""
+
+#: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:95
 msgid "(way to go)"
 msgstr ""
