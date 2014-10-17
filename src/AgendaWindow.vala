@@ -24,8 +24,8 @@ namespace Agenda {
      *  becouse sizing for dialogs is different and these new measures
      *  make it possible to have a window as big as the previous one.
      */
-    const int MIN_WIDTH = 425;
-    const int MIN_HEIGHT = 505;
+    const int MIN_WIDTH = 430;
+    const int MIN_HEIGHT = 510;
     const string HINT_STRING = N_("Add a new task");
 
     public class AgendaWindow : Gtk.Dialog {
@@ -185,6 +185,11 @@ namespace Agenda {
             // setup the TEXT column
             text.ypad = 6;                              // set vertical padding between rows
             text.editable = true;
+            text.max_width_chars = 10;
+            text.ellipsize_set = true;
+            text.ellipsize = Pango.EllipsizeMode.END;
+            text.placeholder_text = _("This task is empty, edit it or delete it.");
+            //(text as Gtk.Widget).tooltip_text (text.text);
             
             column = new Gtk.TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
             column.expand = true;                       // the text column should fill the whole width of the column

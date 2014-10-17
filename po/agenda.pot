@@ -17,14 +17,22 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:29
+#: ../src/AgendaWindow.vala:29
 msgid "Add a new task..."
 msgstr ""
 
-#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:66
+#: ../src/AgendaWindow.vala:94
 msgid "No Tasks!"
 msgstr ""
 
-#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:66
+#: ../src/AgendaWindow.vala:95
+msgid "(add one below)"
+msgstr ""
+
+#: ../src/AgendaWindow.vala:95
+msgid "(way to go)"
+msgstr ""
+
+#: ../src/AgendaWindow.vala:191
 msgid "(way to go)"
 msgstr ""
