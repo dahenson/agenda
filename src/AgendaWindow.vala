@@ -189,7 +189,6 @@ namespace Agenda {
             text.ellipsize_set = true;
             text.ellipsize = Pango.EllipsizeMode.END;
             text.placeholder_text = _("This task is empty, edit it or delete it.");
-            //(text as Gtk.Widget).tooltip_text (text.text);
             
             column = new Gtk.TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
             column.expand = true;                       // the text column should fill the whole width of the column
@@ -200,6 +199,8 @@ namespace Agenda {
             column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
             tree_view.append_column (column);
             tree_view.model = task_list;
+
+            tree_view.set_tooltip_column (Columns.TEXT);
 
             /*
              *  Set up the task entry
