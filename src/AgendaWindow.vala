@@ -27,7 +27,7 @@ namespace Agenda {
      */
     const int MIN_WIDTH = 440;
     const int MIN_HEIGHT = 520;
-    const string HINT_STRING = N_("Add a new task...");
+    const string HINT_STRING = _("Add a new task...");
 
     public class AgendaWindow : Gtk.Dialog {
 
