@@ -7,24 +7,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-08-31 15:55-0500\n"
+"POT-Creation-Date: 2014-10-16 21:09-0300\n"
 "PO-Revision-Date: 2014-01-11 18:04+0000\n"
 "Last-Translator: Cameron Norman <camerontnorman@gmail.com>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-02 06:30+0000\n"
-"X-Generator: Launchpad (build 17147)\n"
+"X-Launchpad-Export-Date: 2014-10-18 06:59+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 
-#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:29
-msgid "Add a new task..."
-msgstr "Lisa uus ülesanne"
+#: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:29
+msgid "Add a new task"
+msgstr ""
 
-#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:66
+#: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:94
 msgid "No Tasks!"
 msgstr "Tubli!"
 
-#: /home/dinzdale/Programming/agenda-tasks/po/../src/AgendaWindow.vala:66
+#: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:95
+msgid "(add one below)"
+msgstr ""
+
+#: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:95
 msgid "(way to go)"
 msgstr "Ülesandeid pole"
