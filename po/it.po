@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-10-16 21:09-0300\n"
-"PO-Revision-Date: 2014-03-31 21:56+0000\n"
+"PO-Revision-Date: 2014-10-18 11:59+0000\n"
 "Last-Translator: Fabio Zaramella <FFabio.96.X@Gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-10-18 06:59+0000\n"
+"X-Launchpad-Export-Date: 2014-10-19 06:58+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 
 #: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:29
 msgid "Add a new task"
-msgstr ""
+msgstr "Aggiungi una nuova attività"
 
 #: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:94
 msgid "No Tasks!"
@@ -27,7 +27,7 @@ msgstr "Nessuna Attività!"
 
 #: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:95
 msgid "(add one below)"
-msgstr ""
+msgstr "(aggiungi qui sotto)"
 
 #: /home/erasmo/fix-translations-problem/po/../src/AgendaWindow.vala:95
 msgid "(way to go)"
