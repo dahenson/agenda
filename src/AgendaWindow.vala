@@ -296,10 +296,9 @@ namespace Agenda {
                 var x = (int32) position.get_child_value (0);
                 var y = (int32) position.get_child_value (1);
                 
-                debug ("Moving window to coordinates");
+                debug ("Moving window to coordinates %d, %d", x, y);
                 this.move (x, y);
-            }
-            else {
+            } else {
                 debug ("Moving window to the centre of the screen");
                 this.window_position = Gtk.WindowPosition.CENTER;
             }
@@ -309,11 +308,9 @@ namespace Agenda {
          *  Save window position.
          */
         public void save_window_position () {
-            int x, y;   // Coordinates
-            
-            debug ("Getting window coordinates");
+            int x, y;   // Coordinates 
             this.get_position (out x, out y);
-            debug ("Saving window position in the form of [x, y] coordinates");
+            debug ("Saving window position to %d, %d", x, y);
             settings.set_value ("window-position", new int[] { x, y });
         }
 
