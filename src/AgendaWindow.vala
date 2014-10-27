@@ -195,7 +195,6 @@ namespace Agenda {
             text.max_width_chars = 10;
             text.ellipsize_set = true;
             text.ellipsize = Pango.EllipsizeMode.END;
-            text.placeholder_text = _("This task is empty, edit it or delete it.");
             
             column = new Gtk.TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
             column.expand = true;                       // the text column should fill the whole width of the column
@@ -226,6 +225,11 @@ namespace Agenda {
 
             // Method for editing tasks
             text.edited.connect ( (path, edited_text) => {
+                /* If the user accidentally blanks a task, abort the edit */
+                if (edited_text == "") {
+                    return;
+                }
+
                 Gtk.TreeIter iter;
                 task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
                 task_list.set (iter, 1, edited_text);

@@ -33,10 +33,6 @@ msgstr ""
 msgid "(way to go)"
 msgstr ""
 
-#: ../src/AgendaWindow.vala:191
-msgid "This task is empty, edit it or delete it."
-msgstr ""
-
 #: ../src/Agenda.vala:53
 msgid "A simple, slick, speedy and no-nonsense task manager."
 msgstr ""
