@@ -54,7 +54,7 @@ namespace Agenda {
             about_documenters = {"Dane Henson <dane.henson@gmail.com",
                                  "Tom Beckmann <tombeckmann@online.de>"};
             about_artists = {"Harvey Cabaguio", "Sergey Davidoff"};
-            about_comments = "A simple, slick, speedy and no-nonsense task manager.";
+            about_comments = _("A simple, slick, speedy and no-nonsense task manager.");
             about_translators = "";
             about_license_type = Gtk.License.GPL_3_0;
         }

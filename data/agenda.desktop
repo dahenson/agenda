@@ -8,7 +8,7 @@ Exec=agenda
 Icon=agenda
 Terminal=false
 Categories=Utility;Office;
-Keywords=Todo;Tasks
+Keywords=Todo;Tasks;
 Actions=About;
 
 [Desktop Action About]

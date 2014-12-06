@@ -2,6 +2,7 @@
   BEGIN LICENSE
 
   Copyright (C) 2011-2012 Dane Henson <dane.henson@gmail.com>
+
   This program is free software: you can redistribute it and/or modify it
   under the terms of the GNU Lesser General Public License version 3, as
   published    by the Free Software Foundation.
@@ -24,9 +25,9 @@ namespace Agenda {
      *  becouse sizing for dialogs is different and these new measures
      *  make it possible to have a window as big as the previous one.
      */
-    const int MIN_WIDTH = 425;
-    const int MIN_HEIGHT = 505;
-    const string HINT_STRING = _("Add a new task");
+    const int MIN_WIDTH = 440;
+    const int MIN_HEIGHT = 520;
+    const string HINT_STRING = _("Add a new task...");
 
     public class AgendaWindow : Gtk.Dialog {
 
@@ -51,6 +52,12 @@ namespace Agenda {
             GtkTreeView row {
                 background-color: shade (#FFF, 0.96);
                 color: #333;
+            }
+
+            .cell:selected,
+            .cell:selected:focus {
+                background-color: @selected_bg_color;
+                color: @selected_fg_color;
             }
 
         """;
@@ -185,6 +192,9 @@ namespace Agenda {
             // setup the TEXT column
             text.ypad = 6;                              // set vertical padding between rows
             text.editable = true;
+            text.max_width_chars = 10;
+            text.ellipsize_set = true;
+            text.ellipsize = Pango.EllipsizeMode.END;
             
             column = new Gtk.TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
             column.expand = true;                       // the text column should fill the whole width of the column
@@ -195,6 +205,8 @@ namespace Agenda {
             column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
             tree_view.append_column (column);
             tree_view.model = task_list;
+
+            tree_view.set_tooltip_column (Columns.TEXT);
 
             /*
              *  Set up the task entry
@@ -213,6 +225,11 @@ namespace Agenda {
 
             // Method for editing tasks
             text.edited.connect ( (path, edited_text) => {
+                /* If the user accidentally blanks a task, abort the edit */
+                if (edited_text == "") {
+                    return;
+                }
+
                 Gtk.TreeIter iter;
                 task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
                 task_list.set (iter, 1, edited_text);
