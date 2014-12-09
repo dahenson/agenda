@@ -61,7 +61,10 @@ add_subdirectory(schemas)
 #
 find_package(PkgConfig)
 
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite)
+pkg_check_modules(DEPS REQUIRED
+        gtk+-3.0>=3.10
+        granite
+        libnotify)
 
 add_definitions(${DEPS_CFLAGS})
 
@@ -78,14 +81,15 @@ vala_precompile(VALA_C
         src/Agenda.vala
         src/AgendaWindow.vala
         src/Translations.vala
+        src/Utils.vala
 PACKAGES
         gtk+-3.0
         granite
+        libnotify
 CUSTOM_VAPIS
         vapi/config.vapi
 OPTIONS
         --thread
-	--define=USE_GRANITE_DECORATED_WINDOW
 )
 
 add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)

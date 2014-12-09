@@ -342,6 +342,7 @@ namespace Agenda {
             Gtk.TreeIter iter;
             bool valid  = task_list.get_iter_first (out iter);
             bool active;
+            int counter = 0;
 
             while (valid) { 
                 task_list.get (iter, Columns.TOGGLE, out active);
@@ -349,10 +350,14 @@ namespace Agenda {
                 if (active) {
                     task_list.remove (iter);
                     valid = task_list.get_iter_first (out iter);
+                    counter++;
                 } else {
                     valid = task_list.iter_next (ref iter);
                 }    
             }
+
+            if (counter != 0)
+                show_notification (_("Task finished"), counter > 1 ? counter.to_string () + _(" tasks have been removed") : _("A task has been removed"));
         }
 
         /**
