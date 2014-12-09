@@ -24,6 +24,7 @@ namespace Agenda {
 
     public class Agenda : Granite.Application {
 
+        private static Agenda app;
         private AgendaWindow window = null;
 
         construct {
@@ -75,7 +76,10 @@ namespace Agenda {
 
         public static Agenda get_instance () {
 
-            return this;
+            if (app == null)
+                app = new Agenda ();
+
+            return app;
         }
 
     	public static int main (string[] args) {
@@ -85,7 +89,7 @@ namespace Agenda {
             Intl.bind_textdomain_codeset (Build.GETTEXT_PACKAGE, "UTF-8");
             Intl.textdomain (Build.GETTEXT_PACKAGE);
 
-	        var app = new Agenda ();
+	        app = new Agenda ();
 	        
 	        if (args[1] == "-s") {
 		        return 0;
