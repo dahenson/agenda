@@ -9,6 +9,7 @@ Icon=agenda
 Terminal=false
 Categories=Utility;Office;
 Keywords=Todo;Tasks;
+X-GNOME-UsesNotifications=true
 Actions=AboutDialog;
 
 [Desktop Action AboutDialog]
