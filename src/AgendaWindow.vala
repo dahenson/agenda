@@ -22,7 +22,7 @@ namespace Agenda {
     
     /**
      *  The dimensions now are greater than when it was a LightWindow
-     *  becouse sizing for dialogs is different and these new measures
+     *  because sizing for dialogs is different and these new measures
      *  make it possible to have a window as big as the previous one.
      */
     const int MIN_WIDTH = 440;
