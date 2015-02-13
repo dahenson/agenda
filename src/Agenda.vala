@@ -39,7 +39,7 @@ namespace Agenda {
             program_name = "Agenda";
             exec_name = "agenda";
 
-            app_years = "2012-2014";
+            app_years = "2012-2015";
             application_id = "net.launchpad.agenda-tasks";
             app_icon = "agenda";
             app_launcher = "agenda.desktop";
