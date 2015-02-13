@@ -25,8 +25,8 @@ namespace Agenda {
      *  because sizing for dialogs is different and these new measures
      *  make it possible to have a window as big as the previous one.
      */
-    const int MIN_WIDTH = 440;
-    const int MIN_HEIGHT = 520;
+    const int MIN_WIDTH = 420;
+    const int MIN_HEIGHT = 500;
     const string HINT_STRING = _("Add a new task...");
 
     public class AgendaWindow : Gtk.Dialog {
@@ -77,14 +77,11 @@ namespace Agenda {
          */
         public AgendaWindow () {
 
-            Object (use_header_bar: 1);
             title = "Agenda";      // Set the window title
             resizable = false;     // Window is not resizable
             set_keep_above (true); // Window stays on top of other windows
             type_hint = Gdk.WindowTypeHint.NORMAL;      // restore normal open/close animation
             set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
-
-            get_header_bar ().get_style_context ().remove_class ("header-bar");
 
             var css_provider = load_css ();
             Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default(),
@@ -213,7 +210,7 @@ namespace Agenda {
              */
             task_entry.name                 = "TaskEntry";          // Name
             task_entry.placeholder_text     = HINT_STRING;
-            task_entry.max_length           = 50;                   // Maximum character length
+            task_entry.max_length           = 64;                   // Maximum character length
             task_entry.hexpand              = true;                 // Horizontally Expand
             task_entry.valign               = Gtk.Align.END;        // Align at the bottom of the parent container
             task_entry.secondary_icon_name  = "list-add-symbolic";  // Add the 'plus' icon on the right side of the entry
@@ -285,8 +282,8 @@ namespace Agenda {
             
             ((Gtk.Container) get_content_area ()).add (grid);
             
-            task_entry.margin_left = 10;
-            task_entry.margin_right = 10;
+            task_entry.margin_start = 12;
+            task_entry.margin_end = 12;
 
             // OPINION: It's better not to put focus on startup because in this way user can see the hint
             //task_entry.grab_focus ();
