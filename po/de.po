@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-08-31 15:55-0500\n"
-"PO-Revision-Date: 2015-01-12 15:39+0000\n"
-"Last-Translator: Tom Beckmann <tomjonabc@gmail.com>\n"
+"PO-Revision-Date: 2015-05-20 07:18+0000\n"
+"Last-Translator: Mister Q <misterq@misterqmusic.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-01-13 06:58+0000\n"
-"X-Generator: Launchpad (build 17298)\n"
+"X-Launchpad-Export-Date: 2015-05-22 04:58+0000\n"
+"X-Generator: Launchpad (build 17514)\n"
 
 #: ../src/AgendaWindow.vala:29
 msgid "Add a new task..."
@@ -39,7 +39,7 @@ msgstr ""
 
 #: ../src/Translations.vala:5
 msgid "What's to be done"
-msgstr ""
+msgstr "Was noch getan werden muss"
 
 #: ../src/Translations.vala:6
 msgid "Todo;Tasks;"
