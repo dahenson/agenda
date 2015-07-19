@@ -85,7 +85,6 @@ CUSTOM_VAPIS
         vapi/config.vapi
 OPTIONS
         --thread
-	    --define=USE_GRANITE_DECORATED_WINDOW
 )
 
 add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)
