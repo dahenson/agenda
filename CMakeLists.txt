@@ -71,7 +71,7 @@ link_directories(${DEPS_LIBRARY_DIRS})
 find_package(Vala REQUIRED)
 
 include(ValaVersion)
-ensure_vala_version("0.16.0" MINIMUM)
+ensure_vala_version("0.26.0" MINIMUM)
 
 include(ValaPrecompile)
 vala_precompile(VALA_C
@@ -85,7 +85,7 @@ CUSTOM_VAPIS
         vapi/config.vapi
 OPTIONS
         --thread
-	--define=USE_GRANITE_DECORATED_WINDOW
+	    --define=USE_GRANITE_DECORATED_WINDOW
 )
 
 add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)

@@ -20,13 +20,8 @@
 
 namespace Agenda {
     
-    /**
-     *  The dimensions now are greater than when it was a LightWindow
-     *  becouse sizing for dialogs is different and these new measures
-     *  make it possible to have a window as big as the previous one.
-     */
-    const int MIN_WIDTH = 440;
-    const int MIN_HEIGHT = 520;
+    const int MIN_WIDTH = 400;
+    const int MIN_HEIGHT = 480;
     const string HINT_STRING = _("Add a new task...");
 
     public class AgendaWindow : Gtk.Dialog {
@@ -77,14 +72,11 @@ namespace Agenda {
          */
         public AgendaWindow () {
 
-            Object (use_header_bar: 1);
             title = "Agenda";      // Set the window title
             resizable = false;     // Window is not resizable
             set_keep_above (true); // Window stays on top of other windows
             type_hint = Gdk.WindowTypeHint.NORMAL;      // restore normal open/close animation
             set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
-
-            get_header_bar ().get_style_context ().remove_class ("header-bar");
 
             var css_provider = load_css ();
             Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default(),
