@@ -71,12 +71,13 @@ link_directories(${DEPS_LIBRARY_DIRS})
 find_package(Vala REQUIRED)
 
 include(ValaVersion)
-ensure_vala_version("0.16.0" MINIMUM)
+ensure_vala_version("0.26.0" MINIMUM)
 
 include(ValaPrecompile)
 vala_precompile(VALA_C
         src/Agenda.vala
         src/AgendaWindow.vala
+        src/Translations.vala
 PACKAGES
         gtk+-3.0
         granite
@@ -84,7 +85,6 @@ CUSTOM_VAPIS
         vapi/config.vapi
 OPTIONS
         --thread
-	--define=USE_GRANITE_DECORATED_WINDOW
 )
 
 add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)
@@ -98,3 +98,9 @@ install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/32/agenda.svg DESTINATION 
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/48/agenda.svg DESTINATION share/icons/hicolor/48x48/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/64/agenda.svg DESTINATION share/icons/hicolor/64x64/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/128/agenda.svg DESTINATION share/icons/hicolor/128x128/apps)
+
+option (ICON_UPDATE "Run gtk-update-icon-cache after the install." ON)
+if (ICON_UPDATE)
+  install (CODE "message(\"-- Updating icon cache...\")")
+  install (CODE "execute_process(COMMAND gtk-update-icon-cache -f -t ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)")
+endif (ICON_UPDATE)

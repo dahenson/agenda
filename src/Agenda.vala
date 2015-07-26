@@ -31,6 +31,10 @@ namespace Agenda {
 
             // App info
             build_version = Build.VERSION;
+            build_data_dir = Build.DATADIR;
+            build_pkg_data_dir = Build.PKGDATADIR;
+            build_release_name = Build.RELEASE_NAME;
+            build_version_info = Build.VERSION_INFO;
 
             program_name = "Agenda";
             exec_name = "agenda";
@@ -51,7 +55,7 @@ namespace Agenda {
             about_documenters = {"Dane Henson <dane.henson@gmail.com",
                                  "Tom Beckmann <tombeckmann@online.de>"};
             about_artists = {"Harvey Cabaguio", "Sergey Davidoff"};
-            about_comments = "A simple, slick, speedy and no-nonsense task manager.";
+            about_comments = _("A simple, slick, speedy and no-nonsense task manager.");
             about_translators = "";
             about_license_type = Gtk.License.GPL_3_0;
         }
@@ -72,8 +76,9 @@ namespace Agenda {
 
     	public static int main (string[] args) {
 	        
-            /* Initiliaze gettext support */
-            Intl.setlocale (LocaleCategory.ALL, Intl.get_language_names ()[0]);
+            // Init internationalization support
+            Intl.setlocale (LocaleCategory.ALL, "");
+            Intl.bind_textdomain_codeset (Build.GETTEXT_PACKAGE, "UTF-8");
             Intl.textdomain (Build.GETTEXT_PACKAGE);
 
 	        var app = new Agenda ();

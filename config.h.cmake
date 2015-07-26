@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#cmakedefine DATADIR "@DATADIR"
+#cmakedefine DATADIR "@DATADIR@"
 #cmakedefine PKGDATADIR "@PKGDATADIR@"
 #cmakedefine GETTEXT_PACKAGE "@GETTEXT_PACKAGE@"
 #cmakedefine RELEASE_NAME "@RELEASE_NAME@"

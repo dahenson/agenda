@@ -19,15 +19,10 @@
 ***/
 
 namespace Agenda {
-    
-    /**
-     *  The dimensions now are greater than when it was a LightWindow
-     *  becouse sizing for dialogs is different and these new measures
-     *  make it possible to have a window as big as the previous one.
-     */
-    const int MIN_WIDTH = 430;
-    const int MIN_HEIGHT = 505;
-    const string HINT_STRING = N_("Add a new task");
+
+    const int MIN_WIDTH = 400;
+    const int MIN_HEIGHT = 480;
+    const string HINT_STRING = _("Add a new task...");
 
     public class AgendaWindow : Gtk.Dialog {
 
@@ -43,7 +38,7 @@ namespace Agenda {
 
         File list_file;
         
-        private const string STYLE = "
+        private const string STYLE = """
 
             GraniteWidgetsWelcome {
                 background-color: shade (#FFF, 0.96);
@@ -60,7 +55,8 @@ namespace Agenda {
                 color: @selected_fg_color;
             }
 
-        ";
+        """;
+
 
         /**
          *  These are the GUI components
@@ -77,14 +73,11 @@ namespace Agenda {
          */
         public AgendaWindow () {
 
-            Object (use_header_bar: 1);
             title = "Agenda";      // Set the window title
             resizable = false;     // Window is not resizable
             set_keep_above (true); // Window stays on top of other windows
             type_hint = Gdk.WindowTypeHint.NORMAL;      // restore normal open/close animation
             set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
-
-            get_header_bar ().get_style_context ().remove_class ("header-bar");
 
             var css_provider = load_css ();
             Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default(),
@@ -98,8 +91,8 @@ namespace Agenda {
             /*
              *  Initialize the GUI components
              */
-            agenda_welcome  = new Granite.Widgets.Welcome (N_("No Tasks!"), 
-                                                           first ? N_("(add one below)") : N_("(way to go)"));
+            agenda_welcome  = new Granite.Widgets.Welcome (_("No Tasks!"), 
+                                                           first ? _("(add one below)") : _("(way to go)"));
             task_list       = new Gtk.ListStore (
                                                     Columns.N_COLUMNS,
                                                     typeof(bool),
@@ -192,6 +185,9 @@ namespace Agenda {
             // setup the TEXT column
             text.ypad = 6;                              // set vertical padding between rows
             text.editable = true;
+            text.max_width_chars = 10;
+            text.ellipsize_set = true;
+            text.ellipsize = Pango.EllipsizeMode.END;
             
             column = new Gtk.TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
             column.expand = true;                       // the text column should fill the whole width of the column
@@ -202,6 +198,8 @@ namespace Agenda {
             column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
             tree_view.append_column (column);
             tree_view.model = task_list;
+
+            tree_view.set_tooltip_column (Columns.TEXT);
 
             /*
              *  Set up the task entry
@@ -220,6 +218,11 @@ namespace Agenda {
 
             // Method for editing tasks
             text.edited.connect ( (path, edited_text) => {
+                /* If the user accidentally blanks a task, abort the edit */
+                if (edited_text == "") {
+                    return;
+                }
+
                 Gtk.TreeIter iter;
                 task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
                 task_list.set (iter, 1, edited_text);
@@ -303,10 +306,9 @@ namespace Agenda {
                 var x = (int32) position.get_child_value (0);
                 var y = (int32) position.get_child_value (1);
                 
-                debug ("Moving window to coordinates");
+                debug ("Moving window to coordinates %d, %d", x, y);
                 this.move (x, y);
-            }
-            else {
+            } else {
                 debug ("Moving window to the centre of the screen");
                 this.window_position = Gtk.WindowPosition.CENTER;
             }
@@ -316,11 +318,9 @@ namespace Agenda {
          *  Save window position.
          */
         public void save_window_position () {
-            int x, y;   // Coordinates
-            
-            debug ("Getting window coordinates");
+            int x, y;   // Coordinates 
             this.get_position (out x, out y);
-            debug ("Saving window position in the form of [x, y] coordinates");
+            debug ("Saving window position to %d, %d", x, y);
             settings.set_value ("window-position", new int[] { x, y });
         }
 
