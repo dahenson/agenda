@@ -37,7 +37,7 @@ namespace Agenda {
         }
 
         File list_file;
-        
+
         private const string STYLE = """
 
             GraniteWidgetsWelcome {
@@ -56,7 +56,6 @@ namespace Agenda {
             }
 
         """;
-
 
         /**
          *  These are the GUI components
