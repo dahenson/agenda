@@ -62,7 +62,7 @@ add_subdirectory(schemas)
 find_package(PkgConfig)
 
 pkg_check_modules(DEPS REQUIRED
-        gtk+-3.0>=3.10
+        gtk+-3.0>=3.12
         granite
         libnotify)
 
