@@ -19,14 +19,10 @@
 ***/
 
 namespace Agenda {
-    
-    /**
-     *  The dimensions now are greater than when it was a LightWindow
-     *  because sizing for dialogs is different and these new measures
-     *  make it possible to have a window as big as the previous one.
-     */
-    const int MIN_WIDTH = 420;
-    const int MIN_HEIGHT = 500;
+
+    const int MIN_WIDTH = 400;
+    const int MIN_HEIGHT = 480;
+
     const string HINT_STRING = _("Add a new task...");
 
     public class AgendaWindow : Gtk.Dialog {

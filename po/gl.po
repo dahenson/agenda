@@ -8,34 +8,34 @@ msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-08-31 15:55-0500\n"
-"PO-Revision-Date: 2012-10-10 14:59+0000\n"
-"Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
+"PO-Revision-Date: 2015-03-22 17:40+0000\n"
+"Last-Translator: Marcos Lans <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-12-07 06:06+0000\n"
-"X-Generator: Launchpad (build 17274)\n"
+"X-Launchpad-Export-Date: 2015-03-23 05:26+0000\n"
+"X-Generator: Launchpad (build 17405)\n"
 
 #: ../src/AgendaWindow.vala:29
 msgid "Add a new task..."
-msgstr ""
+msgstr "Engadir unha tarefa nova..."
 
 #: ../src/AgendaWindow.vala:94
 msgid "No Tasks!"
-msgstr "Non hai ningunha tarefa."
+msgstr "Non hai tarefas."
 
 #: ../src/AgendaWindow.vala:95
 msgid "(add one below)"
-msgstr ""
+msgstr "(Engadir unha debaixo)"
 
 #: ../src/AgendaWindow.vala:95
 msgid "(way to go)"
-msgstr "(camiño a seguir)"
+msgstr ""
 
 #: ../src/Agenda.vala:53
 msgid "A simple, slick, speedy and no-nonsense task manager."
-msgstr ""
+msgstr "Un xestor de tarefas pulido, sinxelo, rápido e sen complicacións."
 
 #: ../src/Translations.vala:5
 msgid "What's to be done"
@@ -43,8 +43,8 @@ msgstr ""
 
 #: ../src/Translations.vala:6
 msgid "Todo;Tasks;"
-msgstr ""
+msgstr "Facer;Tarefas;"
 
 #: ../src/Translations.vala:7
 msgid "About Agenda"
-msgstr ""
+msgstr "Sobre Agenda"

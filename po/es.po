@@ -8,26 +8,26 @@ msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-08-31 15:55-0500\n"
-"PO-Revision-Date: 2014-10-22 02:00+0000\n"
-"Last-Translator: Erasmo Marín <Unknown>\n"
+"PO-Revision-Date: 2015-05-05 13:42+0000\n"
+"Last-Translator: Juan Pablo Lozano <libredeb@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-12-07 06:06+0000\n"
-"X-Generator: Launchpad (build 17274)\n"
+"X-Launchpad-Export-Date: 2015-05-06 05:41+0000\n"
+"X-Generator: Launchpad (build 17474)\n"
 
 #: ../src/AgendaWindow.vala:29
 msgid "Add a new task..."
-msgstr ""
+msgstr "Añadir una nueva tarea…"
 
 #: ../src/AgendaWindow.vala:94
 msgid "No Tasks!"
-msgstr "No hay tareas!"
+msgstr "No hay tareas."
 
 #: ../src/AgendaWindow.vala:95
 msgid "(add one below)"
-msgstr "(añade una abajo)"
+msgstr "(añada una más abajo)"
 
 #: ../src/AgendaWindow.vala:95
 msgid "(way to go)"
@@ -36,15 +36,16 @@ msgstr "(camino a seguir)"
 #: ../src/Agenda.vala:53
 msgid "A simple, slick, speedy and no-nonsense task manager."
 msgstr ""
+"Un administrador de tareas simple, pulido, rápido y sin complicaciones."
 
 #: ../src/Translations.vala:5
 msgid "What's to be done"
-msgstr ""
+msgstr "Pendientes"
 
 #: ../src/Translations.vala:6
 msgid "Todo;Tasks;"
-msgstr ""
+msgstr "Por hacer;Tareas;"
 
 #: ../src/Translations.vala:7
 msgid "About Agenda"
-msgstr ""
+msgstr "Acerca de Agenda"
