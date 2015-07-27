@@ -1,27 +1,26 @@
 /***
-  BEGIN LICENSE
 
-  Copyright (C) 2011-2012 Dane Henson <dane.henson@gmail.com>
+    Copyright (C) 2014-2015 Agenda Developers
 
-  This program is free software: you can redistribute it and/or modify it
-  under the terms of the GNU Lesser General Public License version 3, as
-  published    by the Free Software Foundation.
+    This program is free software: you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License version 3, as
+    published by the Free Software Foundation.
 
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranties of
-  MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
-  PURPOSE.  See the GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranties of
+    MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
+    PURPOSE.  See the GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License along
-  with this program.  If not, see <http://www.gnu.org/licenses>
+    You should have received a copy of the GNU General Public License along
+    with this program.  If not, see <http://www.gnu.org/licenses>
 
-  END LICENSE
 ***/
 
 namespace Agenda {
 
     const int MIN_WIDTH = 400;
     const int MIN_HEIGHT = 480;
+
     const string HINT_STRING = _("Add a new task...");
 
     public class AgendaWindow : Gtk.Dialog {
@@ -205,7 +204,7 @@ namespace Agenda {
              */
             task_entry.name                 = "TaskEntry";          // Name
             task_entry.placeholder_text     = HINT_STRING;
-            task_entry.max_length           = 50;                   // Maximum character length
+            task_entry.max_length           = 64;                   // Maximum character length
             task_entry.hexpand              = true;                 // Horizontally Expand
             task_entry.valign               = Gtk.Align.END;        // Align at the bottom of the parent container
             task_entry.secondary_icon_name  = "list-add-symbolic";  // Add the 'plus' icon on the right side of the entry
@@ -276,7 +275,7 @@ namespace Agenda {
             grid.attach (task_entry, 0, 2, 1, 1);
             
             ((Gtk.Container) get_content_area ()).add (grid);
-            
+
             task_entry.margin_start = 10;
             task_entry.margin_end = 10;
 
@@ -334,6 +333,7 @@ namespace Agenda {
             Gtk.TreeIter iter;
             bool valid  = task_list.get_iter_first (out iter);
             bool active;
+            int counter = 0;
 
             while (valid) { 
                 task_list.get (iter, Columns.TOGGLE, out active);
@@ -341,10 +341,14 @@ namespace Agenda {
                 if (active) {
                     task_list.remove (iter);
                     valid = task_list.get_iter_first (out iter);
+                    counter++;
                 } else {
                     valid = task_list.iter_next (ref iter);
                 }    
             }
+
+            if (counter != 0)
+                show_notification (_("Task finished"), counter > 1 ? counter.to_string () + _(" tasks have been removed") : _("A task has been removed"));
         }
 
         /**

@@ -33,6 +33,18 @@ msgstr ""
 msgid "(way to go)"
 msgstr ""
 
+#: ../src/AgendaWindow.vala:360
+msgid "Task finished"
+msgstr ""
+
+#: ../src/AgendaWindow.vala:360
+msgid " tasks have been removed"
+msgstr ""
+
+#: ../src/AgendaWindow.vala:360
+msgid "A task has been removed"
+msgstr ""
+
 #: ../src/Agenda.vala:53
 msgid "A simple, slick, speedy and no-nonsense task manager."
 msgstr ""
@@ -48,3 +60,4 @@ msgstr ""
 #: ../src/Translations.vala:7
 msgid "About Agenda"
 msgstr ""
+

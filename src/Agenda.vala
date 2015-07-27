@@ -1,21 +1,19 @@
 /***
-  BEGIN LICENSE
 
-  Copyright (C) 2011-2012 Dane Henson <dane.henson@gmail.com>
+    Copyright (C) 2014-2015 Agenda Developers
 
-  This program is free software: you can redistribute it and/or modify it
-  under the terms of the GNU Lesser General Public License version 3, as
-  published    by the Free Software Foundation.
+    This program is free software: you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License version 3, as
+    published by the Free Software Foundation.
 
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranties of
-  MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
-  PURPOSE.  See the GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranties of
+    MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
+    PURPOSE.  See the GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License along
-  with this program.  If not, see <http://www.gnu.org/licenses>
+    You should have received a copy of the GNU General Public License along
+    with this program.  If not, see <http://www.gnu.org/licenses>
 
-  END LICENSE
 ***/
 
 using Gtk;
@@ -25,6 +23,7 @@ namespace Agenda {
 
     public class Agenda : Granite.Application {
 
+        private static Agenda app;
         private AgendaWindow window = null;
 
         construct {
@@ -39,7 +38,7 @@ namespace Agenda {
             program_name = "Agenda";
             exec_name = "agenda";
 
-            app_years = "2012-2014";
+            app_years = "2012-2015";
             application_id = "net.launchpad.agenda-tasks";
             app_icon = "agenda";
             app_launcher = "agenda.desktop";
@@ -74,6 +73,14 @@ namespace Agenda {
             window.update ();
         }
 
+        public static Agenda get_instance () {
+
+            if (app == null)
+                app = new Agenda ();
+
+            return app;
+        }
+
     	public static int main (string[] args) {
 	        
             // Init internationalization support
@@ -81,7 +88,7 @@ namespace Agenda {
             Intl.bind_textdomain_codeset (Build.GETTEXT_PACKAGE, "UTF-8");
             Intl.textdomain (Build.GETTEXT_PACKAGE);
 
-	        var app = new Agenda ();
+	        app = new Agenda ();
 	        
 	        if (args[1] == "-s") {
 		        return 0;

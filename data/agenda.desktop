@@ -9,8 +9,9 @@ Icon=agenda
 Terminal=false
 Categories=Utility;Office;
 Keywords=Todo;Tasks;
-Actions=About;
+X-GNOME-UsesNotifications=true
+Actions=AboutDialog;
 
-[Desktop Action About]
+[Desktop Action AboutDialog]
 Name=About Agenda
 Exec=agenda -a
