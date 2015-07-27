@@ -19,7 +19,7 @@
 ***/
 
 namespace Agenda {
-    
+
     const int MIN_WIDTH = 400;
     const int MIN_HEIGHT = 480;
     const string HINT_STRING = _("Add a new task...");
@@ -37,7 +37,7 @@ namespace Agenda {
         }
 
         File list_file;
-        
+
         private const string STYLE = """
 
             GraniteWidgetsWelcome {
@@ -277,10 +277,10 @@ namespace Agenda {
             
             ((Gtk.Container) get_content_area ()).add (grid);
             
-            task_entry.margin_left = 10;
-            task_entry.margin_right = 10;
+            task_entry.margin_start = 10;
+            task_entry.margin_end = 10;
 
-            // OPINION: It's better not to put focus on startup because in this way user can see the hint
+            // OPINION: It's better not to put focus on startup because in this way users can see the hint
             //task_entry.grab_focus ();
         }
 
@@ -378,6 +378,18 @@ namespace Agenda {
                         
                         task_list.set (iter, Columns.TOGGLE, !current_state, Columns.STRIKETHROUGH, !current_state);   
                         update ();
+                    }
+                    break;
+                case Gdk.Key.space:
+                    if (!task_entry.has_focus) {
+                        Gtk.TreeIter iter;
+                        Gtk.TreeSelection tree_selection;
+                        
+                        tree_selection = tree_view.get_selection ();
+                        tree_selection.get_selected (null, out iter);
+                        
+                        // Prevent task toggle on spacebar press event
+                        task_list.set (iter, Columns.TOGGLE, true, Columns.STRIKETHROUGH, false);
                     }
                     break;
             }
