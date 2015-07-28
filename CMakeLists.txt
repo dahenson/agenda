@@ -63,7 +63,7 @@ find_package(PkgConfig)
 
 pkg_check_modules(DEPS REQUIRED
         gtk+-3.0>=3.12
-        granite
+        granite>=0.3.0
         libnotify)
 
 add_definitions(${DEPS_CFLAGS})
