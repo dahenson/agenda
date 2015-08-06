@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-08-31 15:55-0500\n"
-"PO-Revision-Date: 2013-08-21 19:10+0000\n"
-"Last-Translator: Cameron Norman <camerontnorman@gmail.com>\n"
+"PO-Revision-Date: 2015-08-05 20:22+0000\n"
+"Last-Translator: Cleiton Floss <cleitonfloss@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-07-28 05:36+0000\n"
-"X-Generator: Launchpad (build 17628)\n"
+"X-Launchpad-Export-Date: 2015-08-06 05:41+0000\n"
+"X-Generator: Launchpad (build 17656)\n"
 
 #: ../src/AgendaWindow.vala:29
 msgid "Add a new task..."
-msgstr ""
+msgstr "Adicione nova tarefa..."
 
 #: ../src/AgendaWindow.vala:94
 msgid "No Tasks!"
@@ -27,7 +27,7 @@ msgstr "Sem tarefas!"
 
 #: ../src/AgendaWindow.vala:95
 msgid "(add one below)"
-msgstr ""
+msgstr "(e uma abaixo)"
 
 #: ../src/AgendaWindow.vala:95
 msgid "(way to go)"
@@ -35,15 +35,15 @@ msgstr "(modo de ir)"
 
 #: ../src/AgendaWindow.vala:360
 msgid "Task finished"
-msgstr ""
+msgstr "Tarefa concluída"
 
 #: ../src/AgendaWindow.vala:360
 msgid " tasks have been removed"
-msgstr ""
+msgstr " tarefas foram removidas"
 
 #: ../src/AgendaWindow.vala:360
 msgid "A task has been removed"
-msgstr ""
+msgstr "Uma tarefa foi removida"
 
 #: ../src/Agenda.vala:53
 msgid "A simple, slick, speedy and no-nonsense task manager."
@@ -59,4 +59,4 @@ msgstr ""
 
 #: ../src/Translations.vala:7
 msgid "About Agenda"
-msgstr ""
+msgstr "Sobre Agenda"
