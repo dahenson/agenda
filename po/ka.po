@@ -1,0 +1,64 @@
+# Georgian translation for agenda-tasks
+# Copyright (c) 2015 Rosetta Contributors and Canonical Ltd 2015
+# This file is distributed under the same license as the agenda-tasks package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: agenda-tasks\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-08-31 15:55-0500\n"
+"PO-Revision-Date: 2015-11-17 19:46+0000\n"
+"Last-Translator: Beqa Arabuli <arabulibeqa@yahoo.com>\n"
+"Language-Team: Georgian <ka@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-11-18 05:26+0000\n"
+"X-Generator: Launchpad (build 17847)\n"
+
+#: ../src/AgendaWindow.vala:29
+msgid "Add a new task..."
+msgstr "ახალი დავალების დამატება..."
+
+#: ../src/AgendaWindow.vala:94
+msgid "No Tasks!"
+msgstr "დავალებები არაა!"
+
+#: ../src/AgendaWindow.vala:95
+msgid "(add one below)"
+msgstr "(დაამატე ქვემოდან)"
+
+#: ../src/AgendaWindow.vala:95
+msgid "(way to go)"
+msgstr "(ეგრე უნდა)"
+
+#: ../src/AgendaWindow.vala:360
+msgid "Task finished"
+msgstr "დავალება დასრულებულია"
+
+#: ../src/AgendaWindow.vala:360
+msgid " tasks have been removed"
+msgstr " დავალება წაიშალა"
+
+#: ../src/AgendaWindow.vala:360
+msgid "A task has been removed"
+msgstr "დავალება წაიშალა"
+
+#: ../src/Agenda.vala:53
+msgid "A simple, slick, speedy and no-nonsense task manager."
+msgstr ""
+"მარტივი, მოხერხებული, სწრაფი დავალებების მმართველი ყოველგვარი უაზრობების "
+"გარეშე."
+
+#: ../src/Translations.vala:5
+msgid "What's to be done"
+msgstr "რაც გასაკეთებელია"
+
+#: ../src/Translations.vala:6
+msgid "Todo;Tasks;"
+msgstr "გასაკეთებელი;დავალებები;"
+
+#: ../src/Translations.vala:7
+msgid "About Agenda"
+msgstr "Agenda-ს შესახებ"
