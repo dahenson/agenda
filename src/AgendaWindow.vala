@@ -18,8 +18,8 @@
 
 namespace Agenda {
 
-    const int MIN_WIDTH = 400;
-    const int MIN_HEIGHT = 480;
+    const int MIN_WIDTH = 480;
+    const int MIN_HEIGHT = 540;
 
     const string HINT_STRING = _("Add a new task...");
 
@@ -208,7 +208,7 @@ namespace Agenda {
             task_entry.hexpand              = true;                 // Horizontally Expand
             task_entry.valign               = Gtk.Align.END;        // Align at the bottom of the parent container
             task_entry.secondary_icon_name  = "list-add-symbolic";  // Add the 'plus' icon on the right side of the entry
-
+            task_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Add to list..."));
 
             // Method for when the task entry is activated
             task_entry.activate.connect (() => { add_task ( task_entry.text ); });

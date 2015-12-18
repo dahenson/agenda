@@ -62,7 +62,7 @@ add_subdirectory(schemas)
 find_package(PkgConfig)
 
 pkg_check_modules(DEPS REQUIRED
-        gtk+-3.0>=3.12
+        gtk+-3.0>=3.16
         granite>=0.3.0
         libnotify)
 
@@ -74,7 +74,7 @@ link_directories(${DEPS_LIBRARY_DIRS})
 find_package(Vala REQUIRED)
 
 include(ValaVersion)
-ensure_vala_version("0.26.0" MINIMUM)
+ensure_vala_version("0.28.0" MINIMUM)
 
 include(ValaPrecompile)
 vala_precompile(VALA_C
