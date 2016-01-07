@@ -7,58 +7,62 @@ msgid ""
 msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-08-31 15:55-0500\n"
+"POT-Creation-Date: 2016-01-07 06:14+0900\n"
 "PO-Revision-Date: 2015-11-17 19:46+0000\n"
 "Last-Translator: Beqa Arabuli <arabulibeqa@yahoo.com>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-12-26 05:26+0000\n"
-"X-Generator: Launchpad (build 17865)\n"
+"X-Launchpad-Export-Date: 2016-01-07 05:27+0000\n"
+"X-Generator: Launchpad (build 17876)\n"
 
-#: ../src/AgendaWindow.vala:29
-msgid "Add a new task..."
-msgstr "ახალი დავალების დამატება..."
-
-#: ../src/AgendaWindow.vala:94
-msgid "No Tasks!"
-msgstr "დავალებები არაა!"
-
-#: ../src/AgendaWindow.vala:95
-msgid "(add one below)"
-msgstr "(დაამატე ქვემოდან)"
-
-#: ../src/AgendaWindow.vala:95
-msgid "(way to go)"
-msgstr "(ეგრე უნდა)"
-
-#: ../src/AgendaWindow.vala:360
-msgid "Task finished"
-msgstr "დავალება დასრულებულია"
-
-#: ../src/AgendaWindow.vala:360
-msgid " tasks have been removed"
-msgstr " დავალება წაიშალა"
-
-#: ../src/AgendaWindow.vala:360
-msgid "A task has been removed"
-msgstr "დავალება წაიშალა"
-
-#: ../src/Agenda.vala:53
+#: /home/fabio/Projects/agenda-tasks/po/../src/Agenda.vala:57
 msgid "A simple, slick, speedy and no-nonsense task manager."
 msgstr ""
 "მარტივი, მოხერხებული, სწრაფი დავალებების მმართველი ყოველგვარი უაზრობების "
 "გარეშე."
 
-#: ../src/Translations.vala:5
+#: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:6
 msgid "What's to be done"
 msgstr "რაც გასაკეთებელია"
 
-#: ../src/Translations.vala:6
+#: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:7
 msgid "Todo;Tasks;"
 msgstr "გასაკეთებელი;დავალებები;"
 
-#: ../src/Translations.vala:7
+#: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:8
 msgid "About Agenda"
 msgstr "Agenda-ს შესახებ"
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:24
+msgid "Add a new task..."
+msgstr "ახალი დავალების დამატება..."
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:92
+msgid "No Tasks!"
+msgstr "დავალებები არაა!"
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:93
+msgid "(add one below)"
+msgstr "(დაამატე ქვემოდან)"
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:93
+msgid "(way to go)"
+msgstr "(ეგრე უნდა)"
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:211
+msgid "Add to list..."
+msgstr ""
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
+msgid "Task finished"
+msgstr "დავალება დასრულებულია"
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
+msgid " tasks have been removed"
+msgstr " დავალება წაიშალა"
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
+msgid "A task has been removed"
+msgstr "დავალება წაიშალა"
