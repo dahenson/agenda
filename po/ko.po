@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-01-07 06:14+0900\n"
-"PO-Revision-Date: 2015-03-05 23:30+0000\n"
+"PO-Revision-Date: 2016-01-10 05:48+0000\n"
 "Last-Translator: MinSik CHO <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-01-07 05:27+0000\n"
-"X-Generator: Launchpad (build 17876)\n"
+"X-Launchpad-Export-Date: 2016-01-11 04:54+0000\n"
+"X-Generator: Launchpad (build 17881)\n"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/Agenda.vala:57
 msgid "A simple, slick, speedy and no-nonsense task manager."
@@ -51,16 +51,16 @@ msgstr "(추후 추가 예정)"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:211
 msgid "Add to list..."
-msgstr ""
+msgstr "리스트에 추가..."
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
 msgid "Task finished"
-msgstr ""
+msgstr "작업 완료"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
 msgid " tasks have been removed"
-msgstr ""
+msgstr " 개의 작업이 제거되었습니다."
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
 msgid "A task has been removed"
-msgstr ""
+msgstr "한 개의 작업이 제거되었습니다."
