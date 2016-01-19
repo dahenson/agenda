@@ -25,7 +25,8 @@ namespace Agenda {
 
     public class AgendaWindow : Gtk.Dialog {
 
-        private Settings settings = new Settings ("net.launchpad.agenda-tasks");
+        private GLib.Settings agenda_settings = new GLib.Settings ("net.launchpad.agenda-tasks");
+        private GLib.Settings privacy_setting = new GLib.Settings ("org.gnome.desktop.privacy");
 
         private enum Columns {
             TOGGLE,
@@ -90,7 +91,7 @@ namespace Agenda {
 
             restore_window_position ();
 
-            var first = settings.get_boolean ("first-time");
+            var first = agenda_settings.get_boolean ("first-time");
 
             /**
              *  Initialize the GUI components
@@ -166,7 +167,7 @@ namespace Agenda {
 
                 // Create history list
                 var h_dis = new DataInputStream (history_file.read ());
-                while ((line = h_dis.read_line (null)) != null) {
+                while ((line = h_dis.read_line (null)) != null && privacy_mode_off ()) {
                     add_to_history (line);
                 }
             } catch (Error e) {
@@ -334,6 +335,13 @@ namespace Agenda {
         }
 
         /**
+         *  Check if the system is in Privacy mode.
+         */
+        public bool privacy_mode_off () {
+            return privacy_setting.get_boolean ("remember-app-usage") || privacy_setting.get_boolean ("remember-recent-files");
+        }
+
+        /**
          *  Apply custom CSS style to task list.
          */
         public Gtk.CssProvider load_css () {
@@ -352,7 +360,7 @@ namespace Agenda {
          *  Restore window position.
          */
         public void restore_window_position () {
-            var position = settings.get_value ("window-position");
+            var position = agenda_settings.get_value ("window-position");
 
             if (position.n_children () == 2) {
                 var x = (int32) position.get_child_value (0);
@@ -373,7 +381,7 @@ namespace Agenda {
             int x, y;   // Coordinates 
             this.get_position (out x, out y);
             debug ("Saving window position to %d, %d", x, y);
-            settings.set_value ("window-position", new int[] { x, y });
+            agenda_settings.set_value ("window-position", new int[] { x, y });
         }
 
         /**
@@ -470,14 +478,14 @@ namespace Agenda {
             task_list.append (out iter);
             task_list.set (iter, Columns.TOGGLE, false, Columns.TEXT, task, Columns.STRIKETHROUGH, false, Columns.DRAGHANDLE, "view-list-symbolic");
 
-            if (skip != true) {
+            if (skip != true && privacy_mode_off ()) {
                 add_to_history (task);
             }
 
             update ();
             tasks_to_file ();
             task_entry.set_text("");        // clear the entry box
-            settings.set_boolean ("first-time", false);
+            agenda_settings.set_boolean ("first-time", false);
         }
         
         /**
