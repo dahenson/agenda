@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2015 Agenda Developers
+    Copyright (C) 2014-2016 Agenda Developers
 
     This program is free software: you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License version 3, as
@@ -36,6 +36,7 @@ namespace Agenda {
         }
 
         File list_file;
+        File history_file;
 
         private const string STYLE = """
 
@@ -66,6 +67,11 @@ namespace Agenda {
         private Gtk.Entry                   task_entry;     // Entry that accepts tasks
         private Gtk.Grid                    grid;           // Container for everything
 
+        private Gtk.ListStore               history_list;   // List where history of tasks is stored
+
+        private Gtk.SeparatorMenuItem       separator;
+        private Gtk.MenuItem                item_clear_history;
+
         /**
          *  AgendaWindow Constructor
          */
@@ -86,7 +92,7 @@ namespace Agenda {
 
             var first = settings.get_boolean ("first-time");
 
-            /*
+            /**
              *  Initialize the GUI components
              */
             agenda_welcome  = new Granite.Widgets.Welcome (_("No Tasks!"), 
@@ -103,63 +109,77 @@ namespace Agenda {
             grid            = new Gtk.Grid ();
             tree_view       = new Gtk.TreeView ();
             
-            
+            history_list = new Gtk.ListStore (1, typeof (string));
+
             load_list ();   // Load the list from file
             setup_ui ();    // Set up the GUI
             
-            /*
+            /**
              *  Allow moving the window
              */
             this.button_press_event.connect ( (e) => {
-                if (e.button == 1) {
+                if (e.button == Gdk.BUTTON_PRIMARY) {
                     this.begin_move_drag ((int) e.button, (int) e.x_root, (int) e.y_root, e.time);
                     return true;
                 }
                 return false;
             });
-            
         }
-        
-        /*
+
+        /**
          *  Loads the list from a file, or creates a new list if one doesn't exist.
          */
-        void load_list () {
+        private void load_list () {
             
             Granite.Services.Paths.initialize ("agenda", Build.PKGDATADIR);     // initialize directory paths for agenda
             Granite.Services.Paths.ensure_directory_exists (Granite.Services.Paths.user_data_folder);     // make sure the user specific agenda data directory exists
             
             list_file = Granite.Services.Paths.user_data_folder.get_child ("tasks");
-            
-            if ( !list_file.query_exists () ) {                 // If the file doesn't exist, try to create it
+            history_file = Granite.Services.Paths.user_data_folder.get_child ("history");
+
+            // If the file doesn't exist, try to create it
+            if ( !list_file.query_exists () ) {
                 try {
                     list_file.create (FileCreateFlags.NONE);
                 } catch (Error e) {
                     error ("Error: %s\n", e.message);
                 }
             }
-            
+
+            if ( !history_file.query_exists () ) {
+                try {
+                    history_file.create (FileCreateFlags.NONE);
+                } catch (Error e) {
+                    error ("Error: %s\n", e.message);
+                }
+            }
+
             try {
-                // Open list_file for reading
-                var dis = new DataInputStream (list_file.read ());
                 string line;
+
+                // Open list_file for reading
+                var f_dis = new DataInputStream (list_file.read ());
                 // Read lines until end of file (null) is reached
-                while ((line = dis.read_line (null)) != null) {
-                    add_task (line);
+                while ((line = f_dis.read_line (null)) != null) {
+                    add_task (line, true);
+                }
+
+                // Create history list
+                var h_dis = new DataInputStream (history_file.read ());
+                while ((line = h_dis.read_line (null)) != null) {
+                    add_to_history (line);
                 }
             } catch (Error e) {
                 error ("%s", e.message);
             }
-            
         }
 
         /**
-         *  Builds all of the widgets and arranges them in the window.
+         * Builds all of the widgets and arranges them in the window.
          */
-        void setup_ui () {
+        private void setup_ui () {
 
-            /*
-             *  Set up tree_view
-             */
+            // Set up tree_view
             tree_view.name              = "TaskList";
             tree_view.headers_visible   = false;            // disable headers
             tree_view.enable_search     = false;            // disable live search
@@ -167,31 +187,29 @@ namespace Agenda {
             tree_view.valign            = Gtk.Align.START;  // Align at the beginning of the parent container
             tree_view.reorderable       = true;             // make it reorderable (drag and drop)
             
-            /*
-             *   Set up the TreeView with the necessary columns
-             */
+            // Set up the TreeView with the necessary columns
             var column      = new Gtk.TreeViewColumn ();        // Used for generating Columns
             var text        = new Gtk.CellRendererText ();      // CellRendererText to display the task description
             var toggle      = new Gtk.CellRendererToggle ();    // CellRendererToggle for checking it off the list
             var draghandle  = new Gtk.CellRendererPixbuf ();    // CellRendererPixbuf to draw a pretty icon to make reordering easier
             
-            // setup the TOGGLE column
+            // Setup the TOGGLE column
             toggle.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes ("Toggle", toggle, "active", Columns.TOGGLE);
             tree_view.append_column (column);
 
-            // setup the TEXT column
-            text.ypad = 6;                              // set vertical padding between rows
+            // Setup the TEXT column
+            text.ypad = 6;                              // Set vertical padding between rows
             text.editable = true;
             text.max_width_chars = 10;
             text.ellipsize_set = true;
             text.ellipsize = Pango.EllipsizeMode.END;
             
             column = new Gtk.TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
-            column.expand = true;                       // the text column should fill the whole width of the column
+            column.expand = true;                       // The text column should fill the whole width of the column
             tree_view.append_column (column);
             
-            // setup the DRAGHANDLE column
+            // Setup the DRAGHANDLE column
             draghandle.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
             tree_view.append_column (column);
@@ -199,9 +217,7 @@ namespace Agenda {
 
             tree_view.set_tooltip_column (Columns.TEXT);
 
-            /*
-             *  Set up the task entry
-             */
+            // Set up the task entry
             task_entry.name                 = "TaskEntry";          // Name
             task_entry.placeholder_text     = HINT_STRING;
             task_entry.max_length           = 64;                   // Maximum character length
@@ -210,9 +226,41 @@ namespace Agenda {
             task_entry.secondary_icon_name  = "list-add-symbolic";  // Add the 'plus' icon on the right side of the entry
             task_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Add to list..."));
 
+            // The EntryCompletion
+            Gtk.EntryCompletion completion = new Gtk.EntryCompletion ();
+            task_entry.set_completion (completion);
+
+            // Create, fill & register a ListStore
+            completion.set_model (history_list);
+            completion.set_text_column (0);
+
             // Method for when the task entry is activated
-            task_entry.activate.connect (() => { add_task ( task_entry.text ); });
-            task_entry.icon_press.connect ( () => { add_task (task_entry.text ); });
+            task_entry.activate.connect (() => { add_task (task_entry.text); });
+            task_entry.icon_press.connect (() => { add_task (task_entry.text); });
+
+            // Add option to clear history list in context menu
+            task_entry.populate_popup.connect ((menu) => {
+                Gtk.TreeIter iter;
+                bool valid = history_list.get_iter_first (out iter);
+                separator = new Gtk.SeparatorMenuItem ();
+                item_clear_history = new Gtk.MenuItem.with_label (_("Clear history"));
+
+                menu.insert (separator, 6);
+                menu.insert (item_clear_history, 7);
+
+                // Clear history list
+                item_clear_history.activate.connect (() => {
+                    history_list.clear ();
+                });
+
+                if (valid) {
+                    item_clear_history.set_sensitive (true);
+                } else {
+                    item_clear_history.set_sensitive (false);
+                }
+
+                menu.show_all ();
+            });
 
             // Method for editing tasks
             text.edited.connect ( (path, edited_text) => {
@@ -224,7 +272,10 @@ namespace Agenda {
                 Gtk.TreeIter iter;
                 task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
                 task_list.set (iter, 1, edited_text);
-                list_to_file ();
+                history_list.append (out iter);
+		        history_list.set (iter, 0, edited_text);
+                tasks_to_file ();
+                history_to_file ();
             });
 
             // Method for when a task is toggled (completed)
@@ -254,7 +305,7 @@ namespace Agenda {
                  *  through DND.  This also takes care of the toggled row, since
                  *  it is removed and the row_deleted signal is emitted.
                  */
-                list_to_file ();
+                tasks_to_file ();
             });
             
             this.key_press_event.connect (key_down_event);
@@ -279,12 +330,15 @@ namespace Agenda {
             task_entry.margin_start = 10;
             task_entry.margin_end = 10;
 
-            // OPINION: It's better not to put focus on startup because in this way users can see the hint
-            //task_entry.grab_focus ();
+            task_entry.grab_focus ();
         }
 
+        /**
+         *  Apply custom CSS style to task list.
+         */
         public Gtk.CssProvider load_css () {
             var provider = new Gtk.CssProvider ();
+
             try {
                 provider.load_from_data (STYLE, STYLE.length);
             } catch (Error e) {
@@ -355,6 +409,7 @@ namespace Agenda {
          *  Quit from the program.
          */
         public bool main_quit () {
+            history_to_file ();
             delete_finished_tasks ();
             save_window_position ();
             this.destroy ();
@@ -397,6 +452,7 @@ namespace Agenda {
                     }
                     break;
             }
+
             return false;
         }
 
@@ -405,7 +461,7 @@ namespace Agenda {
          *
          *  @param task the task to be added to the list
          */
-        void add_task (string task) {
+        private void add_task (string task, bool skip = false) {
             if (task == "") {    // if a task_entry is empty, don't add the task
                 return;
             }
@@ -413,12 +469,27 @@ namespace Agenda {
             Gtk.TreeIter iter;
             task_list.append (out iter);
             task_list.set (iter, Columns.TOGGLE, false, Columns.TEXT, task, Columns.STRIKETHROUGH, false, Columns.DRAGHANDLE, "view-list-symbolic");
+
+            if (skip != true) {
+                add_to_history (task);
+            }
+
             update ();
-            list_to_file ();
+            tasks_to_file ();
             task_entry.set_text("");        // clear the entry box
             settings.set_boolean ("first-time", false);
         }
         
+        /**
+         *  Add task to history list.
+         */
+        private void add_to_history (string text) {
+            Gtk.TreeIter iter;
+
+            history_list.append (out iter);
+		    history_list.set (iter, 0, text);
+        }
+
         /**
          *  Updates the window to show the welcome screen if the list is empty.
          */
@@ -433,7 +504,7 @@ namespace Agenda {
         }
         
         /**
-         *  Hides the scrolled_window (task list) and shows the Welcome screen
+         *  Hides the scrolled_window (task list) and shows the Welcome screen.
          */
         void show_welcome () {
             scrolled_window.hide ();
@@ -441,36 +512,54 @@ namespace Agenda {
         }
         
         /**
-         *  Hides the Welcome screen and shows the scrolled_window (task list)
+         *  Hides the Welcome screen and shows the scrolled_window (task list).
          */
         void hide_welcome () {
             agenda_welcome.hide ();
             scrolled_window.show ();
         }
-        
+
         /**
          *  Writes the list to a file.
          */
-        public void list_to_file () {
-        
+        public void tasks_to_file () {
             Gtk.TreeIter iter;
             bool valid = task_list.get_iter_first (out iter);
             
             try {
-                
                 if (list_file.query_exists ()) {    // delete the file if it already exists
                     list_file.delete ();
                 }
-                
-                var dos = new DataOutputStream (list_file.create (FileCreateFlags.REPLACE_DESTINATION));
+
+                var file_dos = new DataOutputStream (list_file.create (FileCreateFlags.REPLACE_DESTINATION));
                 while (valid) {
-                
                     string text;
                 
                     task_list.get (iter, Columns.TEXT, out text);
-                    dos.put_string (text + "\n");        // write line to file here
-                    valid = task_list.iter_next (ref iter);
-                    
+                    file_dos.put_string (text + "\n");        // write line to file here
+                    valid = task_list.iter_next (ref iter); 
+                }
+            } catch (Error e) {
+                error ("Error: %s\n", e.message);
+            }
+        }
+
+        public void history_to_file () {
+            Gtk.TreeIter iter;
+            bool valid = history_list.get_iter_first (out iter);
+
+            try {
+                if (history_file.query_exists ()) {
+                    history_file.delete ();
+                }
+
+                var history_dos = new DataOutputStream (history_file.create (FileCreateFlags.REPLACE_DESTINATION));
+                while (valid) {
+                    string text;
+                
+                    history_list.get (iter, 0, out text);
+                    history_dos.put_string (text + "\n");        // write line to file here
+                    valid = history_list.iter_next (ref iter);
                 }
             } catch (Error e) {
                 error ("Error: %s\n", e.message);
