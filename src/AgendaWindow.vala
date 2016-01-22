@@ -493,9 +493,25 @@ namespace Agenda {
          */
         private void add_to_history (string text) {
             Gtk.TreeIter iter;
+            string row;
+            bool valid = history_list.get_iter_first (out iter);
 
-            history_list.append (out iter);
-		    history_list.set (iter, 0, text);
+            if (valid == false) {
+                history_list.append (out iter);
+		        history_list.set (iter, 0, text);
+            } else {
+                while (valid) {
+                    history_list.get (iter, 0, out row);
+                    if (row == text) {
+                        history_list.remove (iter);
+                    }
+
+                    valid = history_list.iter_next (ref iter);
+                }
+
+                history_list.append (out iter);
+		        history_list.set (iter, 0, text);
+            }
         }
 
         /**
