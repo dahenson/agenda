@@ -266,7 +266,7 @@ namespace Agenda {
             // Method for editing tasks
             text.edited.connect ( (path, edited_text) => {
                 /* If the user accidentally blanks a task, abort the edit */
-                if (edited_text == "") {
+                if (task_is_empty (edited_text)) {
                     return;
                 }
 
@@ -465,15 +465,27 @@ namespace Agenda {
         }
 
         /**
+         *  Check if the user is trying to add an empty task.
+         */
+        private bool task_is_empty (string task) {
+            if (task == "" || (task.replace (" ", "")).length == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /**
          *  Add a task to the list.
          *
          *  @param task the task to be added to the list
          */
         private void add_task (string task, bool skip = false) {
-            if (task == "") {    // if a task_entry is empty, don't add the task
+            // if a task_entry is empty, don't add the task
+            if (task_is_empty (task)) {
                 return;
             }
-            
+
             Gtk.TreeIter iter;
             task_list.append (out iter);
             task_list.set (iter, Columns.TOGGLE, false, Columns.TEXT, task, Columns.STRIKETHROUGH, false, Columns.DRAGHANDLE, "view-list-symbolic");
