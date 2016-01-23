@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-01-07 06:14+0900\n"
+"POT-Creation-Date: 2016-01-19 21:32+0100\n"
 "PO-Revision-Date: 2016-01-10 05:48+0000\n"
 "Last-Translator: MinSik CHO <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-01-11 04:54+0000\n"
-"X-Generator: Launchpad (build 17881)\n"
+"X-Launchpad-Export-Date: 2016-01-23 05:45+0000\n"
+"X-Generator: Launchpad (build 17902)\n"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/Agenda.vala:57
 msgid "A simple, slick, speedy and no-nonsense task manager."
@@ -37,30 +37,34 @@ msgstr "어젠다에 대해서"
 msgid "Add a new task..."
 msgstr "새 할 일 추가하기..."
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:92
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:98
 msgid "No Tasks!"
 msgstr "할 일이 없습니다!"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:93
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
 msgid "(add one below)"
 msgstr "(아래에 추가)"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:93
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
 msgid "(way to go)"
 msgstr "(추후 추가 예정)"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:211
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:227
 msgid "Add to list..."
 msgstr "리스트에 추가..."
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:246
+msgid "Clear history"
+msgstr ""
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:404
 msgid "Task finished"
 msgstr "작업 완료"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:404
 msgid " tasks have been removed"
 msgstr " 개의 작업이 제거되었습니다."
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:404
 msgid "A task has been removed"
 msgstr "한 개의 작업이 제거되었습니다."

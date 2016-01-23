@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-01-07 06:14+0900\n"
+"POT-Creation-Date: 2016-01-19 21:32+0100\n"
 "PO-Revision-Date: 2013-06-07 23:35+0000\n"
 "Last-Translator: Casper Christiansen <casper.developer@gmail.com>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-01-07 05:27+0000\n"
-"X-Generator: Launchpad (build 17876)\n"
+"X-Launchpad-Export-Date: 2016-01-23 05:45+0000\n"
+"X-Generator: Launchpad (build 17902)\n"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/Agenda.vala:57
 msgid "A simple, slick, speedy and no-nonsense task manager."
@@ -37,30 +37,34 @@ msgstr ""
 msgid "Add a new task..."
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:92
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:98
 msgid "No Tasks!"
 msgstr "Ingen Opgaver!"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:93
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
 msgid "(add one below)"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:93
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
 msgid "(way to go)"
 msgstr "(godt klaret)"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:211
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:227
 msgid "Add to list..."
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:246
+msgid "Clear history"
+msgstr ""
+
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:404
 msgid "Task finished"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:404
 msgid " tasks have been removed"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:351
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:404
 msgid "A task has been removed"
 msgstr ""
