@@ -18,33 +18,30 @@
 
 namespace Agenda {
 
-    private Notify.Notification? notification = null;
+    private GLib.Notification notification = null;
+    private GLib.NotificationPriority priority = GLib.NotificationPriority.LOW;
 
     public static void show_notification (string primary_text, string secondary_text) {
 
-        int urgency = Notify.Urgency.NORMAL;
-
-        if (!Notify.is_initted ()) {
-            if (!Notify.init (Agenda.get_instance ().application_id)) {
-                warning ("Could not init libnotify");
-                return;
-            }
-        }
-
         if (notification == null) {
-            notification = new Notify.Notification (primary_text, secondary_text, "");
+            notification = new GLib.Notification (primary_text);
+            notification.set_body (secondary_text);
         } else {
-            notification.clear_hints ();
-            notification.clear_actions ();
-            notification.update (primary_text, secondary_text, "");
+            notification.set_title (primary_text);
+            notification.set_body (secondary_text);
         }
-
-        notification.icon_name = Agenda.get_instance ().app_icon;
-
-        notification.set_urgency ((Notify.Urgency) urgency);
 
         try {
-            notification.show ();
+            notification.set_icon (GLib.Icon.new_for_string (Agenda.get_instance ().app_icon));
+        } catch (GLib.Error e) {
+            warning ("Couldn't find Agenda icon. Default app icon will be used instead.");
+            notification.set_icon (GLib.Icon.new_for_string ("application-default-icon"));
+        }
+
+        notification.set_priority (priority);
+
+        try {
+            GLib.Application.get_default ().send_notification (Agenda.get_instance ().exec_name, notification);
         } catch (GLib.Error err) {
             warning ("Could not show notification: %s", err.message);
         }

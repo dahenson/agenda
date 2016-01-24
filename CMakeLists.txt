@@ -64,7 +64,7 @@ find_package(PkgConfig)
 pkg_check_modules(DEPS REQUIRED
         gtk+-3.0>=3.16
         granite>=0.3.0
-        libnotify)
+        glib-2.0>=2.39)
 
 add_definitions(${DEPS_CFLAGS})
 
@@ -85,7 +85,7 @@ vala_precompile(VALA_C
 PACKAGES
         gtk+-3.0
         granite
-        libnotify
+        glib-2.0
 CUSTOM_VAPIS
         vapi/config.vapi
 OPTIONS
