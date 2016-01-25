@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-19 21:32+0100\n"
+"POT-Creation-Date: 2016-01-25 10:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,34 +37,34 @@ msgstr ""
 msgid "Add a new task..."
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:98
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
 msgid "No Tasks!"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
 msgid "(add one below)"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
 msgid "(way to go)"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:227
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:228
 msgid "Add to list..."
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:246
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:247
 msgid "Clear history"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:404
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
 msgid "Task finished"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:404
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
 msgid " tasks have been removed"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:404
+#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
 msgid "A task has been removed"
 msgstr ""
