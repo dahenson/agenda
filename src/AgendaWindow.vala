@@ -313,6 +313,7 @@ namespace Agenda {
 		 */
 		public void restore_window_position () {
 			var position = agenda_settings.get_value ("window-position");
+			var win_size = agenda_settings.get_value ("window-size");
 
 			if (position.n_children () == 2) {
 				var x = (int32) position.get_child_value (0);
@@ -324,16 +325,30 @@ namespace Agenda {
 				debug ("Moving window to the centre of the screen");
 				this.window_position = Gtk.WindowPosition.CENTER;
 			}
+
+			if (win_size.n_children () == 2) {
+				var width =  (int32) win_size.get_child_value (0);
+                                var height = (int32) win_size.get_child_value (1);
+
+                                debug ("Resizing to width and height: %d, %d", width, height);
+				this.resize (width, height);
+			} else {
+				debug ("Not resizing window");
+			}
 		}
 
 		/**
 		 *  Save window position.
 		 */
 		public void save_window_position () {
-			int x, y;   // Coordinates 
+			int x, y, width, height;
 			this.get_position (out x, out y);
+			this.get_size (out width, out height);
 			debug ("Saving window position to %d, %d", x, y);
 			agenda_settings.set_value ("window-position", new int[] { x, y });
+			debug ("Saving window size of width and height: %d, %d", width, height); 
+			agenda_settings.set_value ("window-size", new int[] { width, height });
+			
 		}
 
 		/**
