@@ -21,80 +21,80 @@ using Granite;
 
 namespace Agenda {
 
-    public class Agenda : Granite.Application {
+public class Agenda : Granite.Application {
 
-        private static Agenda app;
-        private AgendaWindow window = null;
+	private static Agenda app;
+	private AgendaWindow window = null;
 
-        construct {
+	construct {
 
-            // App info
-            build_version = Build.VERSION;
-            build_data_dir = Build.DATADIR;
-            build_pkg_data_dir = Build.PKGDATADIR;
-            build_release_name = Build.RELEASE_NAME;
-            build_version_info = Build.VERSION_INFO;
+		// App info
+		build_version = Build.VERSION;
+		build_data_dir = Build.DATADIR;
+		build_pkg_data_dir = Build.PKGDATADIR;
+		build_release_name = Build.RELEASE_NAME;
+		build_version_info = Build.VERSION_INFO;
 
-            program_name = "Agenda";
-            exec_name = "agenda";
+		program_name = "Agenda";
+		exec_name = "agenda";
 
-            app_years = "2012-2016";
-            application_id = "net.launchpad.agenda-tasks";
-            app_icon = "agenda";
-            app_launcher = "agenda.desktop";
+		app_years = "2012-2016";
+		application_id = "net.launchpad.agenda-tasks";
+		app_icon = "agenda";
+		app_launcher = "agenda.desktop";
 
-            main_url = "https://launchpad.net/agenda-tasks";
-            bug_url = "https://bugs.launchpad.net/agenda-tasks";
-            help_url = "https://answers.launchpad.net/agenda-tasks";
-            translate_url = "https://translations.launchpad.net/agenda-tasks";
+		main_url = "https://launchpad.net/agenda-tasks";
+		bug_url = "https://bugs.launchpad.net/agenda-tasks";
+		help_url = "https://answers.launchpad.net/agenda-tasks";
+		translate_url = "https://translations.launchpad.net/agenda-tasks";
         
-            about_authors = {"Dane Henson <dane.henson@gmail.com>",
-                             "Tom Beckmann <tombeckmann@online.de>",
-                             "Fabio Zaramella <ffabio.96.x@gmail.com>"};
-            about_documenters = {"Dane Henson <dane.henson@gmail.com",
-                                 "Tom Beckmann <tombeckmann@online.de>"};
-            about_artists = {"Harvey Cabaguio", "Sergey Davidoff"};
-            about_comments = _("A simple, slick, speedy and no-nonsense task manager.");
-            about_translators = "";
-            about_license_type = Gtk.License.GPL_3_0;
+		about_authors = {"Tom Beckmann <tombeckmann@online.de>",
+		                 "Dane Henson <dane.henson@gmail.com>",
+		                 "Cameron Norman <camerontnorman@gmail.com>",
+		                 "Fabio Zaramella <ffabio.96.x@gmail.com>"};
+		about_documenters = {"Dane Henson <dane.henson@gmail.com",
+		                     "Tom Beckmann <tombeckmann@online.de>"};
+		about_artists = {"Harvey Cabaguio", "Sergey Davidoff"};
+		about_comments = _("A simple, slick, speedy , and no-nonsense task manager.");
+		about_translators = "";
+		about_license_type = Gtk.License.GPL_3_0;
         }
 
-        protected override void activate () {
-                        
-            if (window != null) {
-                window.present (); // present window if app is already open
-                return;
-            }
+	protected override void activate () {
+		// if app is already open
+		if (window != null) {
+			window.present ();
+			return;
+		}
 
-            window = new AgendaWindow ();
-            window.set_application (this);
-            window.delete_event.connect(window.main_quit);
-            window.show_all ();
-            window.update ();
-        }
+		window = new AgendaWindow ();
+		window.set_application (this);
+		window.delete_event.connect(window.main_quit);
+		window.show_all ();
+		window.update ();
+	}
 
-        public static Agenda get_instance () {
+	public static Agenda get_instance () {
+		if (app == null)
+			app = new Agenda ();
 
-            if (app == null)
-                app = new Agenda ();
+		return app;
+	}
 
-            return app;
-        }
+	public static int main (string[] args) {
+ 
+		// Init internationalization support
+		Intl.setlocale (LocaleCategory.ALL, "");
+		Intl.bind_textdomain_codeset (Build.GETTEXT_PACKAGE, "UTF-8");
+		Intl.textdomain (Build.GETTEXT_PACKAGE);
 
-    	public static int main (string[] args) {
+		app = new Agenda ();
 	        
-            // Init internationalization support
-            Intl.setlocale (LocaleCategory.ALL, "");
-            Intl.bind_textdomain_codeset (Build.GETTEXT_PACKAGE, "UTF-8");
-            Intl.textdomain (Build.GETTEXT_PACKAGE);
-
-	        app = new Agenda ();
-	        
-	        if (args[1] == "-s") {
-		        return 0;
-	        }
-	        
-	        return app.run (args);
-        }
-    }
+		if (args[1] == "-s") {
+			return 0;
+		}
+ 
+		return app.run (args);
+	}
+}
 }

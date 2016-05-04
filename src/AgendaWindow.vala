@@ -18,8 +18,8 @@
 
 namespace Agenda {
 
-    const int MIN_WIDTH = 480;
-    const int MIN_HEIGHT = 540;
+    const int MIN_WIDTH = 360;
+    const int MIN_HEIGHT = 180;
 
     const string HINT_STRING = _("Add a new task...");
 
@@ -39,28 +39,7 @@ namespace Agenda {
         File list_file;
         File history_file;
 
-        private const string STYLE = """
-
-            GraniteWidgetsWelcome {
-                background-color: shade (#FFF, 0.96);
-            }
-
-            GtkTreeView row {
-                background-color: shade (#FFF, 0.96);
-                color: #333;
-            }
-
-            .cell:selected,
-            .cell:selected:focus {
-                background-color: @selected_bg_color;
-                color: @selected_fg_color;
-            }
-
-        """;
-
-        /**
-         *  These are the GUI components
-         */
+        /* GUI components */
         private Granite.Widgets.Welcome     agenda_welcome; // The Welcome screen when there are no tasks
         private Gtk.ListStore               task_list;      // Stores tasks for accessing by a TreeView
         private Gtk.TreeView                tree_view;      // TreeView to display tasks
@@ -73,21 +52,10 @@ namespace Agenda {
         private Gtk.SeparatorMenuItem       separator;
         private Gtk.MenuItem                item_clear_history;
 
-        /**
-         *  AgendaWindow Constructor
-         */
         public AgendaWindow () {
 
-            title = "Agenda";      // Set the window title
-            resizable = false;     // Window is not resizable
-            set_keep_above (true); // Window stays on top of other windows
-            type_hint = Gdk.WindowTypeHint.NORMAL;      // restore normal open/close animation
+            title = "Agenda";
             set_size_request (MIN_WIDTH, MIN_HEIGHT);   // set minimum window size
-
-            var css_provider = load_css ();
-            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default(),
-                                                      css_provider,
-                                                      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             restore_window_position ();
 
@@ -339,21 +307,6 @@ namespace Agenda {
          */
         public bool privacy_mode_off () {
             return privacy_setting.get_boolean ("remember-app-usage") || privacy_setting.get_boolean ("remember-recent-files");
-        }
-
-        /**
-         *  Apply custom CSS style to task list.
-         */
-        public Gtk.CssProvider load_css () {
-            var provider = new Gtk.CssProvider ();
-
-            try {
-                provider.load_from_data (STYLE, STYLE.length);
-            } catch (Error e) {
-                warning ("loading css: %s", e.message);
-            }     
-  
-            return provider;
         }
 
         /**
