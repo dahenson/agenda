@@ -1,18 +1,18 @@
 /***
 
-    Copyright (C) 2014-2016 Agenda Developers
+	Copyright (C) 2014-2016 Agenda Developers
 
-    This program is free software: you can redistribute it and/or modify it
-    under the terms of the GNU Lesser General Public License version 3, as
-    published by the Free Software Foundation.
+	This program is free software: you can redistribute it and/or modify it
+	under the terms of the GNU Lesser General Public License version 3, as
+	published by the Free Software Foundation.
 
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranties of
-    MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
-    PURPOSE.  See the GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful, but
+	WITHOUT ANY WARRANTY; without even the implied warranties of
+	MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
+	PURPOSE.  See the GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License along
-    with this program.  If not, see <http://www.gnu.org/licenses>
+	You should have received a copy of the GNU General Public License along
+	with this program.  If not, see <http://www.gnu.org/licenses>
 
 ***/
 
@@ -47,7 +47,7 @@ public class Agenda : Granite.Application {
 		bug_url = "https://bugs.launchpad.net/agenda-tasks";
 		help_url = "https://answers.launchpad.net/agenda-tasks";
 		translate_url = "https://translations.launchpad.net/agenda-tasks";
-        
+	    
 		about_authors = {"Tom Beckmann <tombeckmann@online.de>",
 		                 "Dane Henson <dane.henson@gmail.com>",
 		                 "Cameron Norman <camerontnorman@gmail.com>",
@@ -58,7 +58,7 @@ public class Agenda : Granite.Application {
 		about_comments = _("A simple, slick, speedy, and no-nonsense task manager.");
 		about_translators = "";
 		about_license_type = Gtk.License.GPL_3_0;
-        }
+	    }
 
 	protected override void activate () {
 		// if app is already open
@@ -89,7 +89,7 @@ public class Agenda : Granite.Application {
 		Intl.textdomain (Build.GETTEXT_PACKAGE);
 
 		app = new Agenda ();
-	        
+		    
 		if (args[1] == "-s") {
 			return 0;
 		}
