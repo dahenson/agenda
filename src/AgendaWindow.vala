@@ -191,7 +191,7 @@ namespace Agenda {
             task_entry.placeholder_text     = HINT_STRING;
             task_entry.max_length           = 64;                   // Maximum character length
             task_entry.hexpand              = true;                 // Horizontally Expand
-            task_entry.valign               = Gtk.Align.END;        // Align at the bottom of the parent container
+            task_entry.valign               = Gtk.Align.START;        // Align at the bottom of the parent container
             task_entry.secondary_icon_name  = "list-add-symbolic";  // Add the 'plus' icon on the right side of the entry
             task_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Add to list..."));
 
@@ -298,6 +298,8 @@ namespace Agenda {
 
             task_entry.margin_start = 10;
             task_entry.margin_end = 10;
+            task_entry.margin_top = 10;
+            task_entry.margin_bottom = 10;
 
             task_entry.grab_focus ();
         }
