@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-01-25 10:15+0100\n"
-"PO-Revision-Date: 2015-05-05 13:42+0000\n"
-"Last-Translator: Juan Pablo Lozano <libredeb@gmail.com>\n"
+"PO-Revision-Date: 2016-05-04 12:07+0000\n"
+"Last-Translator: Cameron Norman <camerontnorman@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-01-26 05:28+0000\n"
-"X-Generator: Launchpad (build 17902)\n"
+"X-Launchpad-Export-Date: 2016-05-05 05:34+0000\n"
+"X-Generator: Launchpad (build 17995)\n"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/Agenda.vala:57
 msgid "A simple, slick, speedy and no-nonsense task manager."
@@ -48,24 +48,24 @@ msgstr "(añada una más abajo)"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
 msgid "(way to go)"
-msgstr "(camino a seguir)"
+msgstr "(buen trabajo)"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:228
 msgid "Add to list..."
-msgstr ""
+msgstr "Añadir a la lista..."
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:247
 msgid "Clear history"
-msgstr ""
+msgstr "Borrar historial"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
 msgid "Task finished"
-msgstr ""
+msgstr "Tarea finalizada"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
 msgid " tasks have been removed"
-msgstr ""
+msgstr " unas tareas han sido eliminadas"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
 msgid "A task has been removed"
-msgstr ""
+msgstr "Una tarea ha sido eliminada"
