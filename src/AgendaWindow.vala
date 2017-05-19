@@ -18,8 +18,8 @@
 
 namespace Agenda {
 
-    const int MIN_WIDTH = 360;
-    const int MIN_HEIGHT = 180;
+    const int MIN_WIDTH = 400;
+    const int MIN_HEIGHT = 300;
 
     const string HINT_STRING = _("Add a new task...");
 
@@ -51,6 +51,21 @@ namespace Agenda {
         private Gtk.MenuItem            item_clear_history;
 
         public AgendaWindow () {
+
+            const string ELEMENTARY_STYLESHEET = """
+
+                @define-color colorPrimary #e6e6e6;
+
+                .agenda-window {
+                    background-color: #fff;
+                }
+
+            """;
+
+            Granite.Widgets.Utils.set_theming_for_screen (this.get_screen (), ELEMENTARY_STYLESHEET,
+                                               Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            this.get_style_context().add_class("agenda-window");
 
             title = "Agenda";
             set_size_request (MIN_WIDTH, MIN_HEIGHT);
@@ -362,7 +377,7 @@ namespace Agenda {
                     counter++;
                 } else {
                     valid = task_list.iter_next (ref iter);
-                }   
+                }
             }
 
             if (counter != 0)
@@ -379,7 +394,7 @@ namespace Agenda {
             this.destroy ();
 
             return false;
-        }          
+        }
 
         /**
          *  Key Press Events
