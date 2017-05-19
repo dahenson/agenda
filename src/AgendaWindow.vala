@@ -49,15 +49,20 @@ namespace Agenda {
         private Gtk.ListStore           history_list;    // List where history of tasks is stored
         private Gtk.SeparatorMenuItem   separator;
         private Gtk.MenuItem            item_clear_history;
+        private Gtk.HeaderBar           header;
 
         public AgendaWindow () {
 
             const string ELEMENTARY_STYLESHEET = """
 
-                @define-color colorPrimary #e6e6e6;
+                @define-color colorPrimary #FFFFFF;
 
                 .agenda-window {
-                    background-color: #fff;
+                    background-color: #FFFFFF;
+                }
+
+                .task-entry {
+                    background-color: #FFFFFF;
                 }
 
             """;
@@ -67,7 +72,6 @@ namespace Agenda {
 
             this.get_style_context().add_class("agenda-window");
 
-            title = "Agenda";
             set_size_request (MIN_WIDTH, MIN_HEIGHT);
 
             restore_window_position ();
@@ -149,6 +153,12 @@ namespace Agenda {
          */
         private void setup_ui () {
 
+            header = new Gtk.HeaderBar ();
+            header.set_show_close_button (true);
+            this.set_titlebar (header);
+
+            this.set_title ("Agenda");
+
             // Set up tree_view
             tree_view.name = "TaskList";
             tree_view.headers_visible = false;
@@ -162,7 +172,7 @@ namespace Agenda {
             var text       = new Gtk.CellRendererText ();   // CellRendererText to display the task description
             var toggle     = new Gtk.CellRendererToggle (); // CellRendererToggle for checking it off the list
             var draghandle = new Gtk.CellRendererPixbuf (); // CellRendererPixbuf to draw a pretty icon to make reordering easier
-            
+
             // Setup the TOGGLE column
             toggle.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes ("Toggle", toggle, "active", Columns.TOGGLE);
@@ -189,6 +199,7 @@ namespace Agenda {
 
             // Set up the task entry
             task_entry.name = "TaskEntry";
+            task_entry.get_style_context().add_class("task-entry");
             task_entry.placeholder_text = HINT_STRING;
             task_entry.max_length = 64;
             task_entry.hexpand = true;
