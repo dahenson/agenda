@@ -18,8 +18,8 @@
 
 namespace Agenda {
 
-    const int MIN_WIDTH = 400;
-    const int MIN_HEIGHT = 300;
+    const int MIN_WIDTH = 300;
+    const int MIN_HEIGHT = 400;
 
     const string HINT_STRING = _("Add a new task...");
 
@@ -72,7 +72,16 @@ namespace Agenda {
 
             this.get_style_context().add_class("agenda-window");
 
-            set_size_request (MIN_WIDTH, MIN_HEIGHT);
+            this.set_size_request(MIN_WIDTH, MIN_HEIGHT);
+
+            // Set up geometry
+            Gdk.Geometry geo = new Gdk.Geometry();
+            geo.min_width = MIN_WIDTH;
+            geo.min_height = MIN_HEIGHT;
+            geo.max_width = 1024;
+            geo.max_height = 2048;
+
+            this.set_geometry_hints(null, geo, Gdk.WindowHints.MIN_SIZE | Gdk.WindowHints.MAX_SIZE);
 
             restore_window_position ();
 
