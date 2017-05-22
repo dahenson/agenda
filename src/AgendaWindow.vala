@@ -18,7 +18,7 @@
 
 namespace Agenda {
 
-    const int MIN_WIDTH = 300;
+    const int MIN_WIDTH = 400;
     const int MIN_HEIGHT = 400;
 
     const string HINT_STRING = _("Add a new task...");
@@ -193,11 +193,11 @@ namespace Agenda {
             text.max_width_chars = 10;
             text.ellipsize_set = true;
             text.ellipsize = Pango.EllipsizeMode.END;
-            
+
             column = new Gtk.TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
             column.expand = true; // The text column should fill the whole width of the column
             tree_view.append_column (column);
-            
+
             // Setup the DRAGHANDLE column
             draghandle.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
@@ -372,7 +372,6 @@ namespace Agenda {
             agenda_settings.set_value ("window-position", new int[] { x, y });
             debug ("Saving window size of width and height: %d, %d", width, height); 
             agenda_settings.set_value ("window-size", new int[] { width, height });
-            
         }
 
         /**
