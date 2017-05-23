@@ -10,7 +10,7 @@ set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 set (PKGDATADIR "${DATADIR}/agenda")
 set (GETTEXT_PACKAGE "agenda")
 set (RELEASE_NAME "Piece of paper.")
-set (VERSION "0.3.1")
+set (VERSION "1.0.0")
 set (VERSION_INFO "Development")
 
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
