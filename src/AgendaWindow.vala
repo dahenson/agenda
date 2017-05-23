@@ -179,6 +179,7 @@ namespace Agenda {
 
             // Set up tree_view
             tree_view.name = "TaskList";
+            tree_view.activate_on_single_click = true;
             tree_view.headers_visible = false;
             tree_view.enable_search = false;
             tree_view.hexpand = true;            // make it fill the container
@@ -297,6 +298,19 @@ namespace Agenda {
                     Columns.TOGGLE, !toggle.active,
                     Columns.DEL_VISIBLE, !toggle.active,
                     Columns.STRIKETHROUGH, !toggle.active);
+            });
+
+            tree_view.row_activated.connect ((path, column) => {
+                bool deletable;
+                Gtk.TreeIter iter;
+
+                task_list.get_iter (out iter, path);
+                task_list.get (iter, Columns.TOGGLE, out deletable);
+
+                if (column.title == "Delete" && deletable) {
+                    task_list.remove (iter);
+                }
+                update (); // Update the GUI
             });
 
             /**
@@ -504,7 +518,7 @@ namespace Agenda {
                 Columns.TOGGLE, toggled,
                 Columns.TEXT, task,
                 Columns.STRIKETHROUGH, toggled,
-                Columns.DELETE, "edit-delete-symbolic",
+                Columns.DELETE, "window-close",
                 Columns.DEL_VISIBLE, toggled,
                 Columns.DRAGHANDLE, "view-list-symbolic");
 
