@@ -144,7 +144,12 @@ namespace Agenda {
                 var f_dis = new DataInputStream (list_file.read ());
                 // Read lines until end of file (null) is reached
                 while ((line = f_dis.read_line (null)) != null) {
-                    add_task (line, true);
+                    var task = line.split (",", 2);
+                    if (task[0] == "t") {
+                        add_task (task[1], true, true);
+                    } else {
+                        add_task (task[1], true, false);
+                    }
                 }
 
                 // Create history list
@@ -398,17 +403,14 @@ namespace Agenda {
                     valid = task_list.iter_next (ref iter);
                 }
             }
-
-            if (counter != 0)
-                show_notification (_("Task finished"), counter > 1 ? counter.to_string () + _(" tasks have been removed") : _("A task has been removed"));
         }
 
         /**
          *  Quit from the program.
          */
         public bool main_quit () {
+            tasks_to_file ();
             history_to_file ();
-            delete_finished_tasks ();
             save_window_position ();
             this.destroy ();
 
@@ -470,7 +472,7 @@ namespace Agenda {
          *
          *  @param task the task to be added to the list
          */
-        private void add_task (string task, bool skip = false) {
+        private void add_task (string task, bool skip = false, bool toggled = false) {
             // if a task_entry is empty, don't add the task
             if (task_is_empty (task)) {
                 return;
@@ -478,7 +480,7 @@ namespace Agenda {
 
             Gtk.TreeIter iter;
             task_list.append (out iter);
-            task_list.set (iter, Columns.TOGGLE, false, Columns.TEXT, task, Columns.STRIKETHROUGH, false, Columns.DRAGHANDLE, "view-list-symbolic");
+            task_list.set (iter, Columns.TOGGLE, toggled, Columns.TEXT, task, Columns.STRIKETHROUGH, toggled, Columns.DRAGHANDLE, "view-list-symbolic");
 
             if (skip != true && privacy_mode_off ()) {
                 add_to_history (task);
@@ -559,11 +561,17 @@ namespace Agenda {
 
                 var file_dos = new DataOutputStream (list_file.create (FileCreateFlags.REPLACE_DESTINATION));
                 while (valid) {
+                    bool toggle;
                     string text;
-                
+                    task_list.get (iter, Columns.TOGGLE, out toggle);
                     task_list.get (iter, Columns.TEXT, out text);
+                    if (toggle) {
+                        text = "t," + text;
+                    } else {
+                        text = "f," + text;
+                    }
                     file_dos.put_string (text + "\n");      // write line to file here
-                    valid = task_list.iter_next (ref iter); 
+                    valid = task_list.iter_next (ref iter);
                 }
             } catch (Error e) {
                 error ("Error: %s\n", e.message);
