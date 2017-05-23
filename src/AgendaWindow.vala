@@ -32,6 +32,8 @@ namespace Agenda {
             TOGGLE,
             TEXT,
             STRIKETHROUGH,
+            DELETE,
+            DEL_VISIBLE,
             DRAGHANDLE,
             N_COLUMNS
         }
@@ -96,13 +98,15 @@ namespace Agenda {
                                            typeof(bool),
                                            typeof(string),
                                            typeof(bool),
+                                           typeof(string),
+                                           typeof(bool),
                                            typeof(string));
 
             scrolled_window = new Gtk.ScrolledWindow (null, null);
             task_entry = new Gtk.Entry ();
             grid = new Gtk.Grid ();
             tree_view = new Gtk.TreeView ();
-            
+
             history_list = new Gtk.ListStore (1, typeof (string));
 
             load_list ();   // Load the list from file
@@ -113,7 +117,7 @@ namespace Agenda {
          *  Loads the list from a file, or creates a new list if one doesn't exist.
          */
         private void load_list () {
-            
+
             Granite.Services.Paths.initialize ("agenda", Build.PKGDATADIR); // initialize directory paths for agenda
             Granite.Services.Paths.ensure_directory_exists (Granite.Services.Paths.user_data_folder); // make sure the user specific agenda data directory exists
 
@@ -180,12 +184,13 @@ namespace Agenda {
             tree_view.hexpand = true;            // make it fill the container
             tree_view.valign = Gtk.Align.START;  // Align at the beginning of the parent container
             tree_view.reorderable = true;
-            
+
             // Set up the TreeView with the necessary columns
-            var column     = new Gtk.TreeViewColumn ();     // Used for generating Columns
-            var text       = new Gtk.CellRendererText ();   // CellRendererText to display the task description
-            var toggle     = new Gtk.CellRendererToggle (); // CellRendererToggle for checking it off the list
-            var draghandle = new Gtk.CellRendererPixbuf (); // CellRendererPixbuf to draw a pretty icon to make reordering easier
+            var column        = new Gtk.TreeViewColumn ();     // Used for generating Columns
+            var text          = new Gtk.CellRendererText ();   // Display the task description
+            var toggle        = new Gtk.CellRendererToggle (); // For checking it off the list
+            var delete_button = new Gtk.CellRendererPixbuf (); // Area to draw the delete button
+            var draghandle    = new Gtk.CellRendererPixbuf (); // Area to draw a pretty icon to make reordering easier
 
             // Setup the TOGGLE column
             toggle.xpad = 6;
@@ -199,13 +204,23 @@ namespace Agenda {
             text.ellipsize_set = true;
             text.ellipsize = Pango.EllipsizeMode.END;
 
-            column = new Gtk.TreeViewColumn.with_attributes ("Task", text, "text", Columns.TEXT, "strikethrough", Columns.STRIKETHROUGH);
+            column = new Gtk.TreeViewColumn.with_attributes ("Task", text,
+                "text", Columns.TEXT,
+                "strikethrough", Columns.STRIKETHROUGH);
             column.expand = true; // The text column should fill the whole width of the column
             tree_view.append_column (column);
 
+            // Setup the DELETE column
+            delete_button.xpad = 6;
+            column = new Gtk.TreeViewColumn.with_attributes ("Delete", delete_button,
+                "icon_name", Columns.DELETE,
+                "visible", Columns.DEL_VISIBLE);
+            tree_view.append_column(column);
+
             // Setup the DRAGHANDLE column
             draghandle.xpad = 6;
-            column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
+            column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle,
+                "icon_name", Columns.DRAGHANDLE);
             tree_view.append_column (column);
             tree_view.model = task_list;
 
@@ -278,7 +293,10 @@ namespace Agenda {
                 var tree_path = new Gtk.TreePath.from_string (path);
                 Gtk.TreeIter iter;
                 task_list.get_iter (out iter, tree_path);
-                task_list.set (iter, Columns.TOGGLE, !toggle.active, Columns.STRIKETHROUGH, !toggle.active);
+                task_list.set (iter,
+                    Columns.TOGGLE, !toggle.active,
+                    Columns.DEL_VISIBLE, !toggle.active,
+                    Columns.STRIKETHROUGH, !toggle.active);
             });
 
             /**
@@ -290,7 +308,7 @@ namespace Agenda {
                 selected.unselect_all ();
                 return false;
             });
-            
+
             // Method for when a row is removed from the task_list or the list is reordered
             task_list.row_deleted.connect ((path, iter) => {
                 /**
@@ -302,24 +320,24 @@ namespace Agenda {
                  */
                 tasks_to_file ();
             });
-            
+
             this.key_press_event.connect (key_down_event);
-            
+
             /**
              *  Set up the scrolled window and add tree_view
              */
             scrolled_window.expand = true;
             scrolled_window.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
             scrolled_window.add (tree_view);
-            
+
             agenda_welcome.expand = true;
-            
+
             grid.expand = true;   // expand the box to fill the whole window
             grid.row_homogeneous = false;
             grid.attach (agenda_welcome, 0, 0, 1, 1);
             grid.attach (scrolled_window, 0, 1, 1, 1);
             grid.attach (task_entry, 0, 2, 1, 1);
-            
+
             this.add (grid);
 
             task_entry.margin_start = 10;
@@ -347,7 +365,7 @@ namespace Agenda {
             if (position.n_children () == 2) {
                 var x = (int32) position.get_child_value (0);
                 var y = (int32) position.get_child_value (1);
-                
+
                 debug ("Moving window to coordinates %d, %d", x, y);
                 this.move (x, y);
             } else {
@@ -430,11 +448,11 @@ namespace Agenda {
                         Gtk.TreeIter iter;
                         Gtk.TreeSelection tree_selection;
                         bool current_state;
-                        
+
                         tree_selection = tree_view.get_selection ();
                         tree_selection.get_selected (null, out iter);
                         task_list.get (iter, 0, out current_state);
-                        
+
                         task_list.set (iter, Columns.TOGGLE, !current_state, Columns.STRIKETHROUGH, !current_state);   
                         update ();
                     }
@@ -446,9 +464,11 @@ namespace Agenda {
                         
                         tree_selection = tree_view.get_selection ();
                         tree_selection.get_selected (null, out iter);
-                        
+
                         // Prevent task toggle on spacebar press event
-                        task_list.set (iter, Columns.TOGGLE, true, Columns.STRIKETHROUGH, false);
+                        task_list.set (iter,
+                            Columns.TOGGLE, true,
+                            Columns.STRIKETHROUGH, false);
                     }
                     break;
             }
@@ -480,7 +500,13 @@ namespace Agenda {
 
             Gtk.TreeIter iter;
             task_list.append (out iter);
-            task_list.set (iter, Columns.TOGGLE, toggled, Columns.TEXT, task, Columns.STRIKETHROUGH, toggled, Columns.DRAGHANDLE, "view-list-symbolic");
+            task_list.set (iter,
+                Columns.TOGGLE, toggled,
+                Columns.TEXT, task,
+                Columns.STRIKETHROUGH, toggled,
+                Columns.DELETE, "edit-delete-symbolic",
+                Columns.DEL_VISIBLE, toggled,
+                Columns.DRAGHANDLE, "view-list-symbolic");
 
             if (skip != true && privacy_mode_off ()) {
                 add_to_history (task);
@@ -491,7 +517,7 @@ namespace Agenda {
             task_entry.set_text("");        // clear the entry box
             agenda_settings.set_boolean ("first-time", false);
         }
-        
+
         /**
          *  Add task to history list.
          */
@@ -523,7 +549,7 @@ namespace Agenda {
          */
         public void update () {
             Gtk.TreeIter iter;
-            
+
             // get_iter_first returns false if there are no items in the list
             if ( !task_list.get_iter_first (out iter) )
                 show_welcome ();
@@ -538,7 +564,7 @@ namespace Agenda {
             scrolled_window.hide ();
             agenda_welcome.show ();
         }
-        
+
         /**
          *  Hides the Welcome screen and shows the scrolled_window (task list).
          */
@@ -553,7 +579,7 @@ namespace Agenda {
         public void tasks_to_file () {
             Gtk.TreeIter iter;
             bool valid = task_list.get_iter_first (out iter);
-            
+
             try {
                 if (list_file.query_exists ()) {    // delete the file if it already exists
                     list_file.delete ();
@@ -590,7 +616,7 @@ namespace Agenda {
                 var history_dos = new DataOutputStream (history_file.create (FileCreateFlags.REPLACE_DESTINATION));
                 while (valid) {
                     string text;
-                
+
                     history_list.get (iter, 0, out text);
                     history_dos.put_string (text + "\n");       // write line to file here
                     valid = history_list.iter_next (ref iter);
