@@ -67,6 +67,16 @@ namespace Agenda {
                     background-color: #FFFFFF;
                 }
 
+                GtkTreeView {
+                    color: #333;
+                    background-color: #FFF;
+                }
+
+                GtkTreeView:selected {
+                    color: #FFF;
+                    background-color: #3d9bda;
+                }
+
             """;
 
             Granite.Widgets.Utils.set_theming_for_screen (this.get_screen (), ELEMENTARY_STYLESHEET,
