@@ -63,10 +63,6 @@ namespace Agenda {
                     background-color: #FFFFFF;
                 }
 
-                .task-entry {
-                    background-color: #FFFFFF;
-                }
-
                 GtkTreeView {
                     color: #333;
                     background-color: #FFF;
