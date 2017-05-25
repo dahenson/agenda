@@ -51,21 +51,23 @@ namespace Agenda {
         private Gtk.ListStore           history_list;    // List where history of tasks is stored
         private Gtk.SeparatorMenuItem   separator;
         private Gtk.MenuItem            item_clear_history;
-        private Gtk.HeaderBar           header;
 
         public AgendaWindow () {
 
             const string ELEMENTARY_STYLESHEET = """
+                .titlebar {
+                    background-color: @bg_color;
+                    background-image: none;
+                    border: none;
+                }
 
-                @define-color colorPrimary #FFFFFF;
-
-                .agenda-window {
-                    background-color: #FFFFFF;
+                .welcome {
+                    background-color: @bg_color;
                 }
 
                 GtkTreeView {
                     color: #333;
-                    background-color: #FFF;
+                    background-color: @bg_color;
                 }
 
                 GtkTreeView:selected {
@@ -78,7 +80,7 @@ namespace Agenda {
             Granite.Widgets.Utils.set_theming_for_screen (this.get_screen (), ELEMENTARY_STYLESHEET,
                                                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-            this.get_style_context().add_class("agenda-window");
+            this.get_style_context ().add_class ("rounded");
 
             this.set_size_request(MIN_WIDTH, MIN_HEIGHT);
 
@@ -176,11 +178,6 @@ namespace Agenda {
          * Builds all of the widgets and arranges them in the window.
          */
         private void setup_ui () {
-
-            header = new Gtk.HeaderBar ();
-            header.set_show_close_button (true);
-            this.set_titlebar (header);
-
             this.set_title ("Agenda");
 
             // Set up tree_view
