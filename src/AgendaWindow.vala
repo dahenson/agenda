@@ -237,7 +237,6 @@ namespace Agenda {
             task_entry.max_length = 64;
             task_entry.hexpand = true;
             task_entry.valign = Gtk.Align.START;
-            task_entry.secondary_icon_name = "list-add-symbolic";  // Add the 'plus' icon on the right side of the entry
             task_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Add to list..."));
 
             // The EntryCompletion
@@ -251,6 +250,16 @@ namespace Agenda {
             // Method for when the task entry is activated
             task_entry.activate.connect (() => { add_task (task_entry.text); });
             task_entry.icon_press.connect (() => { add_task (task_entry.text); });
+
+            // Control the appearance of the symbolic add icon in task_entry
+            task_entry.changed.connect(() => {
+                var str = task_entry.get_text ();
+                if ( str == "" ) {
+                    task_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, null);
+                } else {
+                    task_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "list-add-symbolic");
+                }
+            });
 
             // Add option to clear history list in context menu
             task_entry.populate_popup.connect ((menu) => {
