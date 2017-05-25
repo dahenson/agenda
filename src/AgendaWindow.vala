@@ -18,8 +18,8 @@
 
 namespace Agenda {
 
-    const int MIN_WIDTH = 400;
-    const int MIN_HEIGHT = 400;
+    const int MIN_WIDTH = 500;
+    const int MIN_HEIGHT = 600;
 
     const string HINT_STRING = _("Add a new task...");
 

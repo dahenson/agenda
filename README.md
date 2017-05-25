@@ -2,6 +2,9 @@
 
 A simple, fast, no-nonsense to-do (task) list for elementary OS.
 
+## Screenshot
+![](data/screenshot.png)
+
 ## Installation
 
 Agenda will be available soon in the elementary OS AppCenter.
