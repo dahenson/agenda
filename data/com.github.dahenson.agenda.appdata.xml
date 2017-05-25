@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2017 Dane Henson -->
+<!-- Copyright 2017 Dane Henson <thegreatdane@gmail.com>-->
 <component type="desktop">
   <id>com.github.dahenson.agenda.desktop</id>
   <metadata_license>CC0</metadata_license>
   <name>Agenda</name>
   <summary>Get things done</summary>
+  <developer_name>Dane Henson</developer_name>
+  <url type="homepage">http://brainofdane.com</url>
+  <url type="bugtracker">https://github.com/dahenson/agenda/issues</url>
   <description>
     <p>
       Agenda is a simple, slick, speedy and no-nonsense task manager.
