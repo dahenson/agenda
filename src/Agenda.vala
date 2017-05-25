@@ -36,23 +36,23 @@ public class Agenda : Granite.Application {
         build_version_info = Build.VERSION_INFO;
 
         program_name = "Agenda";
-        exec_name = "agenda";
+        exec_name = "com.github.dahenson.agenda";
 
-        app_years = "2012-2016";
-        application_id = "net.launchpad.agenda-tasks";
-        app_icon = "agenda";
-        app_launcher = "agenda.desktop";
+        app_years = "2012-2017";
+        application_id = "com.github.dahenson.agenda";
+        app_icon = "com.github.dahenson.agenda";
+        app_launcher = "com.github.dahenson.agenda.desktop";
 
-        main_url = "https://launchpad.net/agenda-tasks";
-        bug_url = "https://bugs.launchpad.net/agenda-tasks";
+        main_url = "https://github.com/dahenson/agenda";
+        bug_url = "https://github.com/dahenson/agenda/issues";
         help_url = "https://answers.launchpad.net/agenda-tasks";
         translate_url = "https://translations.launchpad.net/agenda-tasks";
-        
+
         about_authors = {"Tom Beckmann <tombeckmann@online.de>",
-                         "Dane Henson <dane.henson@gmail.com>",
+                         "Dane Henson <thegreatdane@gmail.com>",
                          "Cameron Norman <camerontnorman@gmail.com>",
                          "Fabio Zaramella <ffabio.96.x@gmail.com>"};
-        about_documenters = {"Dane Henson <dane.henson@gmail.com",
+        about_documenters = {"Dane Henson <thegreatdane@gmail.com",
                              "Tom Beckmann <tombeckmann@online.de>"};
         about_artists = {"Harvey Cabaguio", "Sergey Davidoff"};
         about_comments = _("A simple, slick, speedy, and no-nonsense task manager.");
