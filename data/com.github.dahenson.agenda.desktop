@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
 Name=Agenda
-Comment=What's to be done
-GenericName=TodoList
-Exec=agenda
+Comment=Get things done
+GenericName=Task List
+Exec=com.github.dahenson.agenda
 Icon=agenda
 Terminal=false
 X-GNOME-Gettext-Domain=agenda
@@ -14,4 +14,4 @@ Actions=AboutDialog;
 
 [Desktop Action AboutDialog]
 Name=About Agenda
-Exec=agenda -a
+Exec=com.github.dahenson.agenda -a

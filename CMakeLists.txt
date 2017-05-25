@@ -1,4 +1,4 @@
-project (agenda)
+project (com.github.dahenson.agenda)
 cmake_minimum_required (VERSION 2.8)
 
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/vala)
@@ -7,8 +7,8 @@ list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/vala)
 # Base
 #
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
-set (PKGDATADIR "${DATADIR}/agenda")
-set (GETTEXT_PACKAGE "agenda")
+set (PKGDATADIR "${DATADIR}/com.github.dahenson.agenda")
+set (GETTEXT_PACKAGE "com.github.dahenson.agenda")
 set (RELEASE_NAME "Piece of paper.")
 set (VERSION "1.0.2")
 set (VERSION_INFO "Development")
@@ -92,11 +92,11 @@ OPTIONS
 )
 
 add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)
-add_executable(agenda ${VALA_C})
+add_executable(com.github.dahenson.agenda ${VALA_C})
 
-install (TARGETS agenda RUNTIME DESTINATION bin)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/agenda.desktop DESTINATION share/applications)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/agenda.appdata.xml DESTINATION share/appdata)
+install (TARGETS com.github.dahenson.agenda RUNTIME DESTINATION bin)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.dahenson.agenda.desktop DESTINATION share/applications)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.dahenson.agenda.appdata.xml DESTINATION share/appdata)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/16/agenda.svg DESTINATION share/icons/hicolor/16x16/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/24/agenda.svg DESTINATION share/icons/hicolor/24x24/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/32/agenda.svg DESTINATION share/icons/hicolor/32x32/apps)
