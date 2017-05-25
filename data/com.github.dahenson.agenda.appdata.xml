@@ -8,6 +8,11 @@
   <developer_name>Dane Henson</developer_name>
   <url type="homepage">http://brainofdane.com</url>
   <url type="bugtracker">https://github.com/dahenson/agenda/issues</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot.png</image>
+    </screenshot>
+  </screenshots>
   <description>
     <p>
       Agenda is a simple, slick, speedy and no-nonsense task manager.
