@@ -10,7 +10,7 @@ set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 set (PKGDATADIR "${DATADIR}/com.github.dahenson.agenda")
 set (GETTEXT_PACKAGE "com.github.dahenson.agenda")
 set (RELEASE_NAME "Piece of paper.")
-set (VERSION "1.0.3")
+set (VERSION "1.0.4")
 set (VERSION_INFO "Development")
 
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
