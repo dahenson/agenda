@@ -1,4 +1,4 @@
-Source: agenda
+Source: com.github.dahenson.agenda
 Section: x11
 Priority: extra
 Maintainer: Dane Henson <thegreatdane@gmail.com>
@@ -8,7 +8,7 @@ Build-Depends: cmake (>= 2.8),
                valac-0.26 | valac (>= 0.26)
 Standards-Version: 3.9.3
 
-Package: agenda
+Package: com.github.dahenson.agenda
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: A simple task manager
