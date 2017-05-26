@@ -1,2 +1,2 @@
 include(GSettings)
-add_schema("net.launchpad.agenda-tasks.gschema.xml")
+add_schema("com.github.dahenson.agenda.gschema.xml")

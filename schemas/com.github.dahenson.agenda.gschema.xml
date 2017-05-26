@@ -1,5 +1,5 @@
 <schemalist>
-	<schema id="net.launchpad.agenda-tasks" path="/net/launchpad/agenda-tasks/" gettext-domain="agenda">
+	<schema id="com.github.dahenson.agenda" path="/com/github/dahenson/agenda/" gettext-domain="agenda">
         <key name="window-position" type="ai">
             <default>[]</default>
         </key>
