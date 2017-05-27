@@ -25,7 +25,7 @@ namespace Agenda {
 
     public class AgendaWindow : Gtk.Window {
 
-        private GLib.Settings agenda_settings = new GLib.Settings ("net.launchpad.agenda-tasks");
+        private GLib.Settings agenda_settings = new GLib.Settings ("com.github.dahenson.agenda");
         private GLib.Settings privacy_setting = new GLib.Settings ("org.gnome.desktop.privacy");
 
         private enum Columns {
