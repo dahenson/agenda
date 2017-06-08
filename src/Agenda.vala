@@ -21,44 +21,15 @@ using Granite;
 
 namespace Agenda {
 
-public class Agenda : Granite.Application {
+public class Agenda : Gtk.Application {
 
     private static Agenda app;
     private AgendaWindow window = null;
 
-    construct {
-
-        // App info
-        build_version = Build.VERSION;
-        build_data_dir = Build.DATADIR;
-        build_pkg_data_dir = Build.PKGDATADIR;
-        build_release_name = Build.RELEASE_NAME;
-        build_version_info = Build.VERSION_INFO;
-
-        program_name = "Agenda";
-        exec_name = "com.github.dahenson.agenda";
-
-        app_years = "2012-2017";
-        application_id = "com.github.dahenson.agenda";
-        app_icon = "com.github.dahenson.agenda";
-        app_launcher = "com.github.dahenson.agenda.desktop";
-
-        main_url = "https://github.com/dahenson/agenda";
-        bug_url = "https://github.com/dahenson/agenda/issues";
-        help_url = "https://answers.launchpad.net/agenda-tasks";
-        translate_url = "https://translations.launchpad.net/agenda-tasks";
-
-        about_authors = {"Tom Beckmann <tombeckmann@online.de>",
-                         "Dane Henson <thegreatdane@gmail.com>",
-                         "Cameron Norman <camerontnorman@gmail.com>",
-                         "Fabio Zaramella <ffabio.96.x@gmail.com>"};
-        about_documenters = {"Dane Henson <thegreatdane@gmail.com",
-                             "Tom Beckmann <tombeckmann@online.de>"};
-        about_artists = {"Harvey Cabaguio", "Sergey Davidoff"};
-        about_comments = _("A simple, slick, speedy, and no-nonsense task manager.");
-        about_translators = "";
-        about_license_type = Gtk.License.GPL_3_0;
-        }
+    public Agenda () {
+        Object (application_id: "com.github.dahenson.agenda",
+        flags: ApplicationFlags.FLAGS_NONE);
+    }
 
     protected override void activate () {
         // if app is already open

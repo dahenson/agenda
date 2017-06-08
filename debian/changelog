@@ -1,7 +1,6 @@
 com.github.dahenson.agenda (1.0) precise; urgency=low
 
-  * Initial Release.
-  * Fixed style issues
+  * Fixed style issues for dark and light variants
   * Looks good, and feels good!
 
- -- Dane Henson <thegreatdane@gmail.com>  Fri, 26 May 2017 10:02:26 -0500
+ -- Dane Henson <thegreatdane@gmail.com>  Thu, 8 June 2017 10:02:26 -0500

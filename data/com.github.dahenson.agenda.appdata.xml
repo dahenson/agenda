@@ -15,8 +15,16 @@
   </screenshots>
   <description>
     <p>
-      Agenda is a simple, slick, speedy and no-nonsense task manager.
-      Use it to keep track of the tasks that matter most.
+      Agenda is a simple, slick, speedy and no-nonsense task manager. Use it to keep track of the tasks that matter most.
+    </p>
+    <ul>
+      <li>Blazingly fast and light</li>
+      <li>Remembers your list until you clear completed tasks</li>
+      <li>Autocompletion for previously added tasks</li>
+      <li>Quit with the Esc key</li>
+    </ul>
+    <p>
+      I dare you to find an easier, faster, more beautiful task manager for elementary OS.
     </p>
   </description>
 </component>
