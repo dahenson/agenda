@@ -10,8 +10,3 @@ X-GNOME-Gettext-Domain=agenda
 X-GNOME-UsesNotifications=true
 Categories=Utility;Office;
 Keywords=Todo;Tasks;
-Actions=AboutDialog;
-
-[Desktop Action AboutDialog]
-Name=About Agenda
-Exec=com.github.dahenson.agenda -a
