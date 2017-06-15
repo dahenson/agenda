@@ -19,8 +19,7 @@ msgstr ""
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/Agenda.vala:57
 msgid "A simple, slick, speedy and no-nonsense task manager."
-msgstr ""
-"Ein einfacher, handlicher, schneller und nützlicher Aufgaben Verwalter."
+msgstr "Ein einfacher, handlicher, schneller und nützlicher Aufgaben Verwalter."
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:6
 msgid "What's to be done"
@@ -44,7 +43,7 @@ msgstr "Keine Aufgaben!"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
 msgid "(add one below)"
-msgstr ""
+msgstr "(unten hinzufügen)"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
 msgid "(way to go)"
@@ -52,11 +51,11 @@ msgstr "(so soll's sein)"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:228
 msgid "Add to list..."
-msgstr ""
+msgstr "Zur Liste hinzufügen"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:247
 msgid "Clear history"
-msgstr ""
+msgstr "Verlauf löschen"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
 msgid "Task finished"
