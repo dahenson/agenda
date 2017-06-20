@@ -332,7 +332,7 @@ namespace Agenda {
                 task_list.get (iter, Columns.TOGGLE, out deletable);
 
                 if (column.title == "Delete" && deletable) {
-                    task_list.remove (iter);
+                    task_list.remove (ref iter);
                 }
                 update (); // Update the GUI
             });
@@ -452,7 +452,7 @@ namespace Agenda {
                 task_list.get (iter, Columns.TOGGLE, out active);
 
                 if (active) {
-                    task_list.remove (iter);
+                    task_list.remove (ref iter);
                     valid = task_list.get_iter_first (out iter);
                     counter++;
                 } else {
@@ -571,7 +571,7 @@ namespace Agenda {
                 while (valid) {
                     history_list.get (iter, 0, out row);
                     if (row == text) {
-                        history_list.remove (iter);
+                        history_list.remove (ref iter);
                     }
 
                     valid = history_list.iter_next (ref iter);
