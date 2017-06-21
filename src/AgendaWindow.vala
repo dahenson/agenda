@@ -332,7 +332,11 @@ namespace Agenda {
                 task_list.get (iter, Columns.TOGGLE, out deletable);
 
                 if (column.title == "Delete" && deletable) {
+#if VALA_0_36
                     task_list.remove (ref iter);
+#else
+                    task_list.remove (iter);
+#endif
                 }
                 update (); // Update the GUI
             });
@@ -452,7 +456,11 @@ namespace Agenda {
                 task_list.get (iter, Columns.TOGGLE, out active);
 
                 if (active) {
+#if VALA_0_36
                     task_list.remove (ref iter);
+#else
+                    task_list.remove (iter);
+#endif
                     valid = task_list.get_iter_first (out iter);
                     counter++;
                 } else {
@@ -571,7 +579,11 @@ namespace Agenda {
                 while (valid) {
                     history_list.get (iter, 0, out row);
                     if (row == text) {
+#if VALA_0_36
                         history_list.remove (ref iter);
+#else
+                        history_list.remove (iter);
+#endif
                     }
 
                     valid = history_list.iter_next (ref iter);
