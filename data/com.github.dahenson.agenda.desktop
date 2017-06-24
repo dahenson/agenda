@@ -1,12 +1,15 @@
 [Desktop Entry]
 Type=Application
 Name=Agenda
+Name[ru]=Повестка дня
 Comment=Get things done
+Comment[ru]=Довести до завершения
 GenericName=Task List
+GenericName[ru]=Список задач
 Exec=com.github.dahenson.agenda
 Icon=com.github.dahenson.agenda
 Terminal=false
 X-GNOME-Gettext-Domain=agenda
 X-GNOME-UsesNotifications=true
 Categories=Utility;Office;
-Keywords=Todo;Tasks;
+Keywords=Todo;Tasks;Выпонить;Задачи;Завершить;Сделать;
