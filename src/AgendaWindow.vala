@@ -492,7 +492,9 @@ namespace Agenda {
         public bool key_down_event (Gdk.EventKey e) {
             switch (e.keyval) {
                 case Gdk.Key.Escape:
-                    main_quit ();
+                    if (!is_editing) {
+                        main_quit ();
+                    }
                     break;
                 case Gdk.Key.Delete:
                     if (!task_entry.has_focus && !is_editing) {
