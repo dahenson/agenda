@@ -42,15 +42,16 @@ namespace Agenda {
         File history_file;
 
         /* GUI components */
-        private Granite.Widgets.Welcome agenda_welcome;  // The Welcome screen when there are no tasks
-        private Gtk.ListStore           task_list;       // Stores tasks for accessing by a TreeView
-        private Gtk.TreeView            tree_view;       // TreeView to display tasks
-        private Gtk.ScrolledWindow      scrolled_window; // Container for the treeview
-        private Gtk.Entry               task_entry;      // Entry that accepts tasks
-        private Gtk.Grid                grid;            // Container for everything
-        private Gtk.ListStore           history_list;    // List where history of tasks is stored
+        private Granite.Widgets.Welcome agenda_welcome;     // The Welcome screen when there are no tasks
+        private Gtk.ListStore           task_list;          // Stores tasks for accessing by a TreeView
+        private Gtk.TreeView            tree_view;          // TreeView to display tasks
+        private Gtk.ScrolledWindow      scrolled_window;    // Container for the treeview
+        private Gtk.Entry               task_entry;         // Entry that accepts tasks
+        private Gtk.Grid                grid;               // Container for everything
+        private Gtk.ListStore           history_list;       // List where history of tasks is stored
         private Gtk.SeparatorMenuItem   separator;
         private Gtk.MenuItem            item_clear_history;
+        private bool                    is_editing;         // Whether a task is being edited
 
         public AgendaWindow () {
 
@@ -97,7 +98,7 @@ namespace Agenda {
             this.set_size_request(MIN_WIDTH, MIN_HEIGHT);
 
             // Set up geometry
-            Gdk.Geometry geo = new Gdk.Geometry();
+            Gdk.Geometry geo = Gdk.Geometry();
             geo.min_width = MIN_WIDTH;
             geo.min_height = MIN_HEIGHT;
             geo.max_width = 1024;
@@ -128,6 +129,8 @@ namespace Agenda {
             tree_view = new Gtk.TreeView ();
 
             history_list = new Gtk.ListStore (1, typeof (string));
+
+            is_editing = false;
 
             load_list ();   // Load the list from file
             setup_ui ();    // Set up the GUI
@@ -311,6 +314,7 @@ namespace Agenda {
                 history_list.set (iter, 0, edited_text);
                 tasks_to_file ();
                 history_to_file ();
+                is_editing = false;
             });
 
             // Method for when a task is toggled (completed)
@@ -328,6 +332,7 @@ namespace Agenda {
                 bool deletable;
                 Gtk.TreeIter iter;
 
+                is_editing = true;
                 task_list.get_iter (out iter, path);
                 task_list.get (iter, Columns.TOGGLE, out deletable);
 
@@ -490,7 +495,7 @@ namespace Agenda {
                     main_quit ();
                     break;
                 case Gdk.Key.Delete:
-                    if (!task_entry.has_focus) {
+                    if (!task_entry.has_focus && !is_editing) {
                         Gtk.TreeIter iter;
                         Gtk.TreeSelection tree_selection;
                         bool current_state;
