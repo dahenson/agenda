@@ -96,7 +96,7 @@ add_executable(com.github.dahenson.agenda ${VALA_C})
 
 install (TARGETS com.github.dahenson.agenda RUNTIME DESTINATION bin)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.dahenson.agenda.desktop DESTINATION share/applications)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.dahenson.agenda.appdata.xml DESTINATION share/appdata)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.dahenson.agenda.appdata.xml DESTINATION share/metainfo)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/16/com.github.dahenson.agenda.svg DESTINATION share/icons/hicolor/16x16/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/24/com.github.dahenson.agenda.svg DESTINATION share/icons/hicolor/24x24/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/32/com.github.dahenson.agenda.svg DESTINATION share/icons/hicolor/32x32/apps)
