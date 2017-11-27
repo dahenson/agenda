@@ -1,3 +1,12 @@
+com.github.dahenson.agenda (1.0.9) precise; urgency=low
+
+  * Updated the icon with a fresh new look (Thanks, Harvey)
+  * Pressing Esc no longer closes Agenda while editing a task
+  * Pressing Delete no longer crashes Agenda while editing a task
+  * Metadata installs to the correct folder
+
+ -- Dane Henson <thegreatdane@gmail.com> Mon, 27 November 2017 2:55:00 -0500
+
 com.github.dahenson.agenda (1.0) precise; urgency=low
 
   * Fixed style issues for dark and light variants
