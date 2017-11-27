@@ -59,6 +59,7 @@ namespace Agenda {
                 .titlebar {
                     background-color: @bg_color;
                     background-image: none;
+                    box-shadow: none;
                     border: none;
                 }
 
