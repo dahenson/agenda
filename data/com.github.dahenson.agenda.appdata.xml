@@ -3,6 +3,7 @@
 <component type="desktop">
   <id>com.github.dahenson.agenda.desktop</id>
   <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
   <name>Agenda</name>
   <summary>Get things done</summary>
   <developer_name>Dane Henson</developer_name>
@@ -27,4 +28,27 @@
       I dare you to find an easier, faster, more beautiful task manager for elementary OS.
     </p>
   </description>
+
+  <releases>
+    <release version="1.0.9" date="2017-11-27">
+      <description>
+        <p>Small bugfixes and a new icon</p>
+        <ul>
+          <li>Updated the icon with a fresh new look (Thanks, Harvey)</li>
+          <li>Pressing Esc no longer closes Agenda while editing a task</li>
+          <li>Pressing Delete no longer crashes Agenda while editing a task</li>
+          <li>Metadata installs to the correct folder</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.8" date="2017-06-08">
+      <description>
+        <p>Small Fixes</p>
+        <ul>
+          <li>Fixed style issues for dark and light variants</li>
+          <li>Looks good, and feels good!</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
 </component>
