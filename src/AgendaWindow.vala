@@ -54,46 +54,6 @@ namespace Agenda {
         private bool                    is_editing;         // Whether a task is being edited
 
         public AgendaWindow () {
-
-            const string ELEMENTARY_STYLESHEET = """
-                .titlebar {
-                    background-color: @bg_color;
-                    background-image: none;
-                    box-shadow: none;
-                    border: none;
-                }
-
-                .welcome {
-                    background-color: @bg_color;
-                }
-
-                GtkTreeView {
-                    color: @fg_color;
-                    background-color: @bg_color;
-                }
-
-                GtkTreeView:selected {
-                    color: @selected_fg_color;
-                    background-color: @selected_bg_color;
-                }
-
-                GtkTreeView .entry {
-                    background-image: none;
-                    background-color: @bg_color;
-                    border-bottom: 1px solid @fg_color;
-                }
-
-                GtkTreeView .entry selection,
-                GtkTreeView .entry selection:focus,
-                GtkTreeView .entry:selected,
-                GtkTreeView .entry:selected:focus {
-                    background-color: @colorAccent;
-                }
-            """;
-
-            Granite.Widgets.Utils.set_theming_for_screen (this.get_screen (), ELEMENTARY_STYLESHEET,
-                                               Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
             this.get_style_context ().add_class ("rounded");
 
             this.set_size_request(MIN_WIDTH, MIN_HEIGHT);

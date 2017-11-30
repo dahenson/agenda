@@ -7,8 +7,9 @@ list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/vala)
 # Base
 #
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
-set (PKGDATADIR "${DATADIR}/com.github.dahenson.agenda")
-set (GETTEXT_PACKAGE "com.github.dahenson.agenda")
+set (PKGDATADIR "${DATADIR}/${CMAKE_PROJECT_NAME}")
+set (GETTEXT_PACKAGE ${CMAKE_PROJECT_NAME})
+set (EXEC_NAME ${CMAKE_PROJECT_NAME})
 set (RELEASE_NAME "Piece of paper.")
 set (VERSION "1.0.9")
 set (VERSION_INFO "Production")
@@ -91,8 +92,11 @@ OPTIONS
         --thread
 )
 
+include (GResource)
+glib_compile_resources (GLIB_RESOURCES_CSS SOURCE data/css.gresource.xml)
+
 add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)
-add_executable(com.github.dahenson.agenda ${VALA_C})
+add_executable(${EXEC_NAME} ${VALA_C} ${GLIB_RESOURCES_CSS})
 
 install (TARGETS com.github.dahenson.agenda RUNTIME DESTINATION bin)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.dahenson.agenda.desktop DESTINATION share/applications)
