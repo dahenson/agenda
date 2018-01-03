@@ -28,23 +28,12 @@ namespace Agenda {
         private GLib.Settings agenda_settings = new GLib.Settings ("com.github.dahenson.agenda");
         private GLib.Settings privacy_setting = new GLib.Settings ("org.gnome.desktop.privacy");
 
-        private enum Columns {
-            TOGGLE,
-            TEXT,
-            STRIKETHROUGH,
-            DELETE,
-            DEL_VISIBLE,
-            DRAGHANDLE,
-            N_COLUMNS
-        }
-
         File list_file;
         File history_file;
 
         /* GUI components */
         private Granite.Widgets.Welcome agenda_welcome;     // The Welcome screen when there are no tasks
-        private Gtk.ListStore           task_list;          // Stores tasks for accessing by a TreeView
-        private Gtk.TreeView            tree_view;          // TreeView to display tasks
+        private TaskList                task_list;          // Stores tasks for accessing by a TreeView
         private Gtk.ScrolledWindow      scrolled_window;    // Container for the treeview
         private Gtk.Entry               task_entry;         // Entry that accepts tasks
         private Gtk.Grid                grid;               // Container for everything
@@ -76,18 +65,10 @@ namespace Agenda {
              */
             agenda_welcome = new Granite.Widgets.Welcome (_("No Tasks!"), 
                                                            first ? _("(add one below)") : _("(way to go)"));
-            task_list = new Gtk.ListStore (Columns.N_COLUMNS,
-                                           typeof(bool),
-                                           typeof(string),
-                                           typeof(bool),
-                                           typeof(string),
-                                           typeof(bool),
-                                           typeof(string));
-
+            task_list = new TaskList ();
             scrolled_window = new Gtk.ScrolledWindow (null, null);
             task_entry = new Gtk.Entry ();
             grid = new Gtk.Grid ();
-            tree_view = new Gtk.TreeView ();
 
             history_list = new Gtk.ListStore (1, typeof (string));
 
@@ -134,9 +115,9 @@ namespace Agenda {
                 while ((line = f_dis.read_line (null)) != null) {
                     var task = line.split (",", 2);
                     if (task[0] == "t") {
-                        add_task (task[1], true, true);
+                        task_list.append_task (task[1], true);
                     } else {
-                        add_task (task[1], true, false);
+                        task_list.append_task (task[1], false);
                     }
                 }
 
@@ -156,56 +137,6 @@ namespace Agenda {
         private void setup_ui () {
             this.set_title ("Agenda");
 
-            // Set up tree_view
-            tree_view.name = "TaskList";
-            tree_view.activate_on_single_click = true;
-            tree_view.headers_visible = false;
-            tree_view.enable_search = false;
-            tree_view.hexpand = true;            // make it fill the container
-            tree_view.valign = Gtk.Align.START;  // Align at the beginning of the parent container
-            tree_view.reorderable = true;
-
-            // Set up the TreeView with the necessary columns
-            var column        = new Gtk.TreeViewColumn ();     // Used for generating Columns
-            var text          = new Gtk.CellRendererText ();   // Display the task description
-            var toggle        = new Gtk.CellRendererToggle (); // For checking it off the list
-            var delete_button = new Gtk.CellRendererPixbuf (); // Area to draw the delete button
-            var draghandle    = new Gtk.CellRendererPixbuf (); // Area to draw a pretty icon to make reordering easier
-
-            // Setup the TOGGLE column
-            toggle.xpad = 6;
-            column = new Gtk.TreeViewColumn.with_attributes ("Toggle", toggle, "active", Columns.TOGGLE);
-            tree_view.append_column (column);
-
-            // Setup the TEXT column
-            text.ypad = 6; // Set vertical padding between rows
-            text.editable = true;
-            text.max_width_chars = 10;
-            text.ellipsize_set = true;
-            text.ellipsize = Pango.EllipsizeMode.END;
-
-            column = new Gtk.TreeViewColumn.with_attributes ("Task", text,
-                "text", Columns.TEXT,
-                "strikethrough", Columns.STRIKETHROUGH);
-            column.expand = true; // The text column should fill the whole width of the column
-            tree_view.append_column (column);
-
-            // Setup the DELETE column
-            delete_button.xpad = 6;
-            column = new Gtk.TreeViewColumn.with_attributes ("Delete", delete_button,
-                "icon_name", Columns.DELETE,
-                "visible", Columns.DEL_VISIBLE);
-            tree_view.append_column(column);
-
-            // Setup the DRAGHANDLE column
-            draghandle.xpad = 6;
-            column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle,
-                "icon_name", Columns.DRAGHANDLE);
-            tree_view.append_column (column);
-            tree_view.model = task_list;
-
-            tree_view.set_tooltip_column (Columns.TEXT);
-
             // Set up the task entry
             task_entry.name = "TaskEntry";
             task_entry.get_style_context().add_class("task-entry");
@@ -224,8 +155,8 @@ namespace Agenda {
             completion.set_text_column (0);
 
             // Method for when the task entry is activated
-            task_entry.activate.connect (() => { add_task (task_entry.text); });
-            task_entry.icon_press.connect (() => { add_task (task_entry.text); });
+            task_entry.activate.connect (append_task);
+            task_entry.icon_press.connect (append_task);
 
             // Control the appearance of the symbolic add icon in task_entry
             task_entry.changed.connect(() => {
@@ -261,64 +192,18 @@ namespace Agenda {
                 menu.show_all ();
             });
 
-            // Method for editing tasks
-            text.edited.connect ( (path, edited_text) => {
-                /* If the user accidentally blanks a task, abort the edit */
-                if (task_is_empty (edited_text)) {
-                    return;
-                }
-
-                Gtk.TreeIter iter;
-                task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
-                task_list.set (iter, 1, edited_text);
-                history_list.append (out iter);
-                history_list.set (iter, 0, edited_text);
-                tasks_to_file ();
-                history_to_file ();
-                is_editing = false;
-            });
-
-            // Method for when a task is toggled (completed)
-            toggle.toggled.connect ((toggle, path) => {
-                var tree_path = new Gtk.TreePath.from_string (path);
-                Gtk.TreeIter iter;
-                task_list.get_iter (out iter, tree_path);
-                task_list.set (iter,
-                    Columns.TOGGLE, !toggle.active,
-                    Columns.DEL_VISIBLE, !toggle.active,
-                    Columns.STRIKETHROUGH, !toggle.active);
-            });
-
-            tree_view.row_activated.connect ((path, column) => {
-                bool deletable;
-                Gtk.TreeIter iter;
-
-                is_editing = true;
-                task_list.get_iter (out iter, path);
-                task_list.get (iter, Columns.TOGGLE, out deletable);
-
-                if (column.title == "Delete" && deletable) {
-#if VALA_0_36
-                    task_list.remove (ref iter);
-#else
-                    task_list.remove (iter);
-#endif
-                }
-                update (); // Update the GUI
-            });
-
             /**
              *  Unselect everything when not focused on the treeview.
              */
-            tree_view.focus_out_event.connect ((e) => {
+            task_list.focus_out_event.connect ((e) => {
                 Gtk.TreeSelection selected;
-                selected = tree_view.get_selection ();
+                selected = task_list.get_selection ();
                 selected.unselect_all ();
                 return false;
             });
 
             // Method for when a row is removed from the task_list or the list is reordered
-            task_list.row_deleted.connect ((path, iter) => {
+            task_list.list_changed.connect (() => {
                 /**
                  *  When a row is dragged and dropped, a new row is inserted,
                  *  then populated, then the old row is deleted.  This way, we
@@ -327,6 +212,7 @@ namespace Agenda {
                  *  it is removed and the row_deleted signal is emitted.
                  */
                 tasks_to_file ();
+                update ();
             });
 
             this.key_press_event.connect (key_down_event);
@@ -336,7 +222,7 @@ namespace Agenda {
              */
             scrolled_window.expand = true;
             scrolled_window.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
-            scrolled_window.add (tree_view);
+            scrolled_window.add (task_list);
 
             agenda_welcome.expand = true;
 
@@ -355,6 +241,12 @@ namespace Agenda {
 
             task_entry.grab_focus ();
         }
+
+        public void append_task () {
+                task_list.append_task (task_entry.text, false);
+                task_entry.text = "";
+                update ();
+            }
 
         /**
          *  Check if the system is in Privacy mode.
@@ -406,36 +298,6 @@ namespace Agenda {
         }
 
         /**
-         *  Delete striketrough items.
-         */
-        public void delete_finished_tasks () {
-            /*
-             * Iterate through the task list and remove "active",
-             * or checked off, entries.
-             */
-            Gtk.TreeIter iter;
-            bool valid  = task_list.get_iter_first (out iter);
-            bool active;
-            int counter = 0;
-
-            while (valid) { 
-                task_list.get (iter, Columns.TOGGLE, out active);
-
-                if (active) {
-#if VALA_0_36
-                    task_list.remove (ref iter);
-#else
-                    task_list.remove (iter);
-#endif
-                    valid = task_list.get_iter_first (out iter);
-                    counter++;
-                } else {
-                    valid = task_list.iter_next (ref iter);
-                }
-            }
-        }
-
-        /**
          *  Quit from the program.
          */
         public bool main_quit () {
@@ -453,83 +315,19 @@ namespace Agenda {
         public bool key_down_event (Gdk.EventKey e) {
             switch (e.keyval) {
                 case Gdk.Key.Escape:
-                    if (!is_editing) {
+                    if (!task_list.is_editing) {
                         main_quit ();
                     }
                     break;
                 case Gdk.Key.Delete:
-                    if (!task_entry.has_focus && !is_editing) {
-                        Gtk.TreeIter iter;
-                        Gtk.TreeSelection tree_selection;
-                        bool current_state;
-
-                        tree_selection = tree_view.get_selection ();
-                        tree_selection.get_selected (null, out iter);
-                        task_list.get (iter, 0, out current_state);
-
-                        task_list.set (iter, Columns.TOGGLE, !current_state, Columns.STRIKETHROUGH, !current_state);   
+                    if (!task_entry.has_focus && !task_list.is_editing) {
+                        task_list.toggle_selected_task ();
                         update ();
-                    }
-                    break;
-                case Gdk.Key.space:
-                    if (!task_entry.has_focus) {
-                        Gtk.TreeIter iter;
-                        Gtk.TreeSelection tree_selection;
-                        
-                        tree_selection = tree_view.get_selection ();
-                        tree_selection.get_selected (null, out iter);
-
-                        // Prevent task toggle on spacebar press event
-                        task_list.set (iter,
-                            Columns.TOGGLE, true,
-                            Columns.STRIKETHROUGH, false);
                     }
                     break;
             }
 
             return false;
-        }
-
-        /**
-         *  Check if the user is trying to add an empty task.
-         */
-        private bool task_is_empty (string task) {
-            if (task == "" || (task.replace (" ", "")).length == 0) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        /**
-         *  Add a task to the list.
-         *
-         *  @param task the task to be added to the list
-         */
-        private void add_task (string task, bool skip = false, bool toggled = false) {
-            // if a task_entry is empty, don't add the task
-            if (task_is_empty (task)) {
-                return;
-            }
-
-            Gtk.TreeIter iter;
-            task_list.append (out iter);
-            task_list.set (iter,
-                Columns.TOGGLE, toggled,
-                Columns.TEXT, task,
-                Columns.STRIKETHROUGH, toggled,
-                Columns.DELETE, "window-close",
-                Columns.DEL_VISIBLE, toggled,
-                Columns.DRAGHANDLE, "view-list-symbolic");
-
-            if (skip != true && privacy_mode_off ()) {
-                add_to_history (task);
-            }
-
-            update ();
-            tasks_to_file ();
-            task_entry.set_text("");        // clear the entry box
-            agenda_settings.set_boolean ("first-time", false);
         }
 
         /**
@@ -566,15 +364,12 @@ namespace Agenda {
          *  Updates the window to show the welcome screen if the list is empty.
          */
         public void update () {
-            Gtk.TreeIter iter;
-
-            // get_iter_first returns false if there are no items in the list
-            if ( !task_list.get_iter_first (out iter) )
+            if ( !task_list.is_empty () )
                 show_welcome ();
             else
                 hide_welcome ();
         }
-        
+
         /**
          *  Hides the scrolled_window (task list) and shows the Welcome screen.
          */
@@ -595,27 +390,15 @@ namespace Agenda {
          *  Writes the list to a file.
          */
         public void tasks_to_file () {
-            Gtk.TreeIter iter;
-            bool valid = task_list.get_iter_first (out iter);
-
             try {
                 if (list_file.query_exists ()) {    // delete the file if it already exists
                     list_file.delete ();
                 }
 
                 var file_dos = new DataOutputStream (list_file.create (FileCreateFlags.REPLACE_DESTINATION));
-                while (valid) {
-                    bool toggle;
-                    string text;
-                    task_list.get (iter, Columns.TOGGLE, out toggle);
-                    task_list.get (iter, Columns.TEXT, out text);
-                    if (toggle) {
-                        text = "t," + text;
-                    } else {
-                        text = "f," + text;
-                    }
-                    file_dos.put_string (text + "\n");      // write line to file here
-                    valid = task_list.iter_next (ref iter);
+                var tasks = task_list.get_all_tasks ();
+                foreach (string task in tasks) {
+                    file_dos.put_string (task + "\n");
                 }
             } catch (Error e) {
                 error ("Error: %s\n", e.message);

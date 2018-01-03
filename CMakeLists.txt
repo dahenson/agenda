@@ -81,6 +81,7 @@ include(ValaPrecompile)
 vala_precompile(VALA_C
         src/Agenda.vala
         src/AgendaWindow.vala
+        src/AgendaTaskList.vala
         src/Translations.vala
 PACKAGES
         gtk+-3.0
