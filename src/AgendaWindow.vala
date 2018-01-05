@@ -220,6 +220,7 @@ namespace Agenda {
             /**
              *  Set up the scrolled window and add tree_view
              */
+            task_list.expand = true;
             scrolled_window.expand = true;
             scrolled_window.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
             scrolled_window.add (task_list);

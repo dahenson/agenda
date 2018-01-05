@@ -27,7 +27,6 @@ namespace Agenda {
             TEXT,
             STRIKETHROUGH,
             DELETE,
-            DEL_VISIBLE,
             DRAGHANDLE,
             N_COLUMNS
         }
@@ -53,7 +52,6 @@ namespace Agenda {
                                            typeof(string),
                                            typeof(bool),
                                            typeof(string),
-                                           typeof(bool),
                                            typeof(string));
 
             // Set up the TreeView with the necessary columns
@@ -87,8 +85,7 @@ namespace Agenda {
             // Setup the DELETE column
             delete_button.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes ("Delete", delete_button,
-                "icon_name", Columns.DELETE,
-                "visible", Columns.DEL_VISIBLE);
+                "icon_name", Columns.DELETE);
             append_column(column);
 
             // Setup the DRAGHANDLE column
@@ -100,6 +97,14 @@ namespace Agenda {
 
             set_tooltip_column (Columns.TEXT);
 
+            text.editing_started.connect ( (editable, path) => {
+                is_editing = true;
+            });
+
+            text.editing_canceled.connect ( () => {
+                is_editing = false;
+            });
+
             // Method for editing tasks
             text.edited.connect ( (path, edited_text) => {
                 /* If the user accidentally blanks a task, abort the edit */
@@ -109,7 +114,7 @@ namespace Agenda {
 
                 Gtk.TreeIter iter;
                 task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
-                task_list.set (iter, 1, edited_text);
+                task_list.set (iter, Columns.TEXT, edited_text);
                 is_editing = false;
             });
 
@@ -120,19 +125,15 @@ namespace Agenda {
                 task_list.get_iter (out iter, tree_path);
                 task_list.set (iter,
                     Columns.TOGGLE, !toggle.active,
-                    Columns.DEL_VISIBLE, !toggle.active,
                     Columns.STRIKETHROUGH, !toggle.active);
             });
 
             row_activated.connect ((path, column) => {
-                bool deletable;
                 Gtk.TreeIter iter;
 
-                is_editing = true;
                 task_list.get_iter (out iter, path);
-                task_list.get (iter, Columns.TOGGLE, out deletable);
 
-                if (column.title == "Delete" && deletable) {
+                if (column.title == "Delete") {
 #if VALA_0_36
                     task_list.remove (ref iter);
 #else
@@ -160,7 +161,6 @@ namespace Agenda {
                 Columns.TEXT, task,
                 Columns.STRIKETHROUGH, toggled,
                 Columns.DELETE, "edit-delete-symbolic",
-                Columns.DEL_VISIBLE, toggled,
                 Columns.DRAGHANDLE, "view-list-symbolic");
         }
 
@@ -175,8 +175,7 @@ namespace Agenda {
 
             task_list.set (iter,
                            Columns.TOGGLE, !current_state,
-                           Columns.STRIKETHROUGH, !current_state,
-                           Columns.DEL_VISIBLE, !current_state);
+                           Columns.STRIKETHROUGH, !current_state);
         }
 
         /**
