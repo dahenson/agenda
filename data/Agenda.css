@@ -56,7 +56,7 @@ GtkTreeView .image {
 }
 
 GtkTreeView .image:selected {
-    color: @selected_bg_color;
+    color: @selected_fg_color;
 }
 
 GtkTreeView .image:hover {

@@ -105,42 +105,9 @@ namespace Agenda {
                 is_editing = false;
             });
 
-            // Method for editing tasks
-            text.edited.connect ( (path, edited_text) => {
-                /* If the user accidentally blanks a task, abort the edit */
-                if (task_is_empty (edited_text)) {
-                    return;
-                }
-
-                Gtk.TreeIter iter;
-                task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
-                task_list.set (iter, Columns.TEXT, edited_text);
-                is_editing = false;
-            });
-
-            // Method for when a task is toggled (completed)
-            toggle.toggled.connect ((toggle, path) => {
-                var tree_path = new Gtk.TreePath.from_string (path);
-                Gtk.TreeIter iter;
-                task_list.get_iter (out iter, tree_path);
-                task_list.set (iter,
-                    Columns.TOGGLE, !toggle.active,
-                    Columns.STRIKETHROUGH, !toggle.active);
-            });
-
-            row_activated.connect ((path, column) => {
-                Gtk.TreeIter iter;
-
-                task_list.get_iter (out iter, path);
-
-                if (column.title == "Delete") {
-#if VALA_0_36
-                    task_list.remove (ref iter);
-#else
-                    task_list.remove (iter);
-#endif
-                }
-            });
+            text.edited.connect (text_edited);
+            toggle.toggled.connect (task_toggled);
+            row_activated.connect (list_row_activated);
 
             task_list.row_deleted.connect ((path) => {
                 list_changed ();
@@ -242,6 +209,20 @@ namespace Agenda {
             }
         }
 
+        private void list_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
+            Gtk.TreeIter iter;
+
+            task_list.get_iter (out iter, path);
+
+            if (column.title == "Delete") {
+#if VALA_0_36
+                task_list.remove (ref iter);
+#else
+                task_list.remove (iter);
+#endif
+            }
+        }
+
         /**
          * Check if the task is an empty string, or only has white space.
          * 
@@ -253,6 +234,27 @@ namespace Agenda {
             } else {
                 return false;
             }
+        }
+
+        private void task_toggled (Gtk.CellRendererToggle toggle, string path) {
+            var tree_path = new Gtk.TreePath.from_string (path);
+            Gtk.TreeIter iter;
+            task_list.get_iter (out iter, tree_path);
+            task_list.set (iter,
+                Columns.TOGGLE, !toggle.active,
+                Columns.STRIKETHROUGH, !toggle.active);
+        }
+
+        private void text_edited (string path, string edited_text) {
+            /* If the user accidentally blanks a task, abort the edit */
+            if (task_is_empty (edited_text)) {
+                return;
+            }
+
+            Gtk.TreeIter iter;
+            task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
+            task_list.set (iter, Columns.TEXT, edited_text);
+            is_editing = false;
         }
     }
 }
