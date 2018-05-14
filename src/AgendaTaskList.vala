@@ -1,18 +1,21 @@
 /***
 
-    Copyright (C) 2014-2017 Agenda Developers
+    Copyright (C) 2014-2018 Agenda Developers
 
-    This program is free software: you can redistribute it and/or modify it
-    under the terms of the GNU Lesser General Public License version 3, as
-    published by the Free Software Foundation.
+    This file is part of Agenda.
 
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranties of
-    MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
-    PURPOSE.  See the GNU General Public License for more details.
+    Foobar is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-    You should have received a copy of the GNU General Public License along
-    with this program.  If not, see <http://www.gnu.org/licenses>
+    Foobar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 ***/
 
@@ -116,7 +119,7 @@ namespace Agenda {
 
         /**
          * Add a task to the end of the task list
-         * 
+         *
          * @param task The string representing the task
          * @param toggled Whether the task is toggled complete or not
          */
@@ -147,7 +150,7 @@ namespace Agenda {
 
         /**
          * Gets all tasks in the list
-         * 
+         *
          * @return Array of tasks each prepended with 't' or 'f'
          */
         public string[] get_all_tasks () {
@@ -175,7 +178,7 @@ namespace Agenda {
 
         /**
          * Gets if the task list is empty or not
-         * 
+         *
          * @return True if the list is empty
          */
         public bool is_empty () {
@@ -192,7 +195,7 @@ namespace Agenda {
             bool active;
             int counter = 0;
 
-            while (valid) { 
+            while (valid) {
                 task_list.get (iter, Columns.TOGGLE, out active);
 
                 if (active) {
@@ -225,7 +228,7 @@ namespace Agenda {
 
         /**
          * Check if the task is an empty string, or only has white space.
-         * 
+         *
          * @return True if task is empty
          */
         private bool task_is_empty (string task) {
