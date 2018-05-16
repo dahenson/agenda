@@ -50,3 +50,19 @@ GtkTreeView .entry:selected,
 GtkTreeView .entry:selected:focus {
     background-color: @colorAccent;
 }
+
+GtkTreeView .image {
+    color: @bg_color;
+}
+
+GtkTreeView .image:selected {
+    color: @selected_fg_color;
+}
+
+GtkTreeView .image:hover {
+    color: @fg_color;
+}
+
+GtkTreeView .image:selected:hover {
+    color: @selected_fg_color;
+}
