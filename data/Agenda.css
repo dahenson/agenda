@@ -28,41 +28,45 @@
     background-color: @bg_color;
 }
 
-GtkTreeView {
+window {
+    background-color: @bg_color;
+}
+
+treeview {
     color: @fg_color;
     background-color: @bg_color;
 }
 
-GtkTreeView:selected {
+treeview:selected {
     color: @selected_fg_color;
     background-color: @selected_bg_color;
 }
 
-GtkTreeView .entry {
+treeview .entry {
     background-image: none;
     background-color: @bg_color;
     border-bottom: 1px solid @fg_color;
 }
 
-GtkTreeView .entry selection,
-GtkTreeView .entry selection:focus,
-GtkTreeView .entry:selected,
-GtkTreeView .entry:selected:focus {
+treeview .entry selection,
+treeview .entry selection:focus,
+treeview .entry:selected,
+treeview .entry:selected:focus {
     background-color: @colorAccent;
 }
 
-GtkTreeView .image {
+treeview .image {
     color: @bg_color;
 }
 
-GtkTreeView .image:selected {
+treeview .image:selected {
     color: @selected_fg_color;
 }
 
-GtkTreeView .image:hover {
+treeview .image:hover {
     color: @fg_color;
 }
 
-GtkTreeView .image:selected:hover {
+treeview .image:selected:hover {
     color: @selected_fg_color;
 }
