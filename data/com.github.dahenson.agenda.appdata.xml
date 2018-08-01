@@ -14,6 +14,9 @@
       <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot.png</image>
     </screenshot>
   </screenshots>
+  <custom>
+   <value key="x-appcenter-suggested-price">3</value>
+  </custom>
   <description>
     <p>
       Agenda is a simple, slick, speedy and no-nonsense task manager. Use it to keep track of the tasks that matter most.
