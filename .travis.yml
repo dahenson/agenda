@@ -17,10 +17,6 @@ addons:
     packages:
       - libstdc++-5-dev
 
-cache:
-  directories:
-    - /tmp/liftoff
-
 install:
   - npm install @elementaryos/houston
 
