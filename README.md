@@ -1,12 +1,41 @@
+[![Build Status](https://travis-ci.org/dahenson/agenda.svg?branch=master)](https://travis-ci.org/dahenson/agenda)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dahenson/agenda/master/data/icons/128/com.github.dahenson.agenda.svg" alt="Icon" />
+</p>
+<p align="center">
+  <a href="https://appcenter.elementary.io/com.github.dahenson.agenda"><img src="https://appcenter.elementary.io/badge.svg" alt="Get it on AppCenter" /></a>
+</p>
+
 # Agenda
 
-A simple, fast, no-nonsense to-do (task) list for elementary OS.
+## A simple, fast, no-nonsense to-do (task) list for elementary OS.
 
-## Screenshot
 ![](data/screenshot.png)
 
-## Installation
+## Made for [elementary OS](https://elementary.io)
 
-Agenda is available in the elementary OS AppCenter.
+Agenda is designed and built for [elementary OS](https://elementary.io), and is available in the AppCenter. Please purchase the application through the AppCenter to ensure that you are using the latest stable build and to recieve updates as soon as they are released. Purchasing through the AppCenter also helps fund further development of this app.
 
-If you are a developer, you can do the cmake dance to try out the code as is.
+[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.dahenson.agenda)
+
+## Developing and Building
+
+If you want to hack on Agenda, you'll need the following packages installed:
+* libgtk-3-dev
+* libgranite-dev
+* valac
+
+Then do the `cmake` dance to build and install:
+
+```
+mkdir build; cd build
+cmake ..
+make
+sudo make install
+```
+
+## Other Platforms
+
+Agenda was designed on and built for elementary OS. If you are using this application on another platform, it may have been made available by an interested community member. Unfortunately, I am unable to support other platforms at this time. If you are running Agenda on something other than elementary OS, please seek support from the community maintainer. Bugs filed against Agenda running on other platforms are of the lowest priority.
+
