@@ -3,13 +3,12 @@
 <p align="center">
   <img src="https://cdn.rawgit.com/dahenson/agenda/readme-updates/data/icons/128/com.github.dahenson.agenda.svg" alt="Icon" />
 </p>
+<h1 align="center">Agenda</h1>
 <p align="center">
   <a href="https://appcenter.elementary.io/com.github.dahenson.agenda"><img src="https://appcenter.elementary.io/badge.svg" alt="Get it on AppCenter" /></a>
 </p>
 
-# Agenda
-
-![](data/screenshot.png)
+| ![Screenshot](data/screenshot.png) | ![Screenshot](data/screenshot_welcome.png) |
 
 ## A simple, fast, no-nonsense to-do (task) list for elementary OS.
 
