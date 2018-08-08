@@ -8,9 +8,9 @@
   <a href="https://appcenter.elementary.io/com.github.dahenson.agenda"><img src="https://appcenter.elementary.io/badge.svg" alt="Get it on AppCenter" /></a>
 </p>
 
-|------------------------------------|--------------------------------------------|
 | ![Screenshot](data/screenshot.png) | ![Screenshot](data/screenshot_welcome.png) |
 |------------------------------------|--------------------------------------------|
+| Sample List                        | Welcome Screen                             |
 
 ## A simple, fast, no-nonsense to-do (task) list for elementary OS.
 
