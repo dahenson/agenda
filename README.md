@@ -33,7 +33,7 @@ Then do the `cmake` dance to build and install:
 
 ```
 mkdir build; cd build
-cmake ..
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 make
 sudo make install
 ```
