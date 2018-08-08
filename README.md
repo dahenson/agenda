@@ -43,3 +43,6 @@ Agenda was designed on and built for elementary OS. If you are using this applic
 
 If you are running Agenda on something other than elementary OS, please seek support from the community maintainer. Bugs filed against Agenda running on other platforms are of the lowest priority.
 
+## Special Thanks
+
+Huge thanks to [Harvey Cabaguio](https://github.com/harveycabaguio) for the original idea, mockup, and amazing icons. Hire him for something quickly before he becomes too famous!
