@@ -13,6 +13,15 @@
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot.png</image>
     </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_welcome.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_whole_screen_1.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_whole_screen_2.png</image>
+    </screenshot>
   </screenshots>
   <custom>
    <value key="x-appcenter-suggested-price">3</value>
