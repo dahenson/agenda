@@ -1,3 +1,11 @@
+com.github.dahenson.agenda (1.0.10) precise; urgency=low
+
+  * Cleaned up the list icons to only show on hover or select
+  * Tweaks to overall visual style
+  * General code cleanup
+
+ -- Dane Henson <thegreatdane@gmail.com> Fri, 10 August 2018 10:11:00 -0500
+
 com.github.dahenson.agenda (1.0.9) precise; urgency=low
 
   * Updated the icon with a fresh new look (Thanks, Harvey)
