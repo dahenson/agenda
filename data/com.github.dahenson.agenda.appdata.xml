@@ -13,26 +13,46 @@
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot.png</image>
     </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_welcome.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_whole_screen_1.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_whole_screen_2.png</image>
+    </screenshot>
   </screenshots>
   <custom>
    <value key="x-appcenter-suggested-price">3</value>
   </custom>
   <description>
     <p>
-      Agenda is a simple, slick, speedy and no-nonsense task manager. Use it to keep track of the tasks that matter most.
+      A task manager to help you keep track of the tasks that matter most.
     </p>
+    <p>
+      Sometimes, you just need a task list to keep you motivated. Agenda provides a way to write down your tasks and tick them off as you complete them. The list is saved automatically, so you can close the list to get it out of the way without losing your place.
+    </p>
+    <p>Key Features:</p>
     <ul>
-      <li>Blazingly fast and light</li>
-      <li>Remembers your list until you clear completed tasks</li>
+      <li>Saves your task list automatically</li>
+      <li>See your completed tasks until you choose to delete them</li>
       <li>Autocompletion for previously added tasks</li>
       <li>Quit with the Esc key</li>
     </ul>
-    <p>
-      I dare you to find an easier, faster, more beautiful task manager for elementary OS.
-    </p>
   </description>
 
   <releases>
+    <release version="1.0.10" date="2018-08-10">
+      <description>
+        <p>Visual updates and code fixes</p>
+        <ul>
+          <li>Cleaned up the list icons to only show on hover or select</li>
+          <li>Tweaks to the overall visual style.</li>
+          <li>General code cleanup</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.9" date="2017-11-27">
       <description>
         <p>Small bugfixes and a new icon</p>
