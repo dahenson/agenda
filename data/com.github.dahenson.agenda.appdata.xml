@@ -16,12 +16,6 @@
     <screenshot>
       <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_welcome.png</image>
     </screenshot>
-    <screenshot>
-      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_whole_screen_1.png</image>
-    </screenshot>
-    <screenshot>
-      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_whole_screen_2.png</image>
-    </screenshot>
   </screenshots>
   <custom>
    <value key="x-appcenter-suggested-price">3</value>
@@ -43,7 +37,7 @@
   </description>
 
   <releases>
-    <release version="1.0.10" date="2018-08-10">
+    <release version="1.0.11" date="2018-08-14">
       <description>
         <p>Visual updates and code fixes</p>
         <ul>
