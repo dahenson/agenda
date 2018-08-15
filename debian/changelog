@@ -1,4 +1,4 @@
-com.github.dahenson.agenda (1.0.10) precise; urgency=low
+com.github.dahenson.agenda (1.0.11) precise; urgency=low
 
   * Cleaned up the list icons to only show on hover or select
   * Tweaks to overall visual style
