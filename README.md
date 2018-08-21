@@ -38,6 +38,13 @@ make
 sudo make install
 ```
 
+## Arch Linux
+Arch Linux users can find Agenda under the name [agenda-git](https://aur.archlinux.org/packages/agenda-git/) in the **AUR**:
+
+`$ aurman -S agenda-git`
+
+Supported by: @btd1337
+
 ## Other Platforms
 
 Agenda was designed on and built for elementary OS. If you are using this application on another platform, it may have been made available by an interested community member. Unfortunately, I am unable to support other platforms at this time.
