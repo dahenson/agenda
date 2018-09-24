@@ -2,12 +2,8 @@ Source: com.github.dahenson.agenda
 Section: x11
 Priority: extra
 Maintainer: Dane Henson <thegreatdane@gmail.com>
-Build-Depends: debhelper (>= 9),
-               libgranite-dev,
-               libgtk-3-dev,
-               valac (>= 0.26),
-               meson
-Standards-Version: 4.1.1
+Build-Depends: debhelper (>= 9), libgranite-dev, libgtk-3-dev, meson, valac
+Standards-Version: 3.9.6
 
 Package: com.github.dahenson.agenda
 Architecture: any
