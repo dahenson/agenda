@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/dahenson/agenda.svg?branch=master)](https://travis-ci.org/dahenson/agenda)
 
 <p align="center">
-  <img src="https://cdn.rawgit.com/dahenson/agenda/readme-updates/data/icons/128/com.github.dahenson.agenda.svg" alt="Icon" />
+  <img src="https://cdn.rawgit.com/dahenson/agenda/master/data/icons/128/com.github.dahenson.agenda.svg" alt="Icon" />
 </p>
 <h1 align="center">Agenda</h1>
 <p align="center">

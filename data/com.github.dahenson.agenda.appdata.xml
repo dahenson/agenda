@@ -37,6 +37,14 @@
   </description>
 
   <releases>
+    <release version="1.0.12" date="2018-09-14">
+      <description>
+        <p>Visual updates and code fixes</p>
+        <ul>
+          <li>Tiny tweaks for a debut release on elementary OS 5.0</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.11" date="2018-08-14">
       <description>
         <p>Visual updates and code fixes</p>
