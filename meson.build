@@ -5,6 +5,8 @@ project('com.github.dahenson.agenda', ['vala', 'c'],
 gnome = import('gnome')
 i18n = import('i18n')
 
+
+
 asresources = gnome.compile_resources(
     'as-resources', 'data/css.gresource.xml',
     source_dir: 'data',

@@ -6,65 +6,96 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: agenda-tasks\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-01-25 10:15+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-22 00:03-0600\n"
 "PO-Revision-Date: 2013-07-28 08:06+0000\n"
 "Last-Translator: Viko Adi Rahmawan <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2016-01-26 05:28+0000\n"
 "X-Generator: Launchpad (build 17902)\n"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/Agenda.vala:57
-msgid "A simple, slick, speedy and no-nonsense task manager."
-msgstr ""
-
-#: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:6
-msgid "What's to be done"
-msgstr ""
-
-#: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:7
-msgid "Todo;Tasks;"
-msgstr ""
-
-#: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:8
-msgid "About Agenda"
-msgstr ""
-
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:24
+#: src/AgendaWindow.vala:27
 msgid "Add a new task..."
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
+#: src/AgendaWindow.vala:69
 msgid "No Tasks!"
 msgstr "Tak ada Tugas!"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
+#: src/AgendaWindow.vala:70
 msgid "(add one below)"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
+#: src/AgendaWindow.vala:70
 msgid "(way to go)"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:228
+#: src/AgendaWindow.vala:150
 msgid "Add to list..."
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:247
+#: src/AgendaWindow.vala:179
 msgid "Clear history"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
-msgid "Task finished"
+#: data/com.github.dahenson.agenda.appdata.xml.in:7
+#: data/com.github.dahenson.agenda.desktop.in:4
+msgid "Agenda"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
-msgid " tasks have been removed"
+#: data/com.github.dahenson.agenda.appdata.xml.in:8
+#: data/com.github.dahenson.agenda.desktop.in:5
+msgid "Get things done"
 msgstr ""
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
-msgid "A task has been removed"
+#: data/com.github.dahenson.agenda.appdata.xml.in:9
+msgid "Dane Henson"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:24
+msgid "A task manager to help you keep track of the tasks that matter most."
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:27
+msgid ""
+"Sometimes, you just need a task list to keep you motivated. Agenda provides "
+"a way to write down your tasks and tick them off as you complete them. The "
+"list is saved automatically, so you can close the list to get it out of the "
+"way without losing your place."
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:30
+msgid "Key Features:"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:32
+msgid "Saves your task list automatically"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:33
+msgid "See your completed tasks until you choose to delete them"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:34
+msgid "Autocompletion for previously added tasks"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:35
+msgid "Quit with the Esc key"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.desktop.in:6
+msgid "Task List"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.desktop.in:8
+msgid "com.github.dahenson.agenda"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.desktop.in:13
+msgid "Todo;Tasks;"
 msgstr ""
