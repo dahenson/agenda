@@ -63,11 +63,6 @@ namespace Agenda {
 
         public static int main (string[] args) {
 
-            // Init internationalization support
-            Intl.setlocale (LocaleCategory.ALL, "");
-            Intl.bind_textdomain_codeset (Build.GETTEXT_PACKAGE, "UTF-8");
-            Intl.textdomain (Build.GETTEXT_PACKAGE);
-
             app = new Agenda ();
 
             if (args[1] == "-s") {
