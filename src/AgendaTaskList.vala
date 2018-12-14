@@ -47,7 +47,7 @@ namespace Agenda {
             headers_visible = false;
             enable_search = false;
             hexpand = true;
-            valign = Gtk.Align.START;
+            valign = Gtk.Align.FILL;
             reorderable = true;
 
             task_list = new Gtk.ListStore (Columns.N_COLUMNS,
@@ -111,6 +111,17 @@ namespace Agenda {
             text.edited.connect (text_edited);
             toggle.toggled.connect (task_toggled);
             row_activated.connect (list_row_activated);
+            button_press_event.connect ((event) => {
+                Gtk.TreePath p = new Gtk.TreePath ();
+                get_path_at_pos ((int) event.x, (int) event.y, out p, null, null, null);
+                if (p == null) {
+                    get_selection().unselect_all ();
+                    p.free ();
+                    return true;
+                }
+                p.free ();
+                return false;
+            });
 
             task_list.row_deleted.connect ((path) => {
                 list_changed ();
