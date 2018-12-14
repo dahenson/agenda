@@ -4,18 +4,18 @@
 
     This file is part of Agenda.
 
-    Foobar is free software: you can redistribute it and/or modify
+    Agenda is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Foobar is distributed in the hope that it will be useful,
+    Agenda is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+    along with Agenda.  If not, see <http://www.gnu.org/licenses/>.
 
 ***/
 
@@ -57,7 +57,6 @@ namespace Agenda {
                                            typeof(string),
                                            typeof(string));
 
-            // Set up the TreeView with the necessary columns
             var column        = new Gtk.TreeViewColumn ();
             var text          = new Gtk.CellRendererText ();
             var toggle        = new Gtk.CellRendererToggle ();
@@ -87,14 +86,14 @@ namespace Agenda {
 
             // Setup the DELETE column
             delete_button.xpad = 6;
-            column = new Gtk.TreeViewColumn.with_attributes ("Delete", delete_button,
-                "icon_name", Columns.DELETE);
+            column = new Gtk.TreeViewColumn.with_attributes (
+                "Delete", delete_button, "icon_name", Columns.DELETE);
             append_column(column);
 
             // Setup the DRAGHANDLE column
             draghandle.xpad = 6;
-            column = new Gtk.TreeViewColumn.with_attributes ("Drag", draghandle,
-                "icon_name", Columns.DRAGHANDLE);
+            column = new Gtk.TreeViewColumn.with_attributes (
+                "Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
             append_column (column);
             model = task_list;
 
@@ -113,7 +112,8 @@ namespace Agenda {
             row_activated.connect (list_row_activated);
             button_press_event.connect ((event) => {
                 Gtk.TreePath p = new Gtk.TreePath ();
-                get_path_at_pos ((int) event.x, (int) event.y, out p, null, null, null);
+                get_path_at_pos (
+                    (int) event.x, (int) event.y, out p, null, null, null);
                 if (p == null) {
                     get_selection().unselect_all ();
                     p.free ();
