@@ -37,6 +37,7 @@ namespace Agenda {
         File history_file;
 
         private Granite.Widgets.Welcome agenda_welcome;
+        private TaskView                task_view;
         private TaskList                task_list;
         private Gtk.ScrolledWindow      scrolled_window;
         private Gtk.Entry               task_entry;
@@ -69,6 +70,7 @@ namespace Agenda {
                 _("No Tasks!"),
                 first ? _("(add one below)") : _("(way to go)"));
             task_list = new TaskList ();
+            task_view = new TaskView.with_list (task_list);
             scrolled_window = new Gtk.ScrolledWindow (null, null);
             task_entry = new Gtk.Entry ();
             grid = new Gtk.Grid ();
@@ -182,14 +184,14 @@ namespace Agenda {
                 menu.show_all ();
             });
 
-            task_list.focus_out_event.connect ((e) => {
+            task_view.focus_out_event.connect ((e) => {
                 Gtk.TreeSelection selected;
-                selected = task_list.get_selection ();
+                selected = task_view.get_selection ();
                 selected.unselect_all ();
                 return false;
             });
 
-            task_list.list_changed.connect (() => {
+            task_view.list_changed.connect (() => {
                 /**
                  *  When a row is dragged and dropped, a new row is inserted,
                  *  then populated, then the old row is deleted.  This way, we
@@ -203,11 +205,11 @@ namespace Agenda {
 
             this.key_press_event.connect (key_down_event);
 
-            task_list.expand = true;
+            task_view.expand = true;
             scrolled_window.expand = true;
             scrolled_window.set_policy (
                 Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
-            scrolled_window.add (task_list);
+            scrolled_window.add (task_view);
 
             agenda_welcome.expand = true;
 
@@ -284,13 +286,13 @@ namespace Agenda {
         public bool key_down_event (Gdk.EventKey e) {
             switch (e.keyval) {
                 case Gdk.Key.Escape:
-                    if (!task_list.is_editing) {
+                    if (!task_view.is_editing) {
                         main_quit ();
                     }
                     break;
                 case Gdk.Key.Delete:
-                    if (!task_entry.has_focus && !task_list.is_editing) {
-                        task_list.toggle_selected_task ();
+                    if (!task_entry.has_focus && !task_view.is_editing) {
+                        task_view.toggle_selected_task ();
                         update ();
                     }
                     break;

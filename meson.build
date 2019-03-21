@@ -5,8 +5,6 @@ project('com.github.dahenson.agenda', ['vala', 'c'],
 gnome = import('gnome')
 i18n = import('i18n')
 
-
-
 asresources = gnome.compile_resources(
     'as-resources', 'data/css.gresource.xml',
     source_dir: 'data',
@@ -31,20 +29,32 @@ c_args = [
   '-include', 'config.h'
 ]
 
+agenda_client_sources = files(
+    'src/Agenda.vala',
+    'src/Window.vala',
+    'src/TaskView.vala',
+    'src/TaskList.vala',
+    'src/Translations.vala',
+)
+
+# dependencies
+glib = dependency('glib-2.0')
+gtk = dependency('gtk+-3.0')
+granite = dependency('granite')
+
+agenda_deps = [
+    glib,
+    gtk,
+    granite
+]
+
 executable(
     meson.project_name(),
-    'src/Agenda.vala',
-    'src/AgendaTaskList.vala',
-    'src/AgendaWindow.vala',
-    'src/Translations.vala',
+    agenda_client_sources,
     asresources,
     vala_args: vala_args,
     c_args: c_args,
-    dependencies: [
-        dependency('gobject-2.0'),
-        dependency('gtk+-3.0'),
-        dependency('granite')
-    ],
+    dependencies: agenda_deps,
     install : true
 )
 

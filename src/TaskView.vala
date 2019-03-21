@@ -21,41 +21,31 @@
 
 namespace Agenda {
 
-    public class TaskList : Gtk.TreeView {
+    public class TaskView : Gtk.TreeView {
 
         public signal void list_changed ();
 
-        private enum Columns {
-            TOGGLE,
-            TEXT,
-            STRIKETHROUGH,
-            DELETE,
-            DRAGHANDLE,
-            N_COLUMNS
-        }
-
-        private Gtk.ListStore task_list;
+        private TaskList task_list;
         public bool is_editing;
 
-        public TaskList() {
+        public TaskView () {
+            task_list = new TaskList ();
+            model = task_list;
+        }
 
+        public TaskView.with_list (TaskList list) {
+            task_list = list;
+            model = task_list;
         }
 
         construct {
-            name = "TaskList";
+            name = "TaskView";
             activate_on_single_click = true;
             headers_visible = false;
             enable_search = false;
             hexpand = true;
             valign = Gtk.Align.FILL;
             reorderable = true;
-
-            task_list = new Gtk.ListStore (Columns.N_COLUMNS,
-                                           typeof(bool),
-                                           typeof(string),
-                                           typeof(bool),
-                                           typeof(string),
-                                           typeof(string));
 
             var column        = new Gtk.TreeViewColumn ();
             var text          = new Gtk.CellRendererText ();
@@ -68,7 +58,7 @@ namespace Agenda {
             column = new Gtk.TreeViewColumn.with_attributes ("Toggle",
                                                              toggle,
                                                              "active",
-                                                             Columns.TOGGLE);
+                                                             TaskList.Columns.TOGGLE);
             append_column (column);
 
             // Setup the TEXT column
@@ -79,25 +69,24 @@ namespace Agenda {
             text.ellipsize = Pango.EllipsizeMode.END;
 
             column = new Gtk.TreeViewColumn.with_attributes ("Task", text,
-                "text", Columns.TEXT,
-                "strikethrough", Columns.STRIKETHROUGH);
+                "text", TaskList.Columns.TEXT,
+                "strikethrough", TaskList.Columns.STRIKETHROUGH);
             column.expand = true;
             append_column (column);
 
             // Setup the DELETE column
             delete_button.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes (
-                "Delete", delete_button, "icon_name", Columns.DELETE);
+                "Delete", delete_button, "icon_name", TaskList.Columns.DELETE);
             append_column(column);
 
             // Setup the DRAGHANDLE column
             draghandle.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes (
-                "Drag", draghandle, "icon_name", Columns.DRAGHANDLE);
+                "Drag", draghandle, "icon_name", TaskList.Columns.DRAGHANDLE);
             append_column (column);
-            model = task_list;
 
-            set_tooltip_column (Columns.TEXT);
+            set_tooltip_column (TaskList.Columns.TEXT);
 
             text.editing_started.connect ( (editable, path) => {
                 is_editing = true;
@@ -110,39 +99,9 @@ namespace Agenda {
             text.edited.connect (text_edited);
             toggle.toggled.connect (task_toggled);
             row_activated.connect (list_row_activated);
-            button_press_event.connect ((event) => {
-                Gtk.TreePath p = new Gtk.TreePath ();
-                get_path_at_pos (
-                    (int) event.x, (int) event.y, out p, null, null, null);
-                if (p == null) {
-                    get_selection().unselect_all ();
-                    p.free ();
-                    return true;
-                }
-                p.free ();
-                return false;
-            });
-
             task_list.row_deleted.connect ((path) => {
                 list_changed ();
             });
-        }
-
-        /**
-         * Add a task to the end of the task list
-         *
-         * @param task The string representing the task
-         * @param toggled Whether the task is toggled complete or not
-         */
-        public void append_task (string task, bool toggled = false) {
-            Gtk.TreeIter iter;
-            task_list.append (out iter);
-            task_list.set (iter,
-                Columns.TOGGLE, toggled,
-                Columns.TEXT, task,
-                Columns.STRIKETHROUGH, toggled,
-                Columns.DELETE, "edit-delete-symbolic",
-                Columns.DRAGHANDLE, "view-list-symbolic");
         }
 
         public void toggle_selected_task () {
@@ -155,72 +114,8 @@ namespace Agenda {
             task_list.get (iter, 0, out current_state);
 
             task_list.set (iter,
-                           Columns.TOGGLE, !current_state,
-                           Columns.STRIKETHROUGH, !current_state);
-        }
-
-        /**
-         * Gets all tasks in the list
-         *
-         * @return Array of tasks each prepended with 't' or 'f'
-         */
-        public string[] get_all_tasks () {
-            Gtk.TreeIter iter;
-            bool valid = task_list.get_iter_first (out iter);
-
-            string[] tasks = {};
-
-            while (valid) {
-                bool toggle;
-                string text;
-                task_list.get (iter, Columns.TOGGLE, out toggle);
-                task_list.get (iter, Columns.TEXT, out text);
-                if (toggle) {
-                    text = "t," + text;
-                } else {
-                    text = "f," + text;
-                }
-                tasks += text;
-                valid = task_list.iter_next (ref iter);
-            }
-
-            return tasks;
-        }
-
-        /**
-         * Gets if the task list is empty or not
-         *
-         * @return True if the list is empty
-         */
-        public bool is_empty () {
-            Gtk.TreeIter iter;
-            return task_list.get_iter_first (out iter);
-        }
-
-        /**
-         * Removes all completed (toggled) tasks
-         */
-        public void remove_completed_tasks () {
-            Gtk.TreeIter iter;
-            bool valid  = task_list.get_iter_first (out iter);
-            bool active;
-            int counter = 0;
-
-            while (valid) {
-                task_list.get (iter, Columns.TOGGLE, out active);
-
-                if (active) {
-#if VALA_0_36
-                    task_list.remove (ref iter);
-#else
-                    task_list.remove (iter);
-#endif
-                    valid = task_list.get_iter_first (out iter);
-                    counter++;
-                } else {
-                    valid = task_list.iter_next (ref iter);
-                }
-            }
+                           TaskList.Columns.TOGGLE, !current_state,
+                           TaskList.Columns.STRIKETHROUGH, !current_state);
         }
 
         private void list_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
@@ -255,8 +150,8 @@ namespace Agenda {
             Gtk.TreeIter iter;
             task_list.get_iter (out iter, tree_path);
             task_list.set (iter,
-                Columns.TOGGLE, !toggle.active,
-                Columns.STRIKETHROUGH, !toggle.active);
+                TaskList.Columns.TOGGLE, !toggle.active,
+                TaskList.Columns.STRIKETHROUGH, !toggle.active);
         }
 
         private void text_edited (string path, string edited_text) {
@@ -267,8 +162,9 @@ namespace Agenda {
 
             Gtk.TreeIter iter;
             task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
-            task_list.set (iter, Columns.TEXT, edited_text);
+            task_list.set (iter, TaskList.Columns.TEXT, edited_text);
             is_editing = false;
         }
     }
 }
+
