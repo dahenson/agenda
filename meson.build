@@ -31,10 +31,12 @@ c_args = [
 
 agenda_client_sources = files(
     'src/Agenda.vala',
-    'src/Window.vala',
+    'src/HistoryList.vala',
     'src/TaskView.vala',
     'src/TaskList.vala',
     'src/Translations.vala',
+    'src/Utils.vala',
+    'src/Window.vala',
 )
 
 # dependencies

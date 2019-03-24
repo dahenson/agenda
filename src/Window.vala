@@ -42,7 +42,7 @@ namespace Agenda {
         private Gtk.ScrolledWindow      scrolled_window;
         private Gtk.Entry               task_entry;
         private Gtk.Grid                grid;
-        private Gtk.ListStore           history_list;
+        private HistoryList             history_list;
         private Gtk.SeparatorMenuItem   separator;
         private Gtk.MenuItem            item_clear_history;
         private bool                    is_editing;
@@ -75,7 +75,7 @@ namespace Agenda {
             task_entry = new Gtk.Entry ();
             grid = new Gtk.Grid ();
 
-            history_list = new Gtk.ListStore (1, typeof (string));
+            history_list = new HistoryList ();
 
             is_editing = false;
 
@@ -123,7 +123,7 @@ namespace Agenda {
 
                 var h_dis = new DataInputStream (history_file.read ());
                 while ((line = h_dis.read_line (null)) != null && privacy_mode_off ()) {
-                    add_to_history (line);
+                    history_list.add_item (line);
                 }
             } catch (Error e) {
                 error ("%s", e.message);
@@ -143,10 +143,10 @@ namespace Agenda {
                 Gtk.EntryIconPosition.SECONDARY, _("Add to list..."));
 
             Gtk.EntryCompletion completion = new Gtk.EntryCompletion ();
-            task_entry.set_completion (completion);
-
             completion.set_model (history_list);
             completion.set_text_column (0);
+
+            task_entry.set_completion (completion);
 
             task_entry.activate.connect (append_task);
             task_entry.icon_press.connect (append_task);
@@ -199,7 +199,7 @@ namespace Agenda {
                  *  through DND.  This also takes care of the toggled row, since
                  *  it is removed and the row_deleted signal is emitted.
                  */
-                tasks_to_file ();
+                save_list (task_list.get_all_tasks(), list_file);
                 update ();
             });
 
@@ -230,10 +230,12 @@ namespace Agenda {
         }
 
         public void append_task () {
-                task_list.append_task (task_entry.text, false);
-                task_entry.text = "";
-                update ();
-            }
+            var text = task_entry.text;
+            task_list.append_task (text, false);
+            history_list.add_item (text);
+            task_entry.text = "";
+            update ();
+        }
 
         public bool privacy_mode_off () {
             return privacy_setting.get_boolean ("remember-app-usage") || privacy_setting.get_boolean ("remember-recent-files");
@@ -275,7 +277,7 @@ namespace Agenda {
         }
 
         public bool main_quit () {
-            tasks_to_file ();
+            save_list (task_list.get_all_tasks(), list_file);
             history_to_file ();
             save_window_position ();
             this.destroy ();
@@ -301,33 +303,6 @@ namespace Agenda {
             return false;
         }
 
-        private void add_to_history (string text) {
-            Gtk.TreeIter iter;
-            string row;
-            bool valid = history_list.get_iter_first (out iter);
-
-            if (valid == false) {
-                history_list.append (out iter);
-                history_list.set (iter, 0, text);
-            } else {
-                while (valid) {
-                    history_list.get (iter, 0, out row);
-                    if (row == text) {
-#if VALA_0_36
-                        history_list.remove (ref iter);
-#else
-                        history_list.remove (iter);
-#endif
-                    }
-
-                    valid = history_list.iter_next (ref iter);
-                }
-
-                history_list.append (out iter);
-                history_list.set (iter, 0, text);
-            }
-        }
-
         public void update () {
             if ( !task_list.is_empty () )
                 show_welcome ();
@@ -343,23 +318,6 @@ namespace Agenda {
         void hide_welcome () {
             agenda_welcome.hide ();
             scrolled_window.show ();
-        }
-
-        public void tasks_to_file () {
-            try {
-                if (list_file.query_exists ()) {
-                    list_file.delete ();
-                }
-
-                var file_dos = new DataOutputStream (
-                    list_file.create (FileCreateFlags.REPLACE_DESTINATION));
-                var tasks = task_list.get_all_tasks ();
-                foreach (string task in tasks) {
-                    file_dos.put_string (task + "\n");
-                }
-            } catch (Error e) {
-                error ("Error: %s\n", e.message);
-            }
         }
 
         public void history_to_file () {
