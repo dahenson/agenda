@@ -121,8 +121,5 @@ namespace Agenda {
                 }
             }
         }
-
-        public void toggle_selected_task () {
-        }
     }
 }
