@@ -23,19 +23,18 @@ namespace Agenda {
 
     public class TaskView : Gtk.TreeView {
 
-        public signal void list_changed ();
+        public signal void task_deleted ();
 
         private TaskList task_list;
         public bool is_editing;
 
-        public TaskView () {
-            task_list = new TaskList ();
-            model = task_list;
-        }
-
         public TaskView.with_list (TaskList list) {
             task_list = list;
             model = task_list;
+
+            task_list.row_deleted.connect ((path) => {
+                task_deleted ();
+            });
         }
 
         construct {
@@ -99,9 +98,6 @@ namespace Agenda {
             text.edited.connect (text_edited);
             toggle.toggled.connect (task_toggled);
             row_activated.connect (list_row_activated);
-            task_list.row_deleted.connect ((path) => {
-                list_changed ();
-            });
         }
 
         public void toggle_selected_task () {
