@@ -96,7 +96,7 @@ namespace Agenda {
          */
         public bool is_empty () {
             Gtk.TreeIter iter;
-            return get_iter_first (out iter);
+            return !get_iter_first (out iter);
         }
 
         public void remove_completed_tasks () {

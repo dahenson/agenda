@@ -304,7 +304,7 @@ namespace Agenda {
         }
 
         public void update () {
-            if ( !task_list.is_empty () )
+            if ( task_list.is_empty () )
                 show_welcome ();
             else
                 hide_welcome ();
