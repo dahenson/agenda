@@ -191,7 +191,7 @@ namespace Agenda {
                 return false;
             });
 
-            task_view.list_changed.connect (() => {
+            task_view.task_deleted.connect (() => {
                 /**
                  *  When a row is dragged and dropped, a new row is inserted,
                  *  then populated, then the old row is deleted.  This way, we
@@ -304,7 +304,7 @@ namespace Agenda {
         }
 
         public void update () {
-            if ( !task_list.is_empty () )
+            if ( task_list.is_empty () )
                 show_welcome ();
             else
                 hide_welcome ();
