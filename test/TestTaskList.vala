@@ -19,18 +19,20 @@
 
 ***/
 
-void add_base_tests () {
+void add_task_list_tests () {
     Test.add_func ("/agenda/task_list/append_task", () => {
         var list = new Agenda.TaskList ();
-        list.append_task ("a new task");
-        list.append_task ("another new task");
+        var task1 = list.append_task ("a new task");
+        var task2 = list.append_task ("another new task");
 
         assert (list.iter_n_children (null) == 2);
+        assert (list.contains (task1));
+        assert (list.contains (task2));
     });
 }
 
 void main (string[] args) {
     Test.init (ref args);
-    add_base_tests ();
+    add_task_list_tests ();
     Test.run ();
 }

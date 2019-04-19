@@ -29,6 +29,7 @@ namespace Agenda {
             STRIKETHROUGH,
             DELETE,
             DRAGHANDLE,
+            ID,
             N_COLUMNS
         }
 
@@ -37,6 +38,7 @@ namespace Agenda {
                 typeof(bool),
                 typeof(string),
                 typeof(bool),
+                typeof(string),
                 typeof(string),
                 typeof(string)
             };
@@ -50,7 +52,8 @@ namespace Agenda {
          * @param task The string representing the task
          * @param toggled Whether the task is toggled complete or not
          */
-        public void append_task (string task, bool toggled = false) {
+        public string append_task (string task, bool toggled = false) {
+            var id = Uuid.string_random ();
             Gtk.TreeIter iter;
             append (out iter);
             set (iter,
@@ -58,7 +61,28 @@ namespace Agenda {
                 Columns.TEXT, task,
                 Columns.STRIKETHROUGH, toggled,
                 Columns.DELETE, "edit-delete-symbolic",
-                Columns.DRAGHANDLE, "view-list-symbolic");
+                Columns.DRAGHANDLE, "view-list-symbolic",
+                Columns.ID, id);
+
+            return id;
+        }
+
+        public bool contains (string id) {
+            Gtk.TreeIter iter;
+            bool valid = get_iter_first (out iter);
+
+            while (valid) {
+                string list_id;
+                get (iter, TaskList.Columns.ID, out list_id);
+
+                if (list_id == id) {
+                    return true;
+                } else {
+                    valid = iter_next (ref iter);
+                }
+            }
+
+            return false;
         }
 
         /**
