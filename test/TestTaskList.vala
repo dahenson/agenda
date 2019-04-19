@@ -20,6 +20,17 @@
 ***/
 
 void add_task_list_tests () {
+    Test.add_func ("/agenda/task_list/contains", () => {
+        var list = new Agenda.TaskList ();
+
+        assert (list.iter_n_children (null) == 0);
+        assert (!list.contains ("whatever"));
+
+        var task = list.append_task ("a task");
+
+        assert (list.contains (task));
+    });
+
     Test.add_func ("/agenda/task_list/append_task", () => {
         var list = new Agenda.TaskList ();
         var task1 = list.append_task ("a new task");

@@ -67,6 +67,11 @@ namespace Agenda {
             return id;
         }
 
+        /**
+         * Test if the list contains a task with specific id
+         *
+         * @param id The id of the task
+         */
         public bool contains (string id) {
             Gtk.TreeIter iter;
             bool valid = get_iter_first (out iter);
