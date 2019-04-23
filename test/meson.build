@@ -1,12 +1,24 @@
-agenda_test_sources = files(
-    'TestTaskList.vala',
-)
-
-agenda_test_bin = executable('test-agenda',
-    agenda_test_sources + agenda_lib_sources,
+task_list_test_bin = executable('test-agenda',
+    files('TestTaskList.vala') + agenda_model_sources,
     dependencies: agenda_deps,
     vala_args: vala_args,
     c_args: c_args,
 )
 
-test('agenda-tests', agenda_test_bin)
+action_test_bin = executable('test-action',
+    files('TestAction.vala') + agenda_model_sources,
+    dependencies: agenda_deps,
+    vala_args: vala_args,
+    c_args: c_args,
+)
+
+action_list_test_bin = executable('test-action-list',
+    files('TestActionList.vala') + agenda_model_sources,
+    dependencies: agenda_deps,
+    vala_args: vala_args,
+    c_args: c_args,
+)
+
+test('task-list-tests', task_list_test_bin)
+test('action-tests', action_test_bin)
+test('action-list-tests', action_list_test_bin)

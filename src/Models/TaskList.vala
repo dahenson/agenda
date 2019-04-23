@@ -150,5 +150,9 @@ namespace Agenda {
                 }
             }
         }
+
+        public bool undo () {
+            return true;
+        }
     }
 }

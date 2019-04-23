@@ -19,31 +19,22 @@
 
 ***/
 
-void add_task_list_tests () {
-    Test.add_func ("/task_list/contains", () => {
-        var list = new Agenda.TaskList ();
+void add_action_list_tests () {
+    Test.add_func ("/action_list/add", () => {
+        var list = new Agenda.ActionList ();
+        var task1 = new Agenda.Action (
+            "id",
+            "text",
+            Agenda.ActionType.EDITED);
 
-        assert (list.iter_n_children (null) == 0);
-        assert (!list.contains ("whatever"));
+        list.add (task1);
 
-        var task = list.append_task ("a task");
-
-        assert (list.contains (task));
-    });
-
-    Test.add_func ("/task_list/append_task", () => {
-        var list = new Agenda.TaskList ();
-        var task1 = list.append_task ("a new task");
-        var task2 = list.append_task ("another new task");
-
-        assert (list.iter_n_children (null) == 2);
-        assert (list.contains (task1));
-        assert (list.contains (task2));
+        assert (task1.equal (list.last ()));
     });
 }
 
 void main (string[] args) {
     Test.init (ref args);
-    add_task_list_tests ();
+    add_action_list_tests ();
     Test.run ();
 }
