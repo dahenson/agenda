@@ -19,8 +19,22 @@
 
 ***/
 
-void add_action_tests () {
-    Test.add_func ("/action/new", () => {
+using Agenda;
+
+public class ActionTests : Gee.TestCase {
+
+    public ActionTests () {
+        base ("Action");
+        add_test ("[Action] test basic functions", test_basic_functions);
+    }
+
+    public override void set_up () {
+    }
+
+    public override void tear_down () {
+    }
+
+    public void test_basic_functions () {
         var action_id = Uuid.string_random ();
         var text = "This is a task";
         var action_type = Agenda.ActionType.DELETED;
@@ -33,9 +47,9 @@ void add_action_tests () {
         assert (action.id == action_id);
         assert (action.text == text);
         assert (action.action_type == action_type);
-    });
+    }
 
-    Test.add_func ("/action/equal", () => {
+    public void test_equal () {
         var action_id = Uuid.string_random ();
         var text = "task";
         var action_type = Agenda.ActionType.DELETED;
@@ -57,11 +71,5 @@ void add_action_tests () {
 
         assert (action1.equal (action2));
         assert (!action2.equal (action3));
-    });
-}
-
-void main (string[] args) {
-    Test.init (ref args);
-    add_action_tests ();
-    Test.run ();
+    }
 }
