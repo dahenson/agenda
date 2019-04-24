@@ -19,22 +19,42 @@
 
 ***/
 
-void add_action_list_tests () {
-    Test.add_func ("/action_list/add", () => {
-        var list = new Agenda.ActionList ();
-        var task1 = new Agenda.Action (
-            "id",
-            "text",
-            Agenda.ActionType.EDITED);
+using Agenda;
 
-        list.add (task1);
+public class ActionListTests : Gee.TestCase {
 
-        assert (task1.equal (list.last ()));
-    });
-}
+    private ActionList test_list;
+    private Agenda.Action action1;
+    private Agenda.Action action2;
 
-void main (string[] args) {
-    Test.init (ref args);
-    add_action_list_tests ();
-    Test.run ();
+    public ActionListTests () {
+        base ("ActionList");
+        add_test ("[ActionList] test basic functions", test_basic_functions);
+    }
+
+    public override void set_up () {
+        test_list = new ActionList ();
+
+        action1 = new Agenda.Action (
+            "id1",
+            "text1",
+            Agenda.Action.DELETED);
+
+        action2 = new Agenda.Action (
+            "id2",
+            "text2",
+            Agenda.Action.EDITED);
+    }
+
+    public override void tear_down () {
+        test_list = null;
+        action1 = null;
+        action2 = null;
+    }
+
+    public void test_basic_functions () {
+        test_list.add (action1);
+        test_list.add (action2);
+        assert (action2.equal (test_list.last ()));
+    }
 }

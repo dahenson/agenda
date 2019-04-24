@@ -12,8 +12,13 @@ action_test_bin = executable('test-action',
     c_args: c_args,
 )
 
+test_source = files(
+    'TestCase.vala',
+    'TestActionList.vala',
+    'TestMain.vala'
+)
 action_list_test_bin = executable('test-action-list',
-    files('TestActionList.vala') + agenda_model_sources,
+    test_source + agenda_model_sources,
     dependencies: agenda_deps,
     vala_args: vala_args,
     c_args: c_args,

@@ -19,22 +19,10 @@
 
 ***/
 
-namespace Agenda {
+void main (string[] args) {
+    Test.init (ref args);
 
-    public class ActionList : GLib.Object {
+    TestSuite.get_root ().add_suite (new ActionListTests ().get_suite ());
 
-        private Gee.ArrayList<Action> list;
-
-        construct {
-            this.list = new Gee.ArrayList<Action> ();
-        }
-
-        public void add (Action action) {
-            list.add (action);
-        }
-
-        public Action last () {
-            return list.last ();
-        }
-    }
+    Test.run ();
 }
