@@ -58,3 +58,4 @@ public class ActionListTests : Gee.TestCase {
         assert (action2.equal (test_list.last ()));
     }
 }
+

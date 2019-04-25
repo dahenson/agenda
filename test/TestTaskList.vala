@@ -19,31 +19,42 @@
 
 ***/
 
-void add_task_list_tests () {
-    Test.add_func ("/task_list/contains", () => {
-        var list = new Agenda.TaskList ();
+using Agenda;
 
-        assert (list.iter_n_children (null) == 0);
-        assert (!list.contains ("whatever"));
+public class TaskListTests : Gee.TestCase {
 
-        var task = list.append_task ("a task");
+    private TaskList test_list;
 
-        assert (list.contains (task));
-    });
+    public TaskListTests () {
+        base ("TaskList");
+        add_test ("[TaskList] test basic functions", test_basic_functions);
+        add_test ("[TaskList] test append function", test_append_function);
+    }
 
-    Test.add_func ("/task_list/append_task", () => {
-        var list = new Agenda.TaskList ();
-        var task1 = list.append_task ("a new task");
-        var task2 = list.append_task ("another new task");
+    public override void set_up () {
+        test_list = new TaskList ();
+    }
 
-        assert (list.iter_n_children (null) == 2);
-        assert (list.contains (task1));
-        assert (list.contains (task2));
-    });
+    public override void tear_down () {
+        test_list = null;
+    }
+
+    public void test_basic_functions () {
+        assert (test_list.iter_n_children (null) == 0);
+        assert (!test_list.contains ("whatever"));
+
+        var task = test_list.append_task ("a task");
+
+        assert (test_list.contains (task));
+    }
+
+    public void test_append_function () {
+        var task1 = test_list.append_task ("a new task");
+        var task2 = test_list.append_task ("another new task");
+
+        assert (test_list.iter_n_children (null) == 2);
+        assert (test_list.contains (task1));
+        assert (test_list.contains (task2));
+    }
 }
 
-void main (string[] args) {
-    Test.init (ref args);
-    add_task_list_tests ();
-    Test.run ();
-}
