@@ -24,8 +24,9 @@ using Agenda;
 public class ActionTests : Gee.TestCase {
 
     public ActionTests () {
-        base ("Action");
+        base ("Agenda");
         add_test ("[Action] test basic functions", test_basic_functions);
+        add_test ("[Action] test equal", test_equal);
     }
 
     public override void set_up () {
