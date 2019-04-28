@@ -26,9 +26,9 @@ public class TaskListTests : Gee.TestCase {
     private TaskList test_list;
 
     public TaskListTests () {
-        base ("TaskList");
+        base ("Agenda");
         add_test ("[TaskList] test basic functions", test_basic_functions);
-        add_test ("[TaskList] test append function", test_append_function);
+        add_test ("[TaskList] test append", test_append);
     }
 
     public override void set_up () {
@@ -48,7 +48,7 @@ public class TaskListTests : Gee.TestCase {
         assert (test_list.contains (task));
     }
 
-    public void test_append_function () {
+    public void test_append () {
         var task1 = test_list.append_task ("a new task");
         var task2 = test_list.append_task ("another new task");
 
