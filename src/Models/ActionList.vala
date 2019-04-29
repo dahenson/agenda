@@ -24,17 +24,45 @@ namespace Agenda {
     public class ActionList : GLib.Object {
 
         private Gee.ArrayList<Action> list;
+        private Gee.BidirListIterator<Action> iter;
 
         construct {
-            this.list = new Gee.ArrayList<Action> ();
+            list = new Gee.ArrayList<Action> ();
+            iter = list.bidir_list_iterator ();
+        }
+
+        public int size {
+            public get { return list.size; }
+        }
+
+        public bool has_previous_action {
+            public get;
+            private set;
+            default = false;
         }
 
         public void add (Action action) {
-            list.add (action);
+            iter.add (action);
+
+            if (!has_previous_action) {
+                has_previous_action = true;
+            }
         }
 
-        public Action last () {
-            return list.last ();
+        public Action? get_previous_action () {
+            if (iter.valid && has_previous_action) {
+                var action = iter.get ();
+
+                if (iter.has_previous ()) {
+                    iter.previous ();
+                } else {
+                    has_previous_action = false;
+                }
+
+                return action;
+            } else {
+                return null;
+            }
         }
     }
 }
