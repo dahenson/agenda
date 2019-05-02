@@ -38,7 +38,7 @@ public class ActionTests : Gee.TestCase {
     public void test_basic_functions () {
         var action_id = Uuid.string_random ();
         var text = "This is a task";
-        var action_type = Agenda.ActionType.DELETED;
+        var action_type = Agenda.ActionType.REMOVED;
 
         var action = new Agenda.Action (
             action_id,
@@ -53,7 +53,7 @@ public class ActionTests : Gee.TestCase {
     public void test_equal () {
         var action_id = Uuid.string_random ();
         var text = "task";
-        var action_type = Agenda.ActionType.DELETED;
+        var action_type = Agenda.ActionType.REMOVED;
 
         var action1 = new Agenda.Action (
             action_id,
@@ -68,7 +68,7 @@ public class ActionTests : Gee.TestCase {
         var action3 = new Agenda.Action (
             "id",
             "text",
-            Agenda.ActionType.DELETED);
+            Agenda.ActionType.REMOVED);
 
         assert (action1.equal (action2));
         assert (!action2.equal (action3));

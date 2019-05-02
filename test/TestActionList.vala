@@ -40,7 +40,7 @@ public class ActionListTests : Gee.TestCase {
         action1 = new Agenda.Action (
             "id1",
             "text1",
-            Agenda.Action.DELETED);
+            Agenda.Action.REMOVED);
 
         action2 = new Agenda.Action (
             "id2",

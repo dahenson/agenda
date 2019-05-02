@@ -23,7 +23,8 @@ namespace Agenda {
 
     public enum ActionType {
         NOOP,
-        DELETED,
+        APPENDED,
+        REMOVED,
         EDITED,
         MOVED,
         TOGGLED

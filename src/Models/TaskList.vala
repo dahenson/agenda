@@ -33,7 +33,11 @@ namespace Agenda {
             N_COLUMNS
         }
 
+        private ActionList undo_list;
+
         construct {
+            undo_list = new ActionList ();
+
             Type[] types = {
                 typeof(bool),
                 typeof(string),
@@ -44,6 +48,10 @@ namespace Agenda {
             };
 
             set_column_types (types);
+        }
+
+        public int size {
+            public get { return iter_n_children (null); }
         }
 
         /**
@@ -63,6 +71,10 @@ namespace Agenda {
                 Columns.DELETE, "edit-delete-symbolic",
                 Columns.DRAGHANDLE, "view-list-symbolic",
                 Columns.ID, id);
+
+            Action action = new Action(id, task, ActionType.APPENDED);
+
+            undo_list.add (action);
 
             return id;
         }
@@ -118,6 +130,18 @@ namespace Agenda {
             return tasks;
         }
 
+        public void insert_task (string id, string text, bool toggled) {
+            Gtk.TreeIter iter;
+            append (out iter);
+            set (iter,
+                Columns.TOGGLE, toggled,
+                Columns.TEXT, text,
+                Columns.STRIKETHROUGH, toggled,
+                Columns.DELETE, "edit-delete-symbolic",
+                Columns.DRAGHANDLE, "view-list-symbolic",
+                Columns.ID, id);
+        }
+
         /**
          * Gets if the task list is empty or not
          *
@@ -126,6 +150,28 @@ namespace Agenda {
         public bool is_empty () {
             Gtk.TreeIter iter;
             return !get_iter_first (out iter);
+        }
+
+        public bool remove_task (Gtk.TreePath path) {
+            Gtk.TreeIter iter;
+            Action action;
+            string id;
+            string text;
+
+            if (get_iter (out iter, path)) {
+                get (iter, Columns.ID, out id, Columns.TEXT, out text);
+                action = new Action (id, text, ActionType.REMOVED);
+#if VALA_0_36
+                remove (ref iter);
+#else
+                remove (iter);
+#endif
+                undo_list.add (action);
+
+                return true;
+            } else {
+                return false;
+            }
         }
 
         public void remove_completed_tasks () {
@@ -148,6 +194,34 @@ namespace Agenda {
                 } else {
                     valid = iter_next (ref iter);
                 }
+            }
+        }
+
+        public bool undo () {
+            if (!undo_list.has_previous_action) {
+                return false;
+            }
+
+            Gtk.TreeIter iter;
+
+            var action = undo_list.get_previous_action ();
+            switch (action.action_type) {
+                case ActionType.APPENDED:
+                    if (iter_nth_child (out iter, null, size - 1)) {
+#if VALA_0_36
+                        remove (ref iter);
+#else
+                        remove (iter);
+#endif
+                        return true;
+                    } else {
+                        return false;
+                    }
+                case ActionType.REMOVED:
+                    insert_task (action.id, action.text, false);
+                    return true;
+                default:
+                    return false;
             }
         }
     }

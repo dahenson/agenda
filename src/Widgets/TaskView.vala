@@ -115,16 +115,8 @@ namespace Agenda {
         }
 
         private void list_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
-            Gtk.TreeIter iter;
-
-            task_list.get_iter (out iter, path);
-
             if (column.title == "Delete") {
-#if VALA_0_36
-                task_list.remove (ref iter);
-#else
-                task_list.remove (iter);
-#endif
+                task_list.remove_task (path);
             }
         }
 
