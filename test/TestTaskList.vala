@@ -64,7 +64,7 @@ public class TaskListTests : Gee.TestCase {
         var task1 = test_list.append_task ("a new task");
         var task2 = test_list.append_task ("another new task");
 
-        Gtk.TreePath path = new Gtk.TreePath.from_string ("0:0:0");
+        Gtk.TreePath path = new Gtk.TreePath.from_string ("0");
 
         assert (test_list.remove_task (path));
         assert (test_list.size == 1);
