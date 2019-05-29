@@ -1,8 +1,7 @@
 test_source = files(
     'TestCase.vala',
     'TestTaskList.vala',
-    'TestAction.vala',
-    'TestActionList.vala',
+    'TestTaskListHistory.vala',
     'TestMain.vala'
 )
 

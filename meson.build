@@ -34,6 +34,7 @@ agenda_model_sources = files(
     'src/Models/ActionList.vala',
     'src/Models/HistoryList.vala',
     'src/Models/TaskList.vala',
+    'src/Models/TaskListHistory.vala',
 )
 
 agenda_client_sources = files(

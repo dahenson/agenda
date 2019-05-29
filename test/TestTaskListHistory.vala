@@ -24,26 +24,40 @@ using Agenda;
 public class TaskListHistoryTests : Gee.TestCase {
 
     private TaskListHistory test_list;
+    private TaskList list;
 
     public TaskListHistoryTests () {
         base ("Agenda");
-        add_test ("[TaskListHistory] test basic functions", test_basic_functions);
+        add_test ("[TaskListHistory] test add", test_add);
         add_test ("[TaskListHistory] test get_previous_state",
                   test_get_previous_state);
     }
 
     public override void set_up () {
         test_list = new TaskListHistory ();
+        list = new TaskList ();
     }
 
     public override void tear_down () {
         test_list = null;
+        list = null;
     }
 
-    public void test_basic_functions () {
+    public void test_add () {
+        assert (test_list.size == 0);
+        assert (!test_list.has_previous_state);
+
+        test_list.add (list);
+        assert (test_list.size == 1);
+        assert (test_list.has_previous_state);
     }
 
     public void test_get_previous_state () {
+        assert (test_list.get_previous_state () == null);
+        test_list.add (list);
+        TaskList previous_state = test_list.get_previous_state ();
+        assert (previous_state == list);
+        assert (test_list.size == 1);
     }
 }
 
