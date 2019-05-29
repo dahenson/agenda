@@ -32,6 +32,7 @@ public class TaskListTests : Gee.TestCase {
         add_test ("[TaskList] test remove_task", test_remove_task);
         add_test ("[TaskList] test undo append", test_undo_append);
         add_test ("[TaskList] test undo remove", test_undo_remove);
+        add_test ("[TaskList] test copy", test_copy);
     }
 
     public override void set_up () {
@@ -102,6 +103,24 @@ public class TaskListTests : Gee.TestCase {
 
         assert (test_list.undo ());
         assert (test_list.contains (task3));
+    }
+
+    public void test_copy () {
+        TaskList list_copy = test_list.copy ();
+        assert (list_copy.size == 0);
+
+        test_list.append_task ("a new task");
+        test_list.append_task ("another task");
+        var task3 = test_list.append_task ("last task");
+        assert (test_list.size == 3);
+
+        list_copy = test_list.copy ();
+        assert (list_copy.size == 3);
+        assert (test_list.contains (task3));
+
+        Gtk.TreePath path = new Gtk.TreePath.from_string ("2");
+        assert (test_list.remove_task (path));
+        assert (!test_list.contains (task3));
     }
 }
 

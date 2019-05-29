@@ -103,6 +103,44 @@ namespace Agenda {
         }
 
         /**
+         * Return a copy of the list
+         */
+        public TaskList copy () {
+            TaskList list_copy = new TaskList ();
+            Gtk.TreeIter iter;
+
+            bool toggled;
+            string task;
+            string delete_icon;
+            string draghandle_icon;
+            string id;
+
+            bool valid = get_iter_first (out iter);
+
+            while (valid) {
+                get (iter,
+                     Columns.TOGGLE, out toggled,
+                     Columns.TEXT, out task,
+                     Columns.STRIKETHROUGH, out toggled,
+                     Columns.DELETE, out delete_icon,
+                     Columns.DRAGHANDLE, out draghandle_icon,
+                     Columns.ID, out id);
+
+                list_copy.insert_with_values (null, -1,
+                     Columns.TOGGLE, toggled,
+                     Columns.TEXT, task,
+                     Columns.STRIKETHROUGH, toggled,
+                     Columns.DELETE, delete_icon,
+                     Columns.DRAGHANDLE, draghandle_icon,
+                     Columns.ID, id);
+
+                valid = iter_next (ref iter);
+            }
+
+            return list_copy;
+        }
+
+        /**
          * Gets all tasks in the list
          *
          * @return Array of tasks each prepended with 't' or 'f'
