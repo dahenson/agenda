@@ -33,10 +33,10 @@ namespace Agenda {
             N_COLUMNS
         }
 
-        private ActionList undo_list;
+        private TaskListHistory undo_list;
 
         construct {
-            undo_list = new ActionList ();
+            undo_list = new TaskListHistory ();
 
             Type[] types = {
                 typeof(bool),
@@ -61,6 +61,8 @@ namespace Agenda {
          * @param toggled Whether the task is toggled complete or not
          */
         public string append_task (string task, bool toggled = false) {
+            undo_list.add (this);
+
             var id = Uuid.string_random ();
             Gtk.TreeIter iter;
             append (out iter);
@@ -71,10 +73,6 @@ namespace Agenda {
                 Columns.DELETE, "edit-delete-symbolic",
                 Columns.DRAGHANDLE, "view-list-symbolic",
                 Columns.ID, id);
-
-            Action action = new Action(id, task, ActionType.APPENDED);
-
-            undo_list.add (action);
 
             return id;
         }
@@ -191,20 +189,19 @@ namespace Agenda {
         }
 
         public bool remove_task (Gtk.TreePath path) {
+            undo_list.add (this);
+
             Gtk.TreeIter iter;
-            Action action;
             string id;
             string text;
 
             if (get_iter (out iter, path)) {
                 get (iter, Columns.ID, out id, Columns.TEXT, out text);
-                action = new Action (id, text, ActionType.REMOVED);
 #if VALA_0_36
                 remove (ref iter);
 #else
                 remove (iter);
 #endif
-                undo_list.add (action);
 
                 return true;
             } else {
@@ -236,31 +233,43 @@ namespace Agenda {
         }
 
         public bool undo () {
-            if (!undo_list.has_previous_action) {
+            if (!undo_list.has_previous_state) {
                 return false;
             }
+            this.clear ();
 
             Gtk.TreeIter iter;
+            var state = undo_list.get_previous_state ();
+            bool valid = state.get_iter_first (out iter);
 
-            var action = undo_list.get_previous_action ();
-            switch (action.action_type) {
-                case ActionType.APPENDED:
-                    if (iter_nth_child (out iter, null, size - 1)) {
-#if VALA_0_36
-                        remove (ref iter);
-#else
-                        remove (iter);
-#endif
-                        return true;
-                    } else {
-                        return false;
-                    }
-                case ActionType.REMOVED:
-                    insert_task (action.id, action.text, false);
-                    return true;
-                default:
-                    return false;
+
+            bool toggled;
+            string task;
+            string delete_icon;
+            string draghandle_icon;
+            string id;
+
+            while (valid) {
+                state.get (iter,
+                     Columns.TOGGLE, out toggled,
+                     Columns.TEXT, out task,
+                     Columns.STRIKETHROUGH, out toggled,
+                     Columns.DELETE, out delete_icon,
+                     Columns.DRAGHANDLE, out draghandle_icon,
+                     Columns.ID, out id);
+
+                insert_with_values (null, -1,
+                     Columns.TOGGLE, toggled,
+                     Columns.TEXT, task,
+                     Columns.STRIKETHROUGH, toggled,
+                     Columns.DELETE, delete_icon,
+                     Columns.DRAGHANDLE, draghandle_icon,
+                     Columns.ID, id);
+
+                valid = state.iter_next (ref iter);
             }
+
+            return true;
         }
     }
 }

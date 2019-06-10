@@ -48,15 +48,22 @@ public class TaskListHistoryTests : Gee.TestCase {
         assert (!test_list.has_previous_state);
 
         test_list.add (list);
+
         assert (test_list.size == 1);
         assert (test_list.has_previous_state);
     }
 
     public void test_get_previous_state () {
+        assert (!test_list.has_previous_state);
         assert (test_list.get_previous_state () == null);
+
         test_list.add (list);
+
+        assert (test_list.has_previous_state);
+
         TaskList previous_state = test_list.get_previous_state ();
-        assert (previous_state == list);
+
+        assert (previous_state.size == list.size);
         assert (test_list.size == 1);
     }
 }

@@ -42,7 +42,8 @@ namespace Agenda {
         }
 
         public void add (TaskList state) {
-            iter.add (state);
+            TaskList list = state.copy ();
+            iter.add (list);
 
             if (!has_previous_state) {
                 has_previous_state = true;
