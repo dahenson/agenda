@@ -26,7 +26,7 @@ namespace Agenda {
 
     const string HINT_STRING = _("Add a new task...");
 
-    public class AgendaWindow : Gtk.Window {
+    public class AgendaWindow : Gtk.ApplicationWindow {
 
         private GLib.Settings agenda_settings = new GLib.Settings (
             "com.github.dahenson.agenda");
@@ -47,7 +47,14 @@ namespace Agenda {
         private Gtk.MenuItem            item_clear_history;
         private bool                    is_editing;
 
-        public AgendaWindow () {
+        public AgendaWindow (Agenda app) {
+            Object (application: app);
+
+            var undo_action = new SimpleAction ("undo-action", null);
+            add_action (undo_action);
+            app.set_accels_for_action ("win.undo-action",
+                                       { _("<Ctrl>Z") });
+
             this.get_style_context ().add_class ("rounded");
             this.set_size_request(MIN_WIDTH, MIN_HEIGHT);
 
@@ -81,6 +88,8 @@ namespace Agenda {
 
             load_list ();
             setup_ui ();
+
+            undo_action.activate.connect (task_list.undo);
         }
 
         private void load_list () {
@@ -203,6 +212,10 @@ namespace Agenda {
                 update ();
             });
 
+            task_view.task_added.connect (() => {
+                update ();
+            });
+
             this.key_press_event.connect (key_down_event);
 
             task_view.expand = true;
@@ -234,7 +247,6 @@ namespace Agenda {
             task_list.append_task (text, false);
             history_list.add_item (text);
             task_entry.text = "";
-            update ();
         }
 
         public bool privacy_mode_off () {

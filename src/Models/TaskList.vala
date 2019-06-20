@@ -232,10 +232,11 @@ namespace Agenda {
             }
         }
 
-        public bool undo () {
+        public void undo () {
             if (!undo_list.has_previous_state) {
-                return false;
+                return;
             }
+
             this.clear ();
 
             Gtk.TreeIter iter;
@@ -268,8 +269,6 @@ namespace Agenda {
 
                 valid = state.iter_next (ref iter);
             }
-
-            return true;
         }
     }
 }

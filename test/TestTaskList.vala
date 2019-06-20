@@ -74,21 +74,18 @@ public class TaskListTests : Gee.TestCase {
     }
 
     public void test_undo_append () {
-        assert (!test_list.undo ());
         var task1 = test_list.append_task ("a new task");
         var task2 = test_list.append_task ("another new task");
 
         assert (test_list.size == 2);
 
-        assert (test_list.undo ());
+        test_list.undo ();
         assert (test_list.size == 1);
         assert (!test_list.contains (task2));
         assert (test_list.contains (task1));
 
-        assert (test_list.undo ());
+        test_list.undo ();
         assert (test_list.size == 0);
-
-        assert (!test_list.undo ());
     }
 
     public void test_undo_remove () {
@@ -101,7 +98,7 @@ public class TaskListTests : Gee.TestCase {
         assert (test_list.remove_task (path));
         assert (!test_list.contains (task3));
 
-        assert (test_list.undo ());
+        test_list.undo ();
         assert (test_list.contains (task3));
     }
 

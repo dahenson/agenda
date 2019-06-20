@@ -24,6 +24,7 @@ namespace Agenda {
     public class TaskView : Gtk.TreeView {
 
         public signal void task_deleted ();
+        public signal void task_added ();
 
         private TaskList task_list;
         public bool is_editing;
@@ -34,6 +35,10 @@ namespace Agenda {
 
             task_list.row_deleted.connect ((path) => {
                 task_deleted ();
+            });
+
+            task_list.row_inserted.connect ((path) => {
+                task_added ();
             });
         }
 
