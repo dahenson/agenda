@@ -61,6 +61,7 @@ namespace Agenda {
         }
 
         public static int main (string[] args) {
+            Gtk.init (ref args);
             app = new Agenda ();
 
             if (args[1] == "-s") {

@@ -79,6 +79,33 @@ namespace Agenda {
 
             is_editing = false;
 
+            var gtk_settings = Gtk.Settings.get_default ();
+            var mode_switch = new Granite.ModeSwitch.from_icon_name ("display-brightness-symbolic", "weather-clear-night-symbolic");
+            mode_switch.primary_icon_tooltip_text = _("Light Theme");
+            mode_switch.secondary_icon_tooltip_text = _("Dark Theme");
+            mode_switch.valign = Gtk.Align.CENTER;
+            mode_switch.bind_property ("active", gtk_settings, "gtk_application_prefer_dark_theme");
+
+            mode_switch.notify["active"].connect (() => {
+                if (gtk_settings.gtk_application_prefer_dark_theme) {
+                    agenda_settings.set_boolean("use-dark-theme", true);
+                    this.get_style_context ().add_class ("dark");
+                } else {
+                    agenda_settings.set_boolean("use-dark-theme", false);
+                    this.get_style_context ().remove_class ("dark");
+                }
+            });
+            agenda_settings.bind ("use-dark-theme", mode_switch, "active", GLib.SettingsBindFlags.DEFAULT);
+
+            var header = new Gtk.HeaderBar ();
+            header.show_close_button = true;
+            header.set_title("Agenda");
+            header.has_subtitle = false;
+            header.get_style_context ().add_class ("default-decoration");
+            header.get_style_context ().add_class("header-bar");
+            header.pack_end (mode_switch);
+            set_titlebar (header);
+
             load_list ();
             setup_ui ();
         }
@@ -131,8 +158,6 @@ namespace Agenda {
         }
 
         private void setup_ui () {
-            this.set_title ("Agenda");
-
             task_entry.name = "TaskEntry";
             task_entry.get_style_context().add_class("task-entry");
             task_entry.placeholder_text = HINT_STRING;
