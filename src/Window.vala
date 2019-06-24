@@ -79,22 +79,16 @@ namespace Agenda {
 
             is_editing = false;
 
-            var gtk_settings = Gtk.Settings.get_default ();
             var mode_switch = new Granite.ModeSwitch.from_icon_name ("display-brightness-symbolic", "weather-clear-night-symbolic");
             mode_switch.primary_icon_tooltip_text = _("Light Theme");
             mode_switch.secondary_icon_tooltip_text = _("Dark Theme");
             mode_switch.valign = Gtk.Align.CENTER;
-            mode_switch.bind_property ("active", gtk_settings, "gtk_application_prefer_dark_theme");
+            mode_switch.active = Gtk.Settings.get_default ().gtk_application_prefer_dark_theme;
 
             mode_switch.notify["active"].connect (() => {
-                if (gtk_settings.gtk_application_prefer_dark_theme) {
-                    agenda_settings.set_boolean("use-dark-theme", true);
-                    this.get_style_context ().add_class ("dark");
-                } else {
-                    agenda_settings.set_boolean("use-dark-theme", false);
-                    this.get_style_context ().remove_class ("dark");
-                }
+                Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = mode_switch.active;
             });
+
             agenda_settings.bind ("use-dark-theme", mode_switch, "active", GLib.SettingsBindFlags.DEFAULT);
 
             var header = new Gtk.HeaderBar ();
