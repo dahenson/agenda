@@ -9,5 +9,8 @@
         <key name="first-time" type="b">
             <default>true</default>
         </key>
+				<key name="use-dark-theme" type="b">
+					 <default>false</default>
+				</key>
 	</schema>
 </schemalist>
