@@ -35,6 +35,12 @@ namespace Agenda {
 
         private TaskListHistory undo_list;
 
+        private bool record_undo_enable {
+            private get;
+            private set;
+            default = true;
+        }
+
         construct {
             undo_list = new TaskListHistory ();
 
@@ -61,7 +67,9 @@ namespace Agenda {
          * @param toggled Whether the task is toggled complete or not
          */
         public string append_task (string task, bool toggled = false) {
-            undo_list.add (this);
+            if (record_undo_enable) {
+                undo_list.add (this);
+            }
 
             var id = Uuid.string_random ();
             Gtk.TreeIter iter;
@@ -136,6 +144,14 @@ namespace Agenda {
             }
 
             return list_copy;
+        }
+
+        public void disable_undo_recording () {
+            record_undo_enable = false;
+        }
+
+        public void enable_undo_recording () {
+            record_undo_enable = true;
         }
 
         /**

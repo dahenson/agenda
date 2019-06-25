@@ -117,6 +117,8 @@ namespace Agenda {
                 }
             }
 
+            task_list.disable_undo_recording ();
+
             try {
                 string line;
                 var f_dis = new DataInputStream (list_file.read ());
@@ -137,6 +139,8 @@ namespace Agenda {
             } catch (Error e) {
                 error ("%s", e.message);
             }
+
+            task_list.enable_undo_recording ();
         }
 
         private void setup_ui () {
