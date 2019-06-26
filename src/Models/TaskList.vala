@@ -253,7 +253,6 @@ namespace Agenda {
                 return;
             }
 
-            Gtk.TreeIter iter;
             var state = undo_list.get_previous_state ();
             restore_state (state);
         }
@@ -261,6 +260,7 @@ namespace Agenda {
         private void restore_state (TaskList state) {
             this.clear ();
 
+            Gtk.TreeIter iter;
             bool valid = state.get_iter_first (out iter);
 
             bool toggled;
