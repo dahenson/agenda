@@ -30,8 +30,6 @@ c_args = [
 ]
 
 agenda_model_sources = files(
-    'src/Models/Action.vala',
-    'src/Models/ActionList.vala',
     'src/Models/HistoryList.vala',
     'src/Models/TaskList.vala',
     'src/Models/TaskListHistory.vala',
