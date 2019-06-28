@@ -41,12 +41,38 @@ namespace Agenda {
             default = false;
         }
 
+        public bool has_next_state {
+            public get;
+            private set;
+            default = false;
+        }
+
         public void add (TaskList state) {
-            TaskList list = state.copy ();
-            iter.add (list);
+            if (list.size > 0 && iter.has_next ()) {
+                var temp_list = list.slice(0, iter.index ());
+                list.retain_all (temp_list);
+
+                iter = list.bidir_list_iterator ();
+                iter.last ();
+            }
+
+            TaskList current_state = state.copy ();
+            iter.add (current_state);
 
             if (!has_previous_state) {
                 has_previous_state = true;
+            }
+        }
+
+        public TaskList? get_next_state () {
+            if (iter.valid && iter.has_next ()) {
+                iter.next ();
+                var state = iter.get ();
+
+                return state;
+            } else {
+                has_next_state = false;
+                return null;
             }
         }
 

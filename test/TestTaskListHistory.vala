@@ -31,6 +31,8 @@ public class TaskListHistoryTests : Gee.TestCase {
         add_test ("[TaskListHistory] test add", test_add);
         add_test ("[TaskListHistory] test get_previous_state",
                   test_get_previous_state);
+        add_test ("[TaskListHistory] test get_next_state",
+                  test_get_next_state);
     }
 
     public override void set_up () {
@@ -45,26 +47,52 @@ public class TaskListHistoryTests : Gee.TestCase {
 
     public void test_add () {
         assert (test_list.size == 0);
-        assert (!test_list.has_previous_state);
+        assert (test_list.has_previous_state == false);
 
         test_list.add (list);
+        test_list.add (list);
 
-        assert (test_list.size == 1);
+        assert (test_list.size == 2);
         assert (test_list.has_previous_state);
     }
 
     public void test_get_previous_state () {
-        assert (!test_list.has_previous_state);
+        assert (test_list.has_previous_state == false);
         assert (test_list.get_previous_state () == null);
 
         test_list.add (list);
-
+        test_list.add (list);
+        test_list.add (list);
         assert (test_list.has_previous_state);
+        assert (test_list.size == 3);
 
-        TaskList previous_state = test_list.get_previous_state ();
+        test_list.get_previous_state ();
+        test_list.get_previous_state ();
+        test_list.get_previous_state ();
+        assert (test_list.has_previous_state == false);
+        assert (test_list.size == 3);
+    }
 
-        assert (previous_state.size == list.size);
-        assert (test_list.size == 1);
+    public void test_get_next_state () {
+        assert (test_list.has_next_state == false);
+        assert (test_list.get_next_state () == null);
+
+        test_list.add (list);
+        test_list.add (list);
+        test_list.add (list);
+        assert (test_list.size == 3);
+        assert (test_list.has_next_state == false);
+
+        test_list.get_previous_state ();
+        test_list.get_previous_state ();
+        test_list.get_previous_state ();
+        assert (test_list.get_next_state () != null);
+        assert (test_list.size == 3);
+
+        test_list.get_previous_state ();
+        test_list.add (list);
+        assert (test_list.has_next_state == false);
+        assert (test_list.size == 2);
     }
 }
 
