@@ -210,8 +210,6 @@ namespace Agenda {
         }
 
         public bool remove_task (Gtk.TreePath path) {
-            undo_list.add (this);
-
             Gtk.TreeIter iter;
             string id;
             string text;
@@ -223,6 +221,8 @@ namespace Agenda {
 #else
                 remove (iter);
 #endif
+                if (record_undo_enable)
+                    undo_list.add (this);
 
                 return true;
             } else {
