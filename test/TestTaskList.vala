@@ -32,7 +32,9 @@ public class TaskListTests : Gee.TestCase {
         add_test ("[TaskList] test remove_task", test_remove_task);
         add_test ("[TaskList] test undo append", test_undo_append);
         add_test ("[TaskList] test undo remove", test_undo_remove);
+        add_test ("[TaskList] test redo append", test_redo_append);
         add_test ("[TaskList] test copy", test_copy);
+        add_test ("[TaskList] test clear undo", test_clear_undo);
     }
 
     public override void set_up () {
@@ -74,6 +76,7 @@ public class TaskListTests : Gee.TestCase {
     }
 
     public void test_undo_append () {
+        test_list.clear_undo ();
         var task1 = test_list.append_task ("a new task");
         var task2 = test_list.append_task ("another new task");
 
@@ -89,6 +92,7 @@ public class TaskListTests : Gee.TestCase {
     }
 
     public void test_undo_remove () {
+        test_list.clear_undo ();
         test_list.append_task ("a new task");
         test_list.append_task ("another task");
         var task3 = test_list.append_task ("last task");
@@ -97,9 +101,30 @@ public class TaskListTests : Gee.TestCase {
         Gtk.TreePath path = new Gtk.TreePath.from_string ("2");
         assert (test_list.remove_task (path));
         assert (!test_list.contains (task3));
+        assert (test_list.size == 2);
 
         test_list.undo ();
         assert (test_list.contains (task3));
+        assert (test_list.size == 3);
+    }
+
+    public void test_redo_append () {
+        test_list.clear_undo ();
+        var task1 = test_list.append_task ("a new task");
+        var task2 = test_list.append_task ("another new task");
+
+        assert (test_list.size == 2);
+
+        test_list.undo ();
+        test_list.undo ();
+
+        test_list.redo ();
+        assert (test_list.size == 1);
+        assert (test_list.contains (task1));
+
+        test_list.redo ();
+        assert (test_list.size == 2);
+        assert (test_list.contains (task2));
     }
 
     public void test_copy () {
@@ -118,6 +143,13 @@ public class TaskListTests : Gee.TestCase {
         Gtk.TreePath path = new Gtk.TreePath.from_string ("2");
         assert (test_list.remove_task (path));
         assert (!test_list.contains (task3));
+    }
+
+    public void test_clear_undo () {
+        test_list.append_task ("a new task");
+        test_list.append_task ("another task");
+
+        test_list.clear_undo ();
     }
 }
 

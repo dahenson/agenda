@@ -51,9 +51,15 @@ namespace Agenda {
             Object (application: app);
 
             var undo_action = new SimpleAction ("undo-action", null);
+            var redo_action = new SimpleAction ("redo-action", null);
+
             add_action (undo_action);
+            add_action (redo_action);
+
             app.set_accels_for_action ("win.undo-action",
                                        { _("<Ctrl>Z") });
+            app.set_accels_for_action ("win.redo-action",
+                                       { _("<Ctrl>Y") });
 
             this.get_style_context ().add_class ("rounded");
             this.set_size_request(MIN_WIDTH, MIN_HEIGHT);
@@ -90,6 +96,7 @@ namespace Agenda {
             setup_ui ();
 
             undo_action.activate.connect (task_list.undo);
+            redo_action.activate.connect (task_list.redo);
         }
 
         private void load_list () {
@@ -141,6 +148,7 @@ namespace Agenda {
             }
 
             task_list.enable_undo_recording ();
+            task_list.clear_undo ();
         }
 
         private void setup_ui () {

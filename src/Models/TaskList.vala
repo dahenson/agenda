@@ -67,10 +67,6 @@ namespace Agenda {
          * @param toggled Whether the task is toggled complete or not
          */
         public string append_task (string task, bool toggled = false) {
-            if (record_undo_enable) {
-                undo_list.add (this);
-            }
-
             var id = Uuid.string_random ();
             Gtk.TreeIter iter;
             append (out iter);
@@ -82,7 +78,16 @@ namespace Agenda {
                 Columns.DRAGHANDLE, "view-list-symbolic",
                 Columns.ID, id);
 
+            if (record_undo_enable) {
+                undo_list.add (this);
+            }
+
             return id;
+        }
+
+        public void clear_undo () {
+            undo_list = new TaskListHistory ();
+            undo_list.add (this);
         }
 
         /**
@@ -248,20 +253,25 @@ namespace Agenda {
             }
         }
 
-        public void undo () {
-            if (!undo_list.has_previous_state) {
-                return;
-            }
+        public void redo () {
+            var state = undo_list.get_next_state ();
 
+            if (state != null)
+                restore_state (state);
+        }
+
+        public void undo () {
             var state = undo_list.get_previous_state ();
-            restore_state (state);
+
+            if (state != null)
+                restore_state (state);
         }
 
         private void restore_state (TaskList state) {
             this.clear ();
 
-            Gtk.TreeIter iter;
-            bool valid = state.get_iter_first (out iter);
+            Gtk.TreeIter state_iter;
+            bool valid = state.get_iter_first (out state_iter);
 
             bool toggled;
             string task;
@@ -270,7 +280,7 @@ namespace Agenda {
             string id;
 
             while (valid) {
-                state.get (iter,
+                state.get (state_iter,
                      Columns.TOGGLE, out toggled,
                      Columns.TEXT, out task,
                      Columns.STRIKETHROUGH, out toggled,
@@ -278,7 +288,7 @@ namespace Agenda {
                      Columns.DRAGHANDLE, out draghandle_icon,
                      Columns.ID, out id);
 
-                insert_with_values (null, -1,
+                this.insert_with_values (null, -1,
                      Columns.TOGGLE, toggled,
                      Columns.TEXT, task,
                      Columns.STRIKETHROUGH, toggled,
@@ -286,7 +296,7 @@ namespace Agenda {
                      Columns.DRAGHANDLE, draghandle_icon,
                      Columns.ID, id);
 
-                valid = state.iter_next (ref iter);
+                valid = state.iter_next (ref state_iter);
             }
         }
     }
