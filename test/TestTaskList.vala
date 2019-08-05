@@ -33,6 +33,7 @@ public class TaskListTests : Gee.TestCase {
         add_test ("[TaskList] test undo append", test_undo_append);
         add_test ("[TaskList] test undo remove", test_undo_remove);
         add_test ("[TaskList] test redo append", test_redo_append);
+        add_test ("[TaskList] test drag reorder", test_undo_drag_reorder);
         add_test ("[TaskList] test copy", test_copy);
     }
 
@@ -124,6 +125,21 @@ public class TaskListTests : Gee.TestCase {
         test_list.redo ();
         assert (test_list.size == 2);
         assert (test_list.contains (task2));
+    }
+
+    public void test_undo_drag_reorder () {
+        test_list.clear_undo ();
+        var task1 = test_list.append_task ("first task");
+        test_list.append_task ("second task");
+        test_list.append_task ("third task");
+
+        // Simulate drag and drop reorder
+        test_list.insert_task(task1, "first task", false);
+        test_list.remove_task(new Gtk.TreePath.from_string("0"));
+        assert(test_list.size == 3);
+
+        test_list.undo ();
+        assert(test_list.size == 3);
     }
 
     public void test_copy () {
