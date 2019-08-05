@@ -41,6 +41,10 @@ namespace Agenda {
             default = true;
         }
 
+        public int size {
+            public get { return iter_n_children (null); }
+        }
+
         construct {
             undo_list = new TaskListHistory ();
 
@@ -54,10 +58,9 @@ namespace Agenda {
             };
 
             set_column_types (types);
-        }
 
-        public int size {
-            public get { return iter_n_children (null); }
+            row_changed.connect (on_row_changed);
+            row_deleted.connect (on_row_deleted);
         }
 
         /**
@@ -71,16 +74,12 @@ namespace Agenda {
             Gtk.TreeIter iter;
             append (out iter);
             set (iter,
-                Columns.TOGGLE, toggled,
-                Columns.TEXT, task,
-                Columns.STRIKETHROUGH, toggled,
-                Columns.DELETE, "edit-delete-symbolic",
-                Columns.DRAGHANDLE, "view-list-symbolic",
-                Columns.ID, id);
-
-            if (record_undo_enable) {
-                undo_list.add (this);
-            }
+                 Columns.TOGGLE, toggled,
+                 Columns.TEXT, task,
+                 Columns.STRIKETHROUGH, toggled,
+                 Columns.DELETE, "edit-delete-symbolic",
+                 Columns.DRAGHANDLE, "view-list-symbolic",
+                 Columns.ID, id);
 
             return id;
         }
@@ -111,6 +110,26 @@ namespace Agenda {
             }
 
             return false;
+        }
+
+        public bool has_duplicates_of (string id) {
+            Gtk.TreeIter iter;
+            bool valid = get_iter_first (out iter);
+            int count = 0;
+
+            while (valid) {
+                string list_id;
+                get (iter, TaskList.Columns.ID, out list_id);
+
+                if (list_id == id)
+                    count++;
+                valid = iter_next(ref iter);
+            }
+
+            if (count > 1)
+                return true;
+            else
+                return false;
         }
 
         /**
@@ -209,6 +228,19 @@ namespace Agenda {
             return !get_iter_first (out iter);
         }
 
+        private void on_row_changed (Gtk.TreePath path, Gtk.TreeIter iter) {
+            string list_id;
+
+            get (iter, TaskList.Columns.ID, out list_id);
+            if (record_undo_enable && !has_duplicates_of (list_id))
+                undo_list.add (this);
+        }
+
+        private void on_row_deleted (Gtk.TreePath path) {
+            if (record_undo_enable)
+                undo_list.add (this);
+        }
+
         public bool remove_task (Gtk.TreePath path) {
             Gtk.TreeIter iter;
             string id;
@@ -221,8 +253,6 @@ namespace Agenda {
 #else
                 remove (iter);
 #endif
-                if (record_undo_enable)
-                    undo_list.add (this);
 
                 return true;
             } else {
@@ -268,6 +298,7 @@ namespace Agenda {
         }
 
         private void restore_state (TaskList state) {
+            disable_undo_recording ();
             this.clear ();
 
             Gtk.TreeIter state_iter;
@@ -298,6 +329,7 @@ namespace Agenda {
 
                 valid = state.iter_next (ref state_iter);
             }
+            enable_undo_recording ();
         }
     }
 }
