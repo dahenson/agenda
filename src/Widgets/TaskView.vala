@@ -24,6 +24,7 @@ namespace Agenda {
     public class TaskView : Gtk.TreeView {
 
         public signal void task_deleted ();
+        public signal void task_added ();
 
         private TaskList task_list;
         public bool is_editing;
@@ -34,6 +35,10 @@ namespace Agenda {
 
             task_list.row_deleted.connect ((path) => {
                 task_deleted ();
+            });
+
+            task_list.row_inserted.connect ((path) => {
+                task_added ();
             });
         }
 
@@ -115,16 +120,8 @@ namespace Agenda {
         }
 
         private void list_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
-            Gtk.TreeIter iter;
-
-            task_list.get_iter (out iter, path);
-
             if (column.title == "Delete") {
-#if VALA_0_36
-                task_list.remove (ref iter);
-#else
-                task_list.remove (iter);
-#endif
+                task_list.remove_task (path);
             }
         }
 

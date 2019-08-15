@@ -29,14 +29,18 @@ c_args = [
   '-include', 'config.h'
 ]
 
+agenda_model_sources = files(
+    'src/Models/HistoryList.vala',
+    'src/Models/TaskList.vala',
+    'src/Models/TaskListHistory.vala',
+)
+
 agenda_client_sources = files(
     'src/Agenda.vala',
-    'src/HistoryList.vala',
-    'src/TaskView.vala',
-    'src/TaskList.vala',
     'src/Translations.vala',
     'src/Utils.vala',
     'src/Window.vala',
+    'src/Widgets/TaskView.vala',
 )
 
 # dependencies
@@ -52,7 +56,7 @@ agenda_deps = [
 
 executable(
     meson.project_name(),
-    agenda_client_sources,
+    agenda_client_sources + agenda_model_sources,
     asresources,
     vala_args: vala_args,
     c_args: c_args,
@@ -64,3 +68,4 @@ meson.add_install_script('meson/post_install.py')
 
 subdir('data')
 subdir('po')
+subdir('test')
