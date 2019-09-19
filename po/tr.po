@@ -35,7 +35,7 @@ msgstr "Ajanda Hakkında"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:24
 msgid "Add a new task..."
-msgstr "Yeni bir görev ekle..."
+msgstr "Yeni görev ekle..."
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
 msgid "No Tasks!"
@@ -63,8 +63,8 @@ msgstr "Görev tamamlandı"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
 msgid " tasks have been removed"
-msgstr " görev tamamlandı"
+msgstr " görev kaldırıldı"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
 msgid "A task has been removed"
-msgstr "Görev tamamlandı"
+msgstr "Görev kaldırıldı"
