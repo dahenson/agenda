@@ -24,7 +24,7 @@ vala_args = [
 ]
 
 c_args = [
-  '-include', 'config.h'
+    '-include', 'config.h'
 ]
 
 agenda_model_sources = files(
