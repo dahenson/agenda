@@ -27,16 +27,19 @@ Agenda is designed and built for [elementary OS](https://elementary.io), and is 
 If you want to hack on Agenda, you'll need the following packages installed:
 * libgtk-3-dev
 * libgranite-dev
+* meson
 * valac
 
-Then do the `cmake` dance to build and install:
+Run `meson build` to configure the build environment. Change to the build directory and run `ninja` to build
 
-```
-mkdir build; cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=/usr
-make
-sudo make install
-```
+    meson build --prefix=/usr
+    cd build
+    ninja
+
+To install, use `ninja install`, then execute with `com.github.dahenson.agenda`
+
+    sudo ninja install
+    com.github.dahenson.agenda
 
 ## Other Platforms
 
