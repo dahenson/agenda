@@ -92,6 +92,10 @@ namespace Agenda {
 
             is_editing = false;
 
+            if (first) {
+                agenda_settings.set_boolean ("first-time", false);
+            }
+
             load_list ();
             setup_ui ();
 
