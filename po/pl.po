@@ -42,11 +42,11 @@ msgstr "Brak zadań!"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
 msgid "(add one below)"
-msgstr "(Dodaj jakieś poniżej)"
+msgstr "(dodaj jakieś poniżej)"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
 msgid "(way to go)"
-msgstr ""
+msgstr "(tak trzymaj)"
 
 #: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:228
 msgid "Add to list..."
