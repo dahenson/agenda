@@ -16,7 +16,6 @@ add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi
 conf = configuration_data()
 conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 conf.set_quoted('VERSION', meson.project_version())
-conf.set_quoted('DATADIR', get_option('datadir'))
 conf.set_quoted('PKGDATADIR', join_paths(get_option('datadir'), meson.project_name()))
 configure_file(output: 'config.h', configuration: conf)
 config_h_dir = include_directories('.')
@@ -26,7 +25,7 @@ vala_args = [
 ]
 
 c_args = [
-  '-include', 'config.h'
+    '-include', 'config.h'
 ]
 
 agenda_model_sources = files(
