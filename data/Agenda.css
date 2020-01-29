@@ -42,17 +42,18 @@ treeview:selected {
     background-color: @selected_bg_color;
 }
 
-treeview .entry {
+treeview entry {
     background-image: none;
     background-color: @bg_color;
-    border-bottom: 1px solid @fg_color;
+    border-bottom: 1px solid @selected_bg_color;
 }
 
-treeview .entry selection,
-treeview .entry selection:focus,
-treeview .entry:selected,
-treeview .entry:selected:focus {
-    background-color: @colorAccent;
+treeview entry selection,
+treeview entry selection:focus,
+treeview entry:selected,
+treeview entry:selected:focus {
+    color: @selected_fg_color;
+    background-color: @selected_bg_color;
 }
 
 treeview .image {
