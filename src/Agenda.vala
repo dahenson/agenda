@@ -44,11 +44,15 @@ namespace Agenda {
             window.show_all ();
             window.update ();
 
-            var provider = new Gtk.CssProvider ();
-            provider.load_from_resource (
-                "com/github/dahenson/agenda/Agenda.css");
-            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (),
-                provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            if (elementary_stylesheet ()) {
+                var elementary_provider = new Gtk.CssProvider ();
+                elementary_provider.load_from_resource (
+                    "com/github/dahenson/agenda/Agenda.css");
+                Gtk.StyleContext.add_provider_for_screen (
+                    Gdk.Screen.get_default (),
+                    elementary_provider,
+                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            }
         }
 
         public static Agenda get_instance () {
@@ -67,6 +71,11 @@ namespace Agenda {
             }
 
             return app.run (args);
+        }
+
+        public static bool elementary_stylesheet () {
+            return Gtk.Settings.get_default ().gtk_theme_name.has_prefix
+                ("elementary");
         }
     }
 }
