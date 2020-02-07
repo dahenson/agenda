@@ -57,9 +57,9 @@ namespace Agenda {
             add_action (redo_action);
 
             app.set_accels_for_action ("win.undo-action",
-                                       { _("<Ctrl>Z") });
+                                       {"<Ctrl>Z"});
             app.set_accels_for_action ("win.redo-action",
-                                       { _("<Ctrl>Y") });
+                                       {"<Ctrl>Y"});
 
             this.get_style_context ().add_class ("rounded");
             this.set_size_request(MIN_WIDTH, MIN_HEIGHT);
