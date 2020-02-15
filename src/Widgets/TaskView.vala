@@ -51,11 +51,11 @@ namespace Agenda {
             valign = Gtk.Align.FILL;
             reorderable = true;
 
-            var column        = new Gtk.TreeViewColumn ();
-            var text          = new Gtk.CellRendererText ();
-            var toggle        = new Gtk.CellRendererToggle ();
+            var column = new Gtk.TreeViewColumn ();
+            var text = new Gtk.CellRendererText ();
+            var toggle = new Gtk.CellRendererToggle ();
             var delete_button = new Gtk.CellRendererPixbuf ();
-            var draghandle    = new Gtk.CellRendererPixbuf ();
+            var draghandle = new Gtk.CellRendererPixbuf ();
 
             // Setup the TOGGLE column
             toggle.xpad = 6;
@@ -82,7 +82,7 @@ namespace Agenda {
             delete_button.xpad = 6;
             column = new Gtk.TreeViewColumn.with_attributes (
                 "Delete", delete_button, "icon_name", TaskList.Columns.DELETE);
-            append_column(column);
+            append_column (column);
 
             // Setup the DRAGHANDLE column
             draghandle.xpad = 6;
@@ -160,4 +160,3 @@ namespace Agenda {
         }
     }
 }
-

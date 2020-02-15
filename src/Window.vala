@@ -24,7 +24,7 @@ namespace Agenda {
     const int MIN_WIDTH = 500;
     const int MIN_HEIGHT = 600;
 
-    const string HINT_STRING = _("Add a new task...");
+    const string HINT_STRING = _("Add a new task…");
 
     public class AgendaWindow : Gtk.ApplicationWindow {
 
@@ -37,15 +37,15 @@ namespace Agenda {
         File history_file;
 
         private Granite.Widgets.Welcome agenda_welcome;
-        private TaskView                task_view;
-        private TaskList                task_list;
-        private Gtk.ScrolledWindow      scrolled_window;
-        private Gtk.Entry               task_entry;
-        private Gtk.Grid                grid;
-        private HistoryList             history_list;
-        private Gtk.SeparatorMenuItem   separator;
-        private Gtk.MenuItem            item_clear_history;
-        private bool                    is_editing;
+        private TaskView task_view;
+        private TaskList task_list;
+        private Gtk.ScrolledWindow scrolled_window;
+        private Gtk.Entry task_entry;
+        private Gtk.Grid grid;
+        private HistoryList history_list;
+        private Gtk.SeparatorMenuItem separator;
+        private Gtk.MenuItem item_clear_history;
+        private bool is_editing;
 
         public AgendaWindow (Agenda app) {
             Object (application: app);
@@ -62,16 +62,16 @@ namespace Agenda {
                                        {"<Ctrl>Y"});
 
             this.get_style_context ().add_class ("rounded");
-            this.set_size_request(MIN_WIDTH, MIN_HEIGHT);
+            this.set_size_request (MIN_WIDTH, MIN_HEIGHT);
 
             // Set up geometry
-            Gdk.Geometry geo = Gdk.Geometry();
+            Gdk.Geometry geo = Gdk.Geometry ();
             geo.min_width = MIN_WIDTH;
             geo.min_height = MIN_HEIGHT;
             geo.max_width = 1024;
             geo.max_height = 2048;
 
-            this.set_geometry_hints(
+            this.set_geometry_hints (
                 null,
                 geo,
                 Gdk.WindowHints.MIN_SIZE | Gdk.WindowHints.MAX_SIZE);
@@ -159,13 +159,13 @@ namespace Agenda {
             this.set_title ("Agenda");
 
             task_entry.name = "TaskEntry";
-            task_entry.get_style_context().add_class("task-entry");
+            task_entry.get_style_context ().add_class ("task-entry");
             task_entry.placeholder_text = HINT_STRING;
             task_entry.max_length = 64;
             task_entry.hexpand = true;
             task_entry.valign = Gtk.Align.START;
             task_entry.set_icon_tooltip_text (
-                Gtk.EntryIconPosition.SECONDARY, _("Add to list..."));
+                Gtk.EntryIconPosition.SECONDARY, _("Add to list…"));
 
             Gtk.EntryCompletion completion = new Gtk.EntryCompletion ();
             completion.set_model (history_list);
@@ -176,7 +176,7 @@ namespace Agenda {
             task_entry.activate.connect (append_task);
             task_entry.icon_press.connect (append_task);
 
-            task_entry.changed.connect(() => {
+            task_entry.changed.connect (() => {
                 var str = task_entry.get_text ();
                 if ( str == "" ) {
                     task_entry.set_icon_from_icon_name (
@@ -224,7 +224,7 @@ namespace Agenda {
                  *  through DND.  This also takes care of the toggled row, since
                  *  it is removed and the row_deleted signal is emitted.
                  */
-                save_list (task_list.get_all_tasks(), list_file);
+                save_list (task_list.get_all_tasks (), list_file);
                 update ();
             });
 
@@ -266,7 +266,12 @@ namespace Agenda {
         }
 
         public bool privacy_mode_off () {
-            return privacy_setting.get_boolean ("remember-app-usage") || privacy_setting.get_boolean ("remember-recent-files");
+            bool remember_app_usage = privacy_setting.get_boolean
+                ("remember-app-usage");
+            bool remember_recent_files = privacy_setting.get_boolean
+                ("remember-recent-files");
+
+            return remember_app_usage || remember_recent_files;
         }
 
         public void restore_window_position () {
@@ -285,7 +290,7 @@ namespace Agenda {
             }
 
             if (win_size.n_children () == 2) {
-                var width =  (int32) win_size.get_child_value (0);
+                var width = (int32) win_size.get_child_value (0);
                 var height = (int32) win_size.get_child_value (1);
                 debug ("Resizing to width and height: %d, %d", width, height);
                 this.resize (width, height);
@@ -305,7 +310,7 @@ namespace Agenda {
         }
 
         public bool main_quit () {
-            save_list (task_list.get_all_tasks(), list_file);
+            save_list (task_list.get_all_tasks (), list_file);
             history_to_file ();
             save_window_position ();
             this.destroy ();

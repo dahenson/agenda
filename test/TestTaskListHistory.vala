@@ -94,4 +94,3 @@ public class TaskListHistoryTests : Gee.TestCase {
         assert (test_list.size == 2);
     }
 }
-

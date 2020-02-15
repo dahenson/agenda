@@ -41,7 +41,7 @@ namespace Agenda {
 
         public void add (TaskList state) {
             if (iter.has_next ()) {
-                var temp_list = list.slice(0, iter.index () + 1);
+                var temp_list = list.slice (0, iter.index () + 1);
                 list.retain_all (temp_list);
             }
 
@@ -70,4 +70,3 @@ namespace Agenda {
         }
     }
 }
-
