@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dahenson.agenda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-07 21:48+0900\n"
+"POT-Creation-Date: 2020-02-15 18:09-0600\n"
 "PO-Revision-Date: 2020-02-08 07:57+0900\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: none\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/Window.vala:27
-msgid "Add a new task..."
+#, fuzzy
+msgid "Add a new task…"
 msgstr "新しいタスクを追加…"
 
 #: src/Window.vala:83
@@ -34,7 +35,8 @@ msgid "(way to go)"
 msgstr "(お疲れさまです)"
 
 #: src/Window.vala:168
-msgid "Add to list..."
+#, fuzzy
+msgid "Add to list…"
 msgstr "リストに追加…"
 
 #: src/Window.vala:194
