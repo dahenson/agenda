@@ -32,11 +32,22 @@
       <li>Saves your task list automatically</li>
       <li>See your completed tasks until you choose to delete them</li>
       <li>Autocompletion for previously added tasks</li>
+      <li>Undo/Redo with Ctrl-Z and Ctrl-Y</li>
       <li>Quit with the Esc key</li>
     </ul>
   </description>
 
   <releases>
+    <release version="1.1.0" date="2020-03-04">
+      <description>
+        <p>New features and polish</p>
+        <ul>
+          <li>Added Undo/Redo feature to save you from yourself</li>
+          <li>Restored first-run message</li>
+          <li>Tons of code refactoring for stability</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.12" date="2018-09-14">
       <description>
         <p>Visual updates and code fixes</p>
