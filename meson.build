@@ -1,5 +1,5 @@
 project('com.github.dahenson.agenda', ['vala', 'c'],
-    version: '1.0.12'
+    version: '1.1.0'
 )
 
 gnome = import('gnome')
