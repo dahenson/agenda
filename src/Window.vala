@@ -266,10 +266,8 @@ namespace Agenda {
         }
 
         public bool privacy_mode_off () {
-            bool remember_app_usage = privacy_setting.get_boolean
-                ("remember-app-usage");
-            bool remember_recent_files = privacy_setting.get_boolean
-                ("remember-recent-files");
+            bool remember_app_usage = privacy_setting.get_boolean ("remember-app-usage");
+            bool remember_recent_files = privacy_setting.get_boolean ("remember-recent-files");
 
             return remember_app_usage || remember_recent_files;
         }
