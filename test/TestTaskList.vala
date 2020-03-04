@@ -134,12 +134,12 @@ public class TaskListTests : Gee.TestCase {
         test_list.append_task ("third task");
 
         // Simulate drag and drop reorder
-        test_list.insert_task(task1, "first task", false);
-        test_list.remove_task(new Gtk.TreePath.from_string("0"));
-        assert(test_list.size == 3);
+        test_list.insert_task (task1, "first task", false);
+        test_list.remove_task (new Gtk.TreePath.from_string ("0"));
+        assert (test_list.size == 3);
 
         test_list.undo ();
-        assert(test_list.size == 3);
+        assert (test_list.size == 3);
     }
 
     public void test_copy () {
@@ -160,4 +160,3 @@ public class TaskListTests : Gee.TestCase {
         assert (!test_list.contains (task3));
     }
 }
-

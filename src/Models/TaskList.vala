@@ -49,12 +49,12 @@ namespace Agenda {
             undo_list = new TaskListHistory ();
 
             Type[] types = {
-                typeof(bool),
-                typeof(string),
-                typeof(bool),
-                typeof(string),
-                typeof(string),
-                typeof(string)
+                typeof (bool),
+                typeof (string),
+                typeof (bool),
+                typeof (string),
+                typeof (string),
+                typeof (string)
             };
 
             set_column_types (types);
@@ -123,7 +123,7 @@ namespace Agenda {
 
                 if (list_id == id)
                     count++;
-                valid = iter_next(ref iter);
+                valid = iter_next (ref iter);
             }
 
             if (count > 1)
@@ -262,7 +262,7 @@ namespace Agenda {
 
         public void remove_completed_tasks () {
             Gtk.TreeIter iter;
-            bool valid  = get_iter_first (out iter);
+            bool valid = get_iter_first (out iter);
             bool active;
             int counter = 0;
 

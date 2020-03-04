@@ -24,7 +24,7 @@ namespace Agenda {
     public class HistoryList : Gtk.ListStore {
 
         construct {
-            Type[] types = { typeof(string) };
+            Type[] types = { typeof (string) };
             set_column_types (types);
         }
 

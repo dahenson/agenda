@@ -40,7 +40,7 @@ namespace Agenda {
             }
 
             window = new AgendaWindow (this);
-            window.delete_event.connect(window.main_quit);
+            window.delete_event.connect (window.main_quit);
             window.show_all ();
             window.update ();
 
