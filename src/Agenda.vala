@@ -1,21 +1,21 @@
 /***
 
-    Copyright (C) 2014-2018 Agenda Developers
+    Copyright (C) 2014-2020 Agenda Developers
 
     This file is part of Agenda.
 
-    Foobar is free software: you can redistribute it and/or modify
+    Agenda is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Foobar is distributed in the hope that it will be useful,
+    Agenda is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+    along with Agenda.  If not, see <http://www.gnu.org/licenses/>.
 
 ***/
 
@@ -25,7 +25,6 @@ using Granite;
 namespace Agenda {
 
     public class Agenda : Gtk.Application {
-
         private static Agenda app;
         private AgendaWindow window = null;
 
@@ -35,22 +34,25 @@ namespace Agenda {
         }
 
         protected override void activate () {
-            // if app is already open
             if (window != null) {
                 window.present ();
                 return;
             }
 
-            window = new AgendaWindow ();
-            window.set_application (this);
-            window.delete_event.connect(window.main_quit);
+            window = new AgendaWindow (this);
+            window.delete_event.connect (window.main_quit);
             window.show_all ();
             window.update ();
 
-            var provider = new Gtk.CssProvider ();
-            provider.load_from_resource ("com/github/dahenson/agenda/Agenda.css");
-            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (),
-                provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            if (elementary_stylesheet ()) {
+                var elementary_provider = new Gtk.CssProvider ();
+                elementary_provider.load_from_resource (
+                    "com/github/dahenson/agenda/Agenda.css");
+                Gtk.StyleContext.add_provider_for_screen (
+                    Gdk.Screen.get_default (),
+                    elementary_provider,
+                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            }
         }
 
         public static Agenda get_instance () {
@@ -62,12 +64,6 @@ namespace Agenda {
         }
 
         public static int main (string[] args) {
-
-            // Init internationalization support
-            Intl.setlocale (LocaleCategory.ALL, "");
-            Intl.bind_textdomain_codeset (Build.GETTEXT_PACKAGE, "UTF-8");
-            Intl.textdomain (Build.GETTEXT_PACKAGE);
-
             app = new Agenda ();
 
             if (args[1] == "-s") {
@@ -75,6 +71,11 @@ namespace Agenda {
             }
 
             return app.run (args);
+        }
+
+        public static bool elementary_stylesheet () {
+            return Gtk.Settings.get_default ().gtk_theme_name.has_prefix
+                ("elementary");
         }
     }
 }

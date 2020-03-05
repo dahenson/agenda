@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.dahenson.agenda package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.dahenson.agenda\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-15 18:09-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Window.vala:27
+msgid "Add a new task…"
+msgstr ""
+
+#: src/Window.vala:83
+msgid "No Tasks!"
+msgstr ""
+
+#: src/Window.vala:84
+msgid "(add one below)"
+msgstr ""
+
+#: src/Window.vala:84
+msgid "(way to go)"
+msgstr ""
+
+#: src/Window.vala:168
+msgid "Add to list…"
+msgstr ""
+
+#: src/Window.vala:194
+msgid "Clear history"
+msgstr ""

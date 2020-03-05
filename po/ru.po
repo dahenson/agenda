@@ -6,65 +6,63 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: agenda-tasks\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-01-25 10:15+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-15 18:09-0600\n"
 "PO-Revision-Date: 2016-03-29 14:38+0000\n"
 "Last-Translator: Eugene Marshal <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2016-03-30 06:13+0000\n"
 "X-Generator: Launchpad (build 17967)\n"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/Agenda.vala:57
-msgid "A simple, slick, speedy and no-nonsense task manager."
-msgstr "Простой и быстрый менеджер задач"
-
-#: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:6
-msgid "What's to be done"
-msgstr "Намеченные задачи"
-
-#: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:7
-msgid "Todo;Tasks;"
-msgstr "Задачи;Планы"
-
-#: /home/fabio/Projects/agenda-tasks/po/../src/Translations.vala:8
-msgid "About Agenda"
-msgstr "Сведения о Agenda"
-
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:24
-msgid "Add a new task..."
+#: src/Window.vala:27
+#, fuzzy
+msgid "Add a new task…"
 msgstr "Создать новую задачу..."
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:99
+#: src/Window.vala:83
 msgid "No Tasks!"
 msgstr "Задачи отсутствуют!"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
+#: src/Window.vala:84
 msgid "(add one below)"
 msgstr "(добавить один ниже)"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:100
+#: src/Window.vala:84
 msgid "(way to go)"
 msgstr "(хорошая работа)"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:228
-msgid "Add to list..."
+#: src/Window.vala:168
+#, fuzzy
+msgid "Add to list…"
 msgstr "Добавить в список..."
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:247
+#: src/Window.vala:194
 msgid "Clear history"
 msgstr "Очистить журнал"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
-msgid "Task finished"
-msgstr "Задание завершено"
+#, fuzzy
+#~ msgid "Agenda"
+#~ msgstr "Сведения о Agenda"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
-msgid " tasks have been removed"
-msgstr " задач было удалено"
+#, fuzzy
+#~ msgid "Task List"
+#~ msgstr "Задание завершено"
 
-#: /home/fabio/Projects/agenda-tasks/po/../src/AgendaWindow.vala:413
-msgid "A task has been removed"
-msgstr "Задача была удалена"
+#~ msgid "Todo;Tasks;"
+#~ msgstr "Задачи;Планы"
+
+#~ msgid "A simple, slick, speedy and no-nonsense task manager."
+#~ msgstr "Простой и быстрый менеджер задач"
+
+#~ msgid "What's to be done"
+#~ msgstr "Намеченные задачи"
+
+#~ msgid " tasks have been removed"
+#~ msgstr " задач было удалено"
+
+#~ msgid "A task has been removed"
+#~ msgstr "Задача была удалена"
