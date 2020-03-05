@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2018 Agenda Developers
+    Copyright (C) 2014-2020 Agenda Developers
 
     This file is part of Agenda.
 
