@@ -135,12 +135,16 @@ namespace Agenda {
                 var f_dis = new DataInputStream (list_file.read ());
 
                 while ((line = f_dis.read_line (null)) != null) {
-                    var task = line.split (",", 2);
-                    if (task[0] == "t") {
-                        task_list.append_task (task[1], true);
+                    var task_line = line.split (",", 2);
+                    Task task = new Task ();
+                    task.text = task_line[1];
+
+                    if (task_line[0] == "t") {
+                        task.complete = true;
                     } else {
-                        task_list.append_task (task[1], false);
+                        task.complete = false;
                     }
+                    task_list.append_task (task);
                 }
 
                 var h_dis = new DataInputStream (history_file.read ());
@@ -259,9 +263,13 @@ namespace Agenda {
         }
 
         public void append_task () {
-            var text = task_entry.text;
-            task_list.append_task (text, false);
-            history_list.add_item (text);
+            Task task = new Task.with_attributes (
+                "",
+                false,
+                task_entry.text);
+
+            task_list.append_task (task);
+            history_list.add_item (task.text);
             task_entry.text = "";
         }
 

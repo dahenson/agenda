@@ -66,22 +66,23 @@ namespace Agenda {
         /**
          * Add a task to the end of the task list
          *
-         * @param task The string representing the task
-         * @param toggled Whether the task is toggled complete or not
+         * @param task The task being appended to the list
          */
-        public string append_task (string task, bool toggled = false) {
-            var id = Uuid.string_random ();
+        public void append_task (Task task) {
             Gtk.TreeIter iter;
+
+            if (task.id == "") {
+                task.id = Uuid.string_random ();
+            }
+
             append (out iter);
             set (iter,
-                 Columns.TOGGLE, toggled,
-                 Columns.TEXT, task,
-                 Columns.STRIKETHROUGH, toggled,
+                 Columns.TOGGLE, task.complete,
+                 Columns.TEXT, task.text,
+                 Columns.STRIKETHROUGH, task.complete,
                  Columns.DELETE, "edit-delete-symbolic",
                  Columns.DRAGHANDLE, "view-list-symbolic",
-                 Columns.ID, id);
-
-            return id;
+                 Columns.ID, task.id);
         }
 
         public void clear_undo () {

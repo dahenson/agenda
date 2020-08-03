@@ -25,6 +25,8 @@ public class TaskListHistoryTests : Gee.TestCase {
 
     private TaskListHistory test_list;
     private TaskList list;
+    private Agenda.Task test_task_1;
+    private Agenda.Task test_task_2;
 
     public TaskListHistoryTests () {
         base ("Agenda");
@@ -38,6 +40,9 @@ public class TaskListHistoryTests : Gee.TestCase {
     public override void set_up () {
         test_list = new TaskListHistory ();
         list = new TaskList ();
+
+        test_task_1 = new Agenda.Task.with_attributes ("1", false, "foo");
+        test_task_2 = new Agenda.Task.with_attributes ("2", true, "bar");
     }
 
     public override void tear_down () {
@@ -59,10 +64,10 @@ public class TaskListHistoryTests : Gee.TestCase {
 
         test_list.add (list);
 
-        list.append_task ("First Task");
+        list.append_task (test_task_1);
         test_list.add (list);
 
-        list.append_task ("Second Task");
+        list.append_task (test_task_2);
         test_list.add (list);
 
         assert (test_list.size == 3);
