@@ -24,22 +24,6 @@ namespace Agenda {
     public void load_list () {
     }
 
-    public void save_list (string[] list, File file) {
-        try {
-            if (file.query_exists ()) {
-                file.delete ();
-            }
-
-            var file_dos = new DataOutputStream (
-                file.create (FileCreateFlags.REPLACE_DESTINATION));
-            foreach (string item in list) {
-                file_dos.put_string (item + "\n");
-            }
-        } catch (Error e) {
-            error ("Error: %s\n", e.message);
-        }
-    }
-
     public void save_tasks (Task[] list, File file) {
         try {
             if (file.query_exists ()) {
