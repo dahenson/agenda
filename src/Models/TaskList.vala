@@ -182,25 +182,29 @@ namespace Agenda {
         /**
          * Gets all tasks in the list
          *
-         * @return Array of tasks each prepended with 't' or 'f'
+         * @return Array of tasks
          */
-        public string[] get_all_tasks () {
+        public Task[] get_all_tasks () {
             Gtk.TreeIter iter;
             bool valid = get_iter_first (out iter);
 
-            string[] tasks = {};
+            Task[] tasks = {};
 
             while (valid) {
-                bool toggle;
+                string id;
+                bool complete;
                 string text;
-                get (iter, TaskList.Columns.TOGGLE, out toggle);
-                get (iter, TaskList.Columns.TEXT, out text);
-                if (toggle) {
-                    text = "t," + text;
-                } else {
-                    text = "f," + text;
-                }
-                tasks += text;
+
+                get (iter,
+                     Columns.ID, out id,
+                     Columns.TOGGLE, out complete,
+                     Columns.TEXT, out text);
+
+                Task task = new Task.with_attributes (
+                    id,
+                    complete,
+                    text);
+                tasks += task;
                 valid = iter_next (ref iter);
             }
 
@@ -284,6 +288,19 @@ namespace Agenda {
 
             if (state != null)
                 restore_state (state);
+        }
+
+        public Task get_task (Gtk.TreeIter iter) {
+            string id;
+            bool complete;
+            string text;
+
+            this.get (iter,
+                      Columns.ID, out id,
+                      Columns.TOGGLE, out complete,
+                      Columns.TEXT, out text);
+
+            return new Task.with_attributes (id, complete, text);
         }
 
         private void restore_state (TaskList state) {

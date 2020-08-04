@@ -39,4 +39,20 @@ namespace Agenda {
             error ("Error: %s\n", e.message);
         }
     }
+
+    public void save_tasks (Task[] list, File file) {
+        try {
+            if (file.query_exists ()) {
+                file.delete ();
+            }
+
+            var file_dos = new DataOutputStream (
+                file.create (FileCreateFlags.REPLACE_DESTINATION));
+            foreach (Task task in list) {
+                file_dos.put_string (task.to_string () + "\n");
+            }
+        } catch (Error e) {
+            error ("Error: %s\n", e.message);
+        }
+    }
 }

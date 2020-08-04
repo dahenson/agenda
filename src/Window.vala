@@ -228,7 +228,7 @@ namespace Agenda {
                  *  through DND.  This also takes care of the toggled row, since
                  *  it is removed and the row_deleted signal is emitted.
                  */
-                save_list (task_list.get_all_tasks (), list_file);
+                save_tasks (task_list.get_all_tasks (), list_file);
                 update ();
             });
 
@@ -316,7 +316,7 @@ namespace Agenda {
         }
 
         public bool main_quit () {
-            save_list (task_list.get_all_tasks (), list_file);
+            save_tasks (task_list.get_all_tasks (), list_file);
             history_to_file ();
             save_window_position ();
             this.destroy ();

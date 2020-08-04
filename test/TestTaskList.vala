@@ -33,6 +33,7 @@ public class TaskListTests : Gee.TestCase {
         base ("Agenda");
         add_test ("[TaskList] test basic functions", test_basic_functions);
         add_test ("[TaskList] test append", test_append);
+        add_test ("[TaskList] test get_all_tasks", test_get_all_tasks);
         add_test ("[TaskList] test get_task", test_get_task);
         add_test ("[TaskList] test remove_task", test_remove_task);
         add_test ("[TaskList] test undo append", test_undo_append);
@@ -73,6 +74,19 @@ public class TaskListTests : Gee.TestCase {
         assert (test_list.size == 2);
         assert (test_list.contains (test_task_1.id));
         assert (test_list.contains (test_task_2.id));
+    }
+
+    public void test_get_all_tasks () {
+        test_list.append_task (test_task_1);
+        test_list.append_task (test_task_2);
+        test_list.append_task (test_task_3);
+
+        Agenda.Task[] tasks = test_list.get_all_tasks ();
+
+        assert (tasks.length == 3);
+        assert (tasks[0].id == test_task_1.id);
+        assert (tasks[1].id == test_task_2.id);
+        assert (tasks[2].id == test_task_3.id);
     }
 
     public void test_get_task () {
