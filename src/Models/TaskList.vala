@@ -207,18 +207,6 @@ namespace Agenda {
             return tasks;
         }
 
-        public void insert_task (string id, string text, bool toggled) {
-            Gtk.TreeIter iter;
-            append (out iter);
-            set (iter,
-                Columns.TOGGLE, toggled,
-                Columns.TEXT, text,
-                Columns.STRIKETHROUGH, toggled,
-                Columns.DELETE, "edit-delete-symbolic",
-                Columns.DRAGHANDLE, "view-list-symbolic",
-                Columns.ID, id);
-        }
-
         /**
          * Gets if the task list is empty or not
          *
