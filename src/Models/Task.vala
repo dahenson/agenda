@@ -21,22 +21,31 @@
 
 namespace Agenda {
 
-    public void load_list () {
-    }
+    public class Task : GLib.Object {
+        public string id { get; set; default = ""; }
+        public bool complete { get; set; default = false; }
+        public string text { get; set; default = ""; }
 
-    public void save_tasks (Task[] list, File file) {
-        try {
-            if (file.query_exists ()) {
-                file.delete ();
+        public Task () {
+        }
+
+        public Task.with_attributes (string id, bool complete, string text) {
+            Object (
+                id: id,
+                complete: complete,
+                text: text);
+        }
+
+        public string to_string () {
+            string str;
+
+            if (this.complete) {
+                str = "t," + this.text;
+            } else {
+                str = "f," + this.text;
             }
 
-            var file_dos = new DataOutputStream (
-                file.create (FileCreateFlags.REPLACE_DESTINATION));
-            foreach (Task task in list) {
-                file_dos.put_string (task.to_string () + "\n");
-            }
-        } catch (Error e) {
-            error ("Error: %s\n", e.message);
+            return str;
         }
     }
 }
