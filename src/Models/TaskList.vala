@@ -113,60 +113,14 @@ namespace Agenda {
             return false;
         }
 
-        public bool has_duplicates_of (string id) {
-            Gtk.TreeIter iter;
-            bool valid = get_iter_first (out iter);
-            int count = 0;
-
-            while (valid) {
-                string list_id;
-                get (iter, TaskList.Columns.ID, out list_id);
-
-                if (list_id == id)
-                    count++;
-                valid = iter_next (ref iter);
-            }
-
-            if (count > 1)
-                return true;
-            else
-                return false;
-        }
-
         /**
          * Return a copy of the list
          */
         public TaskList copy () {
             TaskList list_copy = new TaskList ();
-            Gtk.TreeIter iter;
+            Task[] tasks = get_all_tasks ();
 
-            bool toggled;
-            string task;
-            string delete_icon;
-            string draghandle_icon;
-            string id;
-
-            bool valid = get_iter_first (out iter);
-
-            while (valid) {
-                get (iter,
-                     Columns.TOGGLE, out toggled,
-                     Columns.TEXT, out task,
-                     Columns.STRIKETHROUGH, out toggled,
-                     Columns.DELETE, out delete_icon,
-                     Columns.DRAGHANDLE, out draghandle_icon,
-                     Columns.ID, out id);
-
-                list_copy.insert_with_values (null, -1,
-                     Columns.TOGGLE, toggled,
-                     Columns.TEXT, task,
-                     Columns.STRIKETHROUGH, toggled,
-                     Columns.DELETE, delete_icon,
-                     Columns.DRAGHANDLE, draghandle_icon,
-                     Columns.ID, id);
-
-                valid = iter_next (ref iter);
-            }
+            list_copy.load_tasks (tasks);
 
             return list_copy;
         }
@@ -191,24 +145,45 @@ namespace Agenda {
             Task[] tasks = {};
 
             while (valid) {
-                string id;
-                bool complete;
-                string text;
-
-                get (iter,
-                     Columns.ID, out id,
-                     Columns.TOGGLE, out complete,
-                     Columns.TEXT, out text);
-
-                Task task = new Task.with_attributes (
-                    id,
-                    complete,
-                    text);
+                Task task = get_task (iter);
                 tasks += task;
                 valid = iter_next (ref iter);
             }
 
             return tasks;
+        }
+
+        public Task get_task (Gtk.TreeIter iter) {
+            string id;
+            bool complete;
+            string text;
+
+            this.get (iter,
+                      Columns.ID, out id,
+                      Columns.TOGGLE, out complete,
+                      Columns.TEXT, out text);
+
+            return new Task.with_attributes (id, complete, text);
+        }
+
+        public bool has_duplicates_of (string id) {
+            Gtk.TreeIter iter;
+            bool valid = get_iter_first (out iter);
+            int count = 0;
+
+            while (valid) {
+                string list_id;
+                get (iter, TaskList.Columns.ID, out list_id);
+
+                if (list_id == id)
+                    count++;
+                valid = iter_next (ref iter);
+            }
+
+            if (count > 1)
+                return true;
+            else
+                return false;
         }
 
         /**
@@ -219,6 +194,18 @@ namespace Agenda {
         public bool is_empty () {
             Gtk.TreeIter iter;
             return !get_iter_first (out iter);
+        }
+
+        public void load_tasks (Task[] tasks) {
+            foreach (Task task in tasks) {
+                this.insert_with_values (null, -1,
+                     Columns.TOGGLE, task.complete,
+                     Columns.TEXT, task.text,
+                     Columns.STRIKETHROUGH, task.complete,
+                     Columns.DELETE, "edit-delete-symbolic",
+                     Columns.DRAGHANDLE, "view-list-symbolic",
+                     Columns.ID, task.id);
+            }
         }
 
         private void on_row_changed (Gtk.TreePath path, Gtk.TreeIter iter) {
@@ -290,51 +277,14 @@ namespace Agenda {
                 restore_state (state);
         }
 
-        public Task get_task (Gtk.TreeIter iter) {
-            string id;
-            bool complete;
-            string text;
-
-            this.get (iter,
-                      Columns.ID, out id,
-                      Columns.TOGGLE, out complete,
-                      Columns.TEXT, out text);
-
-            return new Task.with_attributes (id, complete, text);
-        }
-
         private void restore_state (TaskList state) {
             disable_undo_recording ();
             this.clear ();
 
-            Gtk.TreeIter state_iter;
-            bool valid = state.get_iter_first (out state_iter);
+            Task[] tasks = state.get_all_tasks ();
 
-            bool toggled;
-            string task;
-            string delete_icon;
-            string draghandle_icon;
-            string id;
+            this.load_tasks (tasks);
 
-            while (valid) {
-                state.get (state_iter,
-                     Columns.TOGGLE, out toggled,
-                     Columns.TEXT, out task,
-                     Columns.STRIKETHROUGH, out toggled,
-                     Columns.DELETE, out delete_icon,
-                     Columns.DRAGHANDLE, out draghandle_icon,
-                     Columns.ID, out id);
-
-                this.insert_with_values (null, -1,
-                     Columns.TOGGLE, toggled,
-                     Columns.TEXT, task,
-                     Columns.STRIKETHROUGH, toggled,
-                     Columns.DELETE, delete_icon,
-                     Columns.DRAGHANDLE, draghandle_icon,
-                     Columns.ID, id);
-
-                valid = state.iter_next (ref state_iter);
-            }
             enable_undo_recording ();
         }
     }

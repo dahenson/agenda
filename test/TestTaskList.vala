@@ -41,6 +41,7 @@ public class TaskListTests : Gee.TestCase {
         add_test ("[TaskList] test redo append", test_redo_append);
         add_test ("[TaskList] test drag reorder", test_undo_drag_reorder);
         add_test ("[TaskList] test copy", test_copy);
+        add_test ("[TaskList] test load_tasks", test_load_tasks);
     }
 
     public override void set_up () {
@@ -195,5 +196,17 @@ public class TaskListTests : Gee.TestCase {
         Gtk.TreePath path = new Gtk.TreePath.from_string ("2");
         assert (test_list.remove_task (path));
         assert (!test_list.contains (test_task_3.id));
+    }
+
+    public void test_load_tasks () {
+        Agenda.Task[] tasks = {
+            test_task_1,
+            test_task_2,
+            test_task_3
+        };
+        test_list.load_tasks (tasks);
+
+        assert (test_list.size == 3);
+        assert (test_list.contains (test_task_1.id));
     }
 }
