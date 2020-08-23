@@ -22,6 +22,8 @@
 namespace Agenda {
     public interface Backend : GLib.Object {
         public abstract Task[] load_tasks ();
+        public abstract string[] load_history ();
         public abstract void save_tasks (Task[] tasks);
+        public abstract void save_history (string[] history);
     }
 }
