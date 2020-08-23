@@ -33,8 +33,7 @@ namespace Agenda {
         private GLib.Settings privacy_setting = new GLib.Settings (
             "org.gnome.desktop.privacy");
 
-        File list_file;
-        File history_file;
+        FileBackend backend;
 
         private Granite.Widgets.Welcome agenda_welcome;
         private TaskView task_view;
@@ -96,6 +95,8 @@ namespace Agenda {
                 agenda_settings.set_boolean ("first-time", false);
             }
 
+            backend = new FileBackend ();
+
             load_list ();
             setup_ui ();
 
@@ -104,55 +105,16 @@ namespace Agenda {
         }
 
         private void load_list () {
-            Granite.Services.Paths.initialize (
-                "agenda", Build.PKGDATADIR);
-            Granite.Services.Paths.ensure_directory_exists (
-                Granite.Services.Paths.user_data_folder);
-
-            list_file = Granite.Services.Paths.user_data_folder.get_child ("tasks");
-            history_file = Granite.Services.Paths.user_data_folder.get_child ("history");
-
-            if ( !list_file.query_exists () ) {
-                try {
-                    list_file.create (FileCreateFlags.NONE);
-                } catch (Error e) {
-                    error ("Error: %s\n", e.message);
-                }
-            }
-
-            if ( !history_file.query_exists () ) {
-                try {
-                    history_file.create (FileCreateFlags.NONE);
-                } catch (Error e) {
-                    error ("Error: %s\n", e.message);
-                }
-            }
-
             task_list.disable_undo_recording ();
 
-            try {
-                string line;
-                var f_dis = new DataInputStream (list_file.read ());
+            var tasks = backend.load_tasks ();
+            foreach (Task task in tasks) {
+                task_list.append_task (task);
+            }
 
-                while ((line = f_dis.read_line (null)) != null) {
-                    var task_line = line.split (",", 2);
-                    Task task = new Task ();
-                    task.text = task_line[1];
-
-                    if (task_line[0] == "t") {
-                        task.complete = true;
-                    } else {
-                        task.complete = false;
-                    }
-                    task_list.append_task (task);
-                }
-
-                var h_dis = new DataInputStream (history_file.read ());
-                while ((line = h_dis.read_line (null)) != null && privacy_mode_off ()) {
-                    history_list.add_item (line);
-                }
-            } catch (Error e) {
-                error ("%s", e.message);
+            var history = backend.load_history ();
+            foreach (string line in history) {
+                history_list.add_item (line);
             }
 
             task_list.enable_undo_recording ();
@@ -228,7 +190,7 @@ namespace Agenda {
                  *  through DND.  This also takes care of the toggled row, since
                  *  it is removed and the row_deleted signal is emitted.
                  */
-                save_tasks (task_list.get_all_tasks (), list_file);
+                backend.save_tasks (task_list.get_all_tasks ());
                 update ();
             });
 
@@ -316,8 +278,8 @@ namespace Agenda {
         }
 
         public bool main_quit () {
-            save_tasks (task_list.get_all_tasks (), list_file);
-            history_to_file ();
+            backend.save_tasks (task_list.get_all_tasks ());
+            backend.save_history (history_list.get_all_tasks ());
             save_window_position ();
             this.destroy ();
 
@@ -357,29 +319,6 @@ namespace Agenda {
         void hide_welcome () {
             agenda_welcome.hide ();
             scrolled_window.show ();
-        }
-
-        public void history_to_file () {
-            Gtk.TreeIter iter;
-            bool valid = history_list.get_iter_first (out iter);
-
-            try {
-                if (history_file.query_exists ()) {
-                    history_file.delete ();
-                }
-
-                var history_dos = new DataOutputStream (
-                    history_file.create (FileCreateFlags.REPLACE_DESTINATION));
-                while (valid) {
-                    string text;
-
-                    history_list.get (iter, 0, out text);
-                    history_dos.put_string (text + "\n");
-                    valid = history_list.iter_next (ref iter);
-                }
-            } catch (Error e) {
-                error ("Error: %s\n", e.message);
-            }
         }
     }
 }
