@@ -37,7 +37,6 @@ agenda_model_sources = files(
 
 agenda_client_sources = files(
     'src/Agenda.vala',
-    'src/Utils.vala',
     'src/Window.vala',
     'src/Widgets/TaskView.vala',
     'src/Backend/BackendInterface.vala',
