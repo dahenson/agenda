@@ -90,31 +90,29 @@ namespace Agenda {
         }
 
         public void save_history (string[] history) {
-            try {
-                if (history_file.query_exists ()) {
-                    history_file.delete ();
-                }
-
-                var history_dos = new DataOutputStream (
-                    history_file.create (FileCreateFlags.REPLACE_DESTINATION));
-                foreach (string line in history) {
-                    history_dos.put_string (line + "\n");
-                }
-            } catch (Error e) {
-                error ("Error: %s\n", e.message);
-            }
+            save_to_file (history, history_file);
         }
 
         public void save_tasks (Task[] tasks) {
+            string[] lines = {};
+
+            foreach (Task task in tasks) {
+                lines += task.to_string ();
+            }
+
+            save_to_file (lines, task_file);
+        }
+
+        private void save_to_file (string[] lines, File file) {
             try {
-                if (task_file.query_exists ()) {
-                    task_file.delete ();
+                if (file.query_exists ()) {
+                    file.delete ();
                 }
 
                 var file_dos = new DataOutputStream (
-                    task_file.create (FileCreateFlags.REPLACE_DESTINATION));
-                foreach (Task task in tasks) {
-                    file_dos.put_string (task.to_string () + "\n");
+                    file.create (FileCreateFlags.REPLACE_DESTINATION));
+                foreach (string line in lines) {
+                    file_dos.put_string (line + "\n");
                 }
             } catch (Error e) {
                 error ("Error: %s\n", e.message);
