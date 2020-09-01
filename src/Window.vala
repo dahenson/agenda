@@ -113,8 +113,10 @@ namespace Agenda {
             }
 
             var history = backend.load_history ();
-            foreach (string line in history) {
-                history_list.add_item (line);
+            if (privacy_mode_off ()) {
+                foreach (string line in history) {
+                    history_list.add_item (line);
+                }
             }
 
             task_list.enable_undo_recording ();
