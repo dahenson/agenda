@@ -20,23 +20,10 @@
 ***/
 
 namespace Agenda {
-
-    public void load_list () {
-    }
-
-    public void save_tasks (Task[] list, File file) {
-        try {
-            if (file.query_exists ()) {
-                file.delete ();
-            }
-
-            var file_dos = new DataOutputStream (
-                file.create (FileCreateFlags.REPLACE_DESTINATION));
-            foreach (Task task in list) {
-                file_dos.put_string (task.to_string () + "\n");
-            }
-        } catch (Error e) {
-            error ("Error: %s\n", e.message);
-        }
+    public interface Backend : GLib.Object {
+        public abstract Task[] load_tasks ();
+        public abstract string[] load_history ();
+        public abstract void save_tasks (Task[] tasks);
+        public abstract void save_history (string[] history);
     }
 }
