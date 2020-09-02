@@ -33,7 +33,7 @@ namespace Agenda {
         private GLib.Settings privacy_setting = new GLib.Settings (
             "org.gnome.desktop.privacy");
 
-        FileBackend backend;
+        private FileBackend backend;
 
         private Granite.Widgets.Welcome agenda_welcome;
         private TaskView task_view;
@@ -44,7 +44,6 @@ namespace Agenda {
         private HistoryList history_list;
         private Gtk.SeparatorMenuItem separator;
         private Gtk.MenuItem item_clear_history;
-        private bool is_editing;
 
         public AgendaWindow (Agenda app) {
             Object (application: app);
@@ -88,8 +87,6 @@ namespace Agenda {
             grid = new Gtk.Grid ();
 
             history_list = new HistoryList ();
-
-            is_editing = false;
 
             if (first) {
                 agenda_settings.set_boolean ("first-time", false);
