@@ -107,7 +107,7 @@ namespace Agenda {
                 Gtk.TreePath p = new Gtk.TreePath ();
                 get_path_at_pos ((int) event.x, (int) event.y, out p, null, null, null);
                 if (p == null) {
-                    get_selection().unselect_all ();
+                    get_selection ().unselect_all ();
                     p.free ();
                     return true;
                 }

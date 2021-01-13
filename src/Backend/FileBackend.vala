@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2020 Agenda Developers
+    Copyright (C) 2014-2021 Agenda Developers
 
     This file is part of Agenda.
 
@@ -30,20 +30,19 @@ namespace Agenda {
 
             File dir = File.new_for_path (user_data).get_child ("agenda");
 
-            if (!dir.query_exists ()) {
-                try {
-                    dir.make_directory_with_parents ();
-                } catch {
+            try {
+                dir.make_directory_with_parents ();
+            } catch (Error e) {
+                if (e is IOError.EXISTS) {
+                    info ("%s", e.message);
+                } else {
                     error ("Could not access or create directory '%s'.",
                            dir.get_path ());
                 }
             }
 
             task_file = dir.get_child ("tasks");
-            ensure_file_exists (task_file);
-
             history_file = dir.get_child ("history");
-            ensure_file_exists (history_file);
         }
 
         public string[] load_history () {
@@ -51,13 +50,18 @@ namespace Agenda {
 
             try {
                 string line;
-                var f_dis = new DataInputStream (history_file.read ());
+                var file_input_stream = history_file.read ();
+                var f_dis = new DataInputStream (file_input_stream);
 
                 while ((line = f_dis.read_line (null)) != null) {
                     history += line;
                 }
             } catch (Error e) {
-                error ("%s", e.message);
+                if (e is IOError.NOT_FOUND) {
+                    info ("%s", e.message);
+                } else {
+                    error ("%s", e.message);
+                }
             }
 
             return history;
@@ -68,7 +72,8 @@ namespace Agenda {
 
             try {
                 string line;
-                var f_dis = new DataInputStream (task_file.read ());
+                var file_input_stream = task_file.read ();
+                var f_dis = new DataInputStream (file_input_stream);
 
                 while ((line = f_dis.read_line (null)) != null) {
                     var task_line = line.split (",", 2);
@@ -83,7 +88,11 @@ namespace Agenda {
                     tasks += task;
                 }
             } catch (Error e) {
-                error ("%s", e.message);
+                if (e is IOError.NOT_FOUND) {
+                    info ("%s", e.message);
+                } else {
+                    error ("%s", e.message);
+                }
             }
 
             return tasks;
@@ -105,27 +114,13 @@ namespace Agenda {
 
         private void save_to_file (string[] lines, File file) {
             try {
-                if (file.query_exists ()) {
-                    file.delete ();
-                }
-
-                var file_dos = new DataOutputStream (
-                    file.create (FileCreateFlags.REPLACE_DESTINATION));
+                var file_fos = file.replace (null, false, FileCreateFlags.NONE);
+                var file_dos = new DataOutputStream (file_fos);
                 foreach (string line in lines) {
                     file_dos.put_string (line + "\n");
                 }
             } catch (Error e) {
                 error ("Error: %s\n", e.message);
-            }
-        }
-
-        private void ensure_file_exists (File file) {
-            if ( !file.query_exists () ) {
-                try {
-                    task_file.create (FileCreateFlags.NONE);
-                } catch (Error e) {
-                    error ("Error: %s\n", e.message);
-                }
             }
         }
     }
