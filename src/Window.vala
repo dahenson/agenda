@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2020 Agenda Developers
+    Copyright (C) 2014-2021 Agenda Developers
 
     This file is part of Agenda.
 
@@ -35,6 +35,7 @@ namespace Agenda {
 
         private FileBackend backend;
 
+        private Gtk.HeaderBar header;
         private Granite.Widgets.Welcome agenda_welcome;
         private TaskView task_view;
         private TaskList task_list;
@@ -61,6 +62,12 @@ namespace Agenda {
 
             this.get_style_context ().add_class ("rounded");
             this.set_size_request (MIN_WIDTH, MIN_HEIGHT);
+
+            header = new Gtk.HeaderBar ();
+            header.show_close_button = true;
+            header.get_style_context ().add_class ("titlebar");
+            header.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+            this.set_titlebar (header);
 
             // Set up geometry
             Gdk.Geometry geo = Gdk.Geometry ();
