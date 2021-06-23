@@ -35,16 +35,12 @@ namespace Agenda {
 
         private FileBackend backend;
 
-        private Gtk.HeaderBar header;
         private Granite.Widgets.Welcome agenda_welcome;
         private TaskView task_view;
         private TaskList task_list;
         private Gtk.ScrolledWindow scrolled_window;
         private Gtk.Entry task_entry;
-        private Gtk.Grid grid;
         private HistoryList history_list;
-        private Gtk.SeparatorMenuItem separator;
-        private Gtk.MenuItem item_clear_history;
 
         public AgendaWindow (Agenda app) {
             Object (application: app);
@@ -63,7 +59,7 @@ namespace Agenda {
             this.get_style_context ().add_class ("rounded");
             this.set_size_request (MIN_WIDTH, MIN_HEIGHT);
 
-            header = new Gtk.HeaderBar ();
+            var header = new Gtk.HeaderBar ();
             header.show_close_button = true;
             header.get_style_context ().add_class ("titlebar");
             header.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
@@ -91,7 +87,6 @@ namespace Agenda {
             task_view = new TaskView.with_list (task_list);
             scrolled_window = new Gtk.ScrolledWindow (null, null);
             task_entry = new Gtk.Entry ();
-            grid = new Gtk.Grid ();
 
             history_list = new HistoryList ();
 
@@ -162,8 +157,8 @@ namespace Agenda {
             task_entry.populate_popup.connect ((menu) => {
                 Gtk.TreeIter iter;
                 bool valid = history_list.get_iter_first (out iter);
-                separator = new Gtk.SeparatorMenuItem ();
-                item_clear_history = new Gtk.MenuItem.with_label (_("Clear history"));
+                var separator = new Gtk.SeparatorMenuItem ();
+                var item_clear_history = new Gtk.MenuItem.with_label (_("Clear history"));
 
                 menu.insert (separator, 6);
                 menu.insert (item_clear_history, 7);
@@ -188,19 +183,8 @@ namespace Agenda {
                 return false;
             });
 
-            task_view.task_deleted.connect (() => {
-                /**
-                 *  When a row is dragged and dropped, a new row is inserted,
-                 *  then populated, then the old row is deleted.  This way, we
-                 *  write the new order to the file every time it gets reordered
-                 *  through DND.  This also takes care of the toggled row, since
-                 *  it is removed and the row_deleted signal is emitted.
-                 */
+            task_list.list_changed.connect (() => {
                 backend.save_tasks (task_list.get_all_tasks ());
-                update ();
-            });
-
-            task_view.task_added.connect (() => {
                 update ();
             });
 
@@ -214,6 +198,7 @@ namespace Agenda {
 
             agenda_welcome.expand = true;
 
+            var grid = new Gtk.Grid ();
             grid.expand = true;
             grid.row_homogeneous = false;
             grid.attach (agenda_welcome, 0, 0, 1, 1);

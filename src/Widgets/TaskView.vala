@@ -101,7 +101,7 @@ namespace Agenda {
             });
 
             text.edited.connect (text_edited);
-            toggle.toggled.connect (task_toggled);
+            toggle.toggled.connect (toggle_clicked);
             row_activated.connect (list_row_activated);
             button_press_event.connect ((event) => {
                 Gtk.TreePath p = new Gtk.TreePath ();
@@ -149,13 +149,9 @@ namespace Agenda {
             }
         }
 
-        private void task_toggled (Gtk.CellRendererToggle toggle, string path) {
+        private void toggle_clicked (Gtk.CellRendererToggle toggle, string path) {
             var tree_path = new Gtk.TreePath.from_string (path);
-            Gtk.TreeIter iter;
-            task_list.get_iter (out iter, tree_path);
-            task_list.set (iter,
-                TaskList.Columns.TOGGLE, !toggle.active,
-                TaskList.Columns.STRIKETHROUGH, !toggle.active);
+            task_list.toggle_task (tree_path);
         }
 
         private void text_edited (string path, string edited_text) {

@@ -23,6 +23,8 @@ namespace Agenda {
 
     public class TaskList : Gtk.ListStore {
 
+        public signal void list_changed ();
+
         public enum Columns {
             TOGGLE,
             TEXT,
@@ -83,6 +85,8 @@ namespace Agenda {
                  Columns.DELETE, "edit-delete-symbolic",
                  Columns.DRAGHANDLE, "view-list-symbolic",
                  Columns.ID, task.id);
+
+            list_changed ();
         }
 
         public void clear_undo () {
@@ -212,13 +216,20 @@ namespace Agenda {
             string list_id;
 
             get (iter, TaskList.Columns.ID, out list_id);
-            if (record_undo_enable && !has_duplicates_of (list_id))
+            if (record_undo_enable && !has_duplicates_of (list_id)) {
                 undo_list.add (this);
+                list_changed ();
+            }
         }
 
         private void on_row_deleted (Gtk.TreePath path) {
+            /**
+             * This takes care of when a row is removed, and also when
+             * a row is reordered through drag and drop.
+             */
             if (record_undo_enable)
                 undo_list.add (this);
+                list_changed ();
         }
 
         public bool remove_task (Gtk.TreePath path) {
@@ -261,6 +272,8 @@ namespace Agenda {
                     valid = iter_next (ref iter);
                 }
             }
+
+            list_changed ();
         }
 
         public void redo () {
@@ -286,6 +299,21 @@ namespace Agenda {
             this.load_tasks (tasks);
 
             enable_undo_recording ();
+            list_changed ();
+        }
+
+        public void toggle_task (Gtk.TreePath path) {
+            bool toggle;
+            Gtk.TreeIter iter;
+
+            get_iter (out iter, path);
+
+            get (iter, Columns.TOGGLE, out toggle);
+            set (iter,
+                TaskList.Columns.TOGGLE, !toggle,
+                TaskList.Columns.STRIKETHROUGH, !toggle);
+
+            list_changed ();
         }
     }
 }

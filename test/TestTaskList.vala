@@ -36,6 +36,7 @@ public class TaskListTests : Gee.TestCase {
         add_test ("[TaskList] test get_all_tasks", test_get_all_tasks);
         add_test ("[TaskList] test get_task", test_get_task);
         add_test ("[TaskList] test remove_task", test_remove_task);
+        add_test ("[TaskList] test toggle_task", test_toggle_task);
         add_test ("[TaskList] test undo append", test_undo_append);
         add_test ("[TaskList] test undo remove", test_undo_remove);
         add_test ("[TaskList] test redo append", test_redo_append);
@@ -111,6 +112,19 @@ public class TaskListTests : Gee.TestCase {
         assert (test_list.size == 1);
         assert (!test_list.contains (test_task_1.id));
         assert (test_list.contains (test_task_2.id));
+    }
+
+    public void test_toggle_task () {
+        test_list.append_task (test_task_1);
+
+        var tree_path = new Gtk.TreePath.from_string ("0");
+        test_list.toggle_task (tree_path);
+
+        Gtk.TreeIter iter;
+        test_list.get_iter (out iter, tree_path);
+
+        var t = test_list.get_task (iter);
+        assert (t.complete == !test_task_1.complete);
     }
 
     public void test_undo_append () {
