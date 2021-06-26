@@ -23,23 +23,12 @@ namespace Agenda {
 
     public class TaskView : Gtk.TreeView {
 
-        public signal void task_deleted ();
-        public signal void task_added ();
-
         private TaskList task_list;
         public bool is_editing;
 
         public TaskView.with_list (TaskList list) {
             task_list = list;
             model = task_list;
-
-            task_list.row_deleted.connect ((path) => {
-                task_deleted ();
-            });
-
-            task_list.row_inserted.connect ((path) => {
-                task_added ();
-            });
         }
 
         construct {
@@ -118,16 +107,15 @@ namespace Agenda {
 
         public void toggle_selected_task () {
             Gtk.TreeIter iter;
-            Gtk.TreeSelection tree_selection;
-            bool current_state;
 
-            tree_selection = get_selection ();
+            var tree_selection = get_selection ();
             tree_selection.get_selected (null, out iter);
-            task_list.get (iter, 0, out current_state);
+            Gtk.TreePath path = task_list.get_path (iter);
+            if (path != null) {
+                task_list.toggle_task (path);
+            }
 
-            task_list.set (iter,
-                           TaskList.Columns.TOGGLE, !current_state,
-                           TaskList.Columns.STRIKETHROUGH, !current_state);
+            path.free ();
         }
 
         private void list_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
