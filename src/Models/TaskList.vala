@@ -302,6 +302,14 @@ namespace Agenda {
             list_changed ();
         }
 
+        public void set_task_text (string path, string text) {
+            Gtk.TreeIter iter;
+            var tree_path = new Gtk.TreePath.from_string (path);
+
+            get_iter (out iter, tree_path);
+            set (iter, TaskList.Columns.TEXT, text);
+        }
+
         public void toggle_task (Gtk.TreePath path) {
             bool toggle;
             Gtk.TreeIter iter;

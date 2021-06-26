@@ -147,10 +147,7 @@ namespace Agenda {
             if (task_is_empty (edited_text)) {
                 return;
             }
-
-            Gtk.TreeIter iter;
-            task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
-            task_list.set (iter, TaskList.Columns.TEXT, edited_text);
+            task_list.set_task_text (path, edited_text);
             is_editing = false;
         }
     }
