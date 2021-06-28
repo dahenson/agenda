@@ -23,23 +23,12 @@ namespace Agenda {
 
     public class TaskView : Gtk.TreeView {
 
-        public signal void task_deleted ();
-        public signal void task_added ();
-
         private TaskList task_list;
         public bool is_editing;
 
         public TaskView.with_list (TaskList list) {
             task_list = list;
             model = task_list;
-
-            task_list.row_deleted.connect ((path) => {
-                task_deleted ();
-            });
-
-            task_list.row_inserted.connect ((path) => {
-                task_added ();
-            });
         }
 
         construct {
@@ -101,13 +90,13 @@ namespace Agenda {
             });
 
             text.edited.connect (text_edited);
-            toggle.toggled.connect (task_toggled);
+            toggle.toggled.connect (toggle_clicked);
             row_activated.connect (list_row_activated);
             button_press_event.connect ((event) => {
                 Gtk.TreePath p = new Gtk.TreePath ();
                 get_path_at_pos ((int) event.x, (int) event.y, out p, null, null, null);
                 if (p == null) {
-                    get_selection().unselect_all ();
+                    get_selection ().unselect_all ();
                     p.free ();
                     return true;
                 }
@@ -118,16 +107,15 @@ namespace Agenda {
 
         public void toggle_selected_task () {
             Gtk.TreeIter iter;
-            Gtk.TreeSelection tree_selection;
-            bool current_state;
 
-            tree_selection = get_selection ();
+            var tree_selection = get_selection ();
             tree_selection.get_selected (null, out iter);
-            task_list.get (iter, 0, out current_state);
+            Gtk.TreePath path = task_list.get_path (iter);
+            if (path != null) {
+                task_list.toggle_task (path);
+            }
 
-            task_list.set (iter,
-                           TaskList.Columns.TOGGLE, !current_state,
-                           TaskList.Columns.STRIKETHROUGH, !current_state);
+            path.free ();
         }
 
         private void list_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
@@ -149,13 +137,9 @@ namespace Agenda {
             }
         }
 
-        private void task_toggled (Gtk.CellRendererToggle toggle, string path) {
+        private void toggle_clicked (Gtk.CellRendererToggle toggle, string path) {
             var tree_path = new Gtk.TreePath.from_string (path);
-            Gtk.TreeIter iter;
-            task_list.get_iter (out iter, tree_path);
-            task_list.set (iter,
-                TaskList.Columns.TOGGLE, !toggle.active,
-                TaskList.Columns.STRIKETHROUGH, !toggle.active);
+            task_list.toggle_task (tree_path);
         }
 
         private void text_edited (string path, string edited_text) {
@@ -163,10 +147,7 @@ namespace Agenda {
             if (task_is_empty (edited_text)) {
                 return;
             }
-
-            Gtk.TreeIter iter;
-            task_list.get_iter (out iter, new Gtk.TreePath.from_string (path));
-            task_list.set (iter, TaskList.Columns.TEXT, edited_text);
+            task_list.set_task_text (path, edited_text);
             is_editing = false;
         }
     }

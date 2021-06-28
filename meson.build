@@ -30,15 +30,17 @@ c_args = [
 
 agenda_model_sources = files(
     'src/Models/HistoryList.vala',
+    'src/Models/Task.vala',
     'src/Models/TaskList.vala',
     'src/Models/TaskListHistory.vala',
 )
 
 agenda_client_sources = files(
     'src/Agenda.vala',
-    'src/Utils.vala',
     'src/Window.vala',
     'src/Widgets/TaskView.vala',
+    'src/Backend/BackendInterface.vala',
+    'src/Backend/FileBackend.vala',
 )
 
 # dependencies

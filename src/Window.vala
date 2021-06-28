@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2020 Agenda Developers
+    Copyright (C) 2014-2021 Agenda Developers
 
     This file is part of Agenda.
 
@@ -33,19 +33,14 @@ namespace Agenda {
         private GLib.Settings privacy_setting = new GLib.Settings (
             "org.gnome.desktop.privacy");
 
-        File list_file;
-        File history_file;
+        private FileBackend backend;
 
         private Granite.Widgets.Welcome agenda_welcome;
         private TaskView task_view;
         private TaskList task_list;
         private Gtk.ScrolledWindow scrolled_window;
         private Gtk.Entry task_entry;
-        private Gtk.Grid grid;
         private HistoryList history_list;
-        private Gtk.SeparatorMenuItem separator;
-        private Gtk.MenuItem item_clear_history;
-        private bool is_editing;
 
         public AgendaWindow (Agenda app) {
             Object (application: app);
@@ -63,6 +58,12 @@ namespace Agenda {
 
             this.get_style_context ().add_class ("rounded");
             this.set_size_request (MIN_WIDTH, MIN_HEIGHT);
+
+            var header = new Gtk.HeaderBar ();
+            header.show_close_button = true;
+            header.get_style_context ().add_class ("titlebar");
+            header.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+            this.set_titlebar (header);
 
             // Set up geometry
             Gdk.Geometry geo = Gdk.Geometry ();
@@ -86,15 +87,14 @@ namespace Agenda {
             task_view = new TaskView.with_list (task_list);
             scrolled_window = new Gtk.ScrolledWindow (null, null);
             task_entry = new Gtk.Entry ();
-            grid = new Gtk.Grid ();
 
             history_list = new HistoryList ();
-
-            is_editing = false;
 
             if (first) {
                 agenda_settings.set_boolean ("first-time", false);
             }
+
+            backend = new FileBackend ();
 
             load_list ();
             setup_ui ();
@@ -104,51 +104,18 @@ namespace Agenda {
         }
 
         private void load_list () {
-            Granite.Services.Paths.initialize (
-                "agenda", Build.PKGDATADIR);
-            Granite.Services.Paths.ensure_directory_exists (
-                Granite.Services.Paths.user_data_folder);
-
-            list_file = Granite.Services.Paths.user_data_folder.get_child ("tasks");
-            history_file = Granite.Services.Paths.user_data_folder.get_child ("history");
-
-            if ( !list_file.query_exists () ) {
-                try {
-                    list_file.create (FileCreateFlags.NONE);
-                } catch (Error e) {
-                    error ("Error: %s\n", e.message);
-                }
-            }
-
-            if ( !history_file.query_exists () ) {
-                try {
-                    history_file.create (FileCreateFlags.NONE);
-                } catch (Error e) {
-                    error ("Error: %s\n", e.message);
-                }
-            }
-
             task_list.disable_undo_recording ();
 
-            try {
-                string line;
-                var f_dis = new DataInputStream (list_file.read ());
+            var tasks = backend.load_tasks ();
+            foreach (Task task in tasks) {
+                task_list.append_task (task);
+            }
 
-                while ((line = f_dis.read_line (null)) != null) {
-                    var task = line.split (",", 2);
-                    if (task[0] == "t") {
-                        task_list.append_task (task[1], true);
-                    } else {
-                        task_list.append_task (task[1], false);
-                    }
-                }
-
-                var h_dis = new DataInputStream (history_file.read ());
-                while ((line = h_dis.read_line (null)) != null && privacy_mode_off ()) {
+            var history = backend.load_history ();
+            if (privacy_mode_off ()) {
+                foreach (string line in history) {
                     history_list.add_item (line);
                 }
-            } catch (Error e) {
-                error ("%s", e.message);
             }
 
             task_list.enable_undo_recording ();
@@ -190,8 +157,8 @@ namespace Agenda {
             task_entry.populate_popup.connect ((menu) => {
                 Gtk.TreeIter iter;
                 bool valid = history_list.get_iter_first (out iter);
-                separator = new Gtk.SeparatorMenuItem ();
-                item_clear_history = new Gtk.MenuItem.with_label (_("Clear history"));
+                var separator = new Gtk.SeparatorMenuItem ();
+                var item_clear_history = new Gtk.MenuItem.with_label (_("Clear history"));
 
                 menu.insert (separator, 6);
                 menu.insert (item_clear_history, 7);
@@ -216,19 +183,8 @@ namespace Agenda {
                 return false;
             });
 
-            task_view.task_deleted.connect (() => {
-                /**
-                 *  When a row is dragged and dropped, a new row is inserted,
-                 *  then populated, then the old row is deleted.  This way, we
-                 *  write the new order to the file every time it gets reordered
-                 *  through DND.  This also takes care of the toggled row, since
-                 *  it is removed and the row_deleted signal is emitted.
-                 */
-                save_list (task_list.get_all_tasks (), list_file);
-                update ();
-            });
-
-            task_view.task_added.connect (() => {
+            task_list.list_changed.connect (() => {
+                backend.save_tasks (task_list.get_all_tasks ());
                 update ();
             });
 
@@ -242,6 +198,7 @@ namespace Agenda {
 
             agenda_welcome.expand = true;
 
+            var grid = new Gtk.Grid ();
             grid.expand = true;
             grid.row_homogeneous = false;
             grid.attach (agenda_welcome, 0, 0, 1, 1);
@@ -259,9 +216,13 @@ namespace Agenda {
         }
 
         public void append_task () {
-            var text = task_entry.text;
-            task_list.append_task (text, false);
-            history_list.add_item (text);
+            Task task = new Task.with_attributes (
+                "",
+                false,
+                task_entry.text);
+
+            task_list.append_task (task);
+            history_list.add_item (task.text);
             task_entry.text = "";
         }
 
@@ -308,8 +269,8 @@ namespace Agenda {
         }
 
         public bool main_quit () {
-            save_list (task_list.get_all_tasks (), list_file);
-            history_to_file ();
+            backend.save_tasks (task_list.get_all_tasks ());
+            backend.save_history (history_list.get_all_tasks ());
             save_window_position ();
             this.destroy ();
 
@@ -349,29 +310,6 @@ namespace Agenda {
         void hide_welcome () {
             agenda_welcome.hide ();
             scrolled_window.show ();
-        }
-
-        public void history_to_file () {
-            Gtk.TreeIter iter;
-            bool valid = history_list.get_iter_first (out iter);
-
-            try {
-                if (history_file.query_exists ()) {
-                    history_file.delete ();
-                }
-
-                var history_dos = new DataOutputStream (
-                    history_file.create (FileCreateFlags.REPLACE_DESTINATION));
-                while (valid) {
-                    string text;
-
-                    history_list.get (iter, 0, out text);
-                    history_dos.put_string (text + "\n");
-                    valid = history_list.iter_next (ref iter);
-                }
-            } catch (Error e) {
-                error ("Error: %s\n", e.message);
-            }
         }
     }
 }

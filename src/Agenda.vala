@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2020 Agenda Developers
+    Copyright (C) 2014-2021 Agenda Developers
 
     This file is part of Agenda.
 
@@ -74,7 +74,7 @@ namespace Agenda {
         }
 
         public static bool elementary_stylesheet () {
-            return Gtk.Settings.get_default ().gtk_theme_name.has_prefix
+            return Gtk.Settings.get_default ().gtk_theme_name.contains
                 ("elementary");
         }
     }
