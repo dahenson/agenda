@@ -45,8 +45,8 @@ namespace Agenda {
         public AgendaWindow (Agenda app) {
             Object (application: app);
 
-            var window_close_action = new SimpleAction("close", null);
-            var app_quit_action = new SimpleAction("quit", null);
+            var window_close_action = new SimpleAction ("close", null);
+            var app_quit_action = new SimpleAction ("quit", null);
             var undo_action = new SimpleAction ("undo", null);
             var redo_action = new SimpleAction ("redo", null);
 
