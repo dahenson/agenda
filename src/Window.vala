@@ -30,8 +30,6 @@ namespace Agenda {
 
         private uint configure_id;
 
-        private GLib.Settings agenda_settings = new GLib.Settings (
-            "com.github.dahenson.agenda");
         private GLib.Settings privacy_setting = new GLib.Settings (
             "org.gnome.desktop.privacy");
 
@@ -81,7 +79,7 @@ namespace Agenda {
 
             restore_window_position ();
 
-            var first = agenda_settings.get_boolean ("first-time");
+            var first = Agenda.settings.get_boolean ("first-time");
             agenda_welcome = new Granite.Widgets.Welcome (
                 _("No Tasks!"),
                 first ? _("(add one below)") : _("(way to go)"));
@@ -93,7 +91,7 @@ namespace Agenda {
             history_list = new HistoryList ();
 
             if (first) {
-                agenda_settings.set_boolean ("first-time", false);
+                Agenda.settings.set_boolean ("first-time", false);
             }
 
             backend = new FileBackend ();
