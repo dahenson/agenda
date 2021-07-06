@@ -25,8 +25,13 @@ using Granite;
 namespace Agenda {
 
     public class Agenda : Gtk.Application {
+        public static GLib.Settings settings;
         private static Agenda app;
         private AgendaWindow window = null;
+
+        static construct {
+            settings = new GLib.Settings ("com.github.dahenson.agenda");
+        }
 
         public Agenda () {
             Object (application_id: "com.github.dahenson.agenda",
