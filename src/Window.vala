@@ -28,8 +28,8 @@ namespace Agenda {
 
     public class AgendaWindow : Gtk.ApplicationWindow {
 
-        private GLib.Settings agenda_settings = new GLib.Settings (
-            "com.github.dahenson.agenda");
+        private uint configure_id;
+
         private GLib.Settings privacy_setting = new GLib.Settings (
             "org.gnome.desktop.privacy");
 
@@ -83,7 +83,7 @@ namespace Agenda {
 
             restore_window_position ();
 
-            var first = agenda_settings.get_boolean ("first-time");
+            var first = Agenda.settings.get_boolean ("first-time");
             agenda_welcome = new Granite.Widgets.Welcome (
                 _("No Tasks!"),
                 first ? _("(add one below)") : _("(way to go)"));
@@ -95,7 +95,7 @@ namespace Agenda {
             history_list = new HistoryList ();
 
             if (first) {
-                agenda_settings.set_boolean ("first-time", false);
+                Agenda.settings.set_boolean ("first-time", false);
             }
 
             backend = new FileBackend ();
@@ -240,44 +240,35 @@ namespace Agenda {
         }
 
         public void restore_window_position () {
-            var position = agenda_settings.get_value ("window-position");
-            var win_size = agenda_settings.get_value ("window-size");
+            var size = Agenda.settings.get_value ("window-size");
+            var position = Agenda.settings.get_value ("window-position");
 
             if (position.n_children () == 2) {
-                var x = (int32) position.get_child_value (0);
-                var y = (int32) position.get_child_value (1);
+                var x = (int) position.get_child_value (0);
+                var y = (int) position.get_child_value (1);
 
                 debug ("Moving window to coordinates %d, %d", x, y);
-                this.move (x, y);
+                move (x, y);
             } else {
                 debug ("Moving window to the centre of the screen");
-                this.window_position = Gtk.WindowPosition.CENTER;
+                window_position = Gtk.WindowPosition.CENTER;
             }
 
-            if (win_size.n_children () == 2) {
-                var width = (int32) win_size.get_child_value (0);
-                var height = (int32) win_size.get_child_value (1);
-                debug ("Resizing to width and height: %d, %d", width, height);
-                this.resize (width, height);
+            if (size.n_children () == 2) {
+                var rect = Gtk.Allocation ();
+                rect.width = (int) size.get_child_value (0);
+                rect.height = (int) size.get_child_value (1);
+
+                debug ("Resizing to width and height: %d, %d", rect.width, rect.height);
+                set_allocation (rect);
             } else {
                 debug ("Not resizing window");
             }
         }
 
-        public void save_window_position () {
-            int x, y, width, height;
-            this.get_position (out x, out y);
-            this.get_size (out width, out height);
-            debug ("Saving window position to %d, %d", x, y);
-            agenda_settings.set_value ("window-position", new int[] { x, y });
-            debug ("Saving window size of width and height: %d, %d", width, height);
-            agenda_settings.set_value ("window-size", new int[] { width, height });
-        }
-
         public bool main_quit () {
             backend.save_tasks (task_list.get_all_tasks ());
             backend.save_history (history_list.get_all_tasks ());
-            save_window_position ();
             this.destroy ();
 
             return false;
@@ -316,6 +307,36 @@ namespace Agenda {
         void hide_welcome () {
             agenda_welcome.hide ();
             scrolled_window.show ();
+        }
+
+        public override bool configure_event (Gdk.EventConfigure event) {
+            if (configure_id != 0) {
+                GLib.Source.remove (configure_id);
+            }
+
+            configure_id = Timeout.add (100, () => {
+                configure_id = 0;
+
+                int x, y;
+                Gdk.Rectangle rect;
+
+                get_position (out x, out y);
+                get_allocation (out rect);
+
+                debug ("Saving window position to %d, %d", x, y);
+                Agenda.settings.set_value (
+                    "window-position", new int[] { x, y });
+
+                debug (
+                    "Saving window size of width and height: %d, %d",
+                    rect.width, rect.height);
+                Agenda.settings.set_value (
+                    "window-size", new int[] { rect.width, rect.height });
+
+                return false;
+            });
+
+            return base.configure_event (event);
         }
     }
 }
