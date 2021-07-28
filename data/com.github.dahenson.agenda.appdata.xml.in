@@ -17,9 +17,6 @@
       <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_welcome.png</image>
     </screenshot>
   </screenshots>
-  <custom>
-    <value key="x-appcenter-suggested-price">3</value>
-  </custom>
   <description>
     <p>
       A task manager to help you keep track of the tasks that matter most.
@@ -128,4 +125,8 @@
     <content_attribute id="money-purchasing">none</content_attribute>
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
+  <custom>
+    <value key="x-appcenter-suggested-price">3</value>
+    <value key="x-appcenter-stripe">pk_live_ABkBJVNQ8dmHcOYBGYqJFVTj</value>
+  </custom>
 </component>
