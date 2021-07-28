@@ -1,0 +1,19 @@
+app-id: com.github.dahenson.agenda
+
+runtime: io.elementary.Platform
+runtime-version: 'daily'
+sdk: io.elementary.Sdk
+
+command: com.github.dahenson.agenda
+
+finish-args:
+  - '--share=ipc'
+  - '--socket=fallback-x11'
+  - '--socket=wayland'
+
+modules:
+  - name: agenda
+    buildsystem: meson
+    sources:
+      - type: dir
+        path: .
