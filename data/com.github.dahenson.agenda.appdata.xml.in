@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2020 Dane Henson <thegreatdane@gmail.com>-->
+<!-- Copyright 2021 Dane Henson <thegreatdane@gmail.com>-->
 <component type="desktop">
   <id>com.github.dahenson.agenda</id>
   <metadata_license>CC0</metadata_license>
@@ -18,7 +18,7 @@
     </screenshot>
   </screenshots>
   <custom>
-   <value key="x-appcenter-suggested-price">3</value>
+    <value key="x-appcenter-suggested-price">3</value>
   </custom>
   <description>
     <p>
@@ -38,6 +38,18 @@
   </description>
 
   <releases>
+    <release version="1.1.1" date="2021-07-27">
+      <description>
+        <p>Bug Fixes</p>
+        <ul>
+          <li>Fixed the issue where the task list is not saved on unexpected quit</li>
+          <li>Fixed the issue where the window position and size are not saved on unexpected quit</li>
+          <li>Added Ctrl-Q and Ctrl-W keyboard shortcuts for closing the window</li>
+          <li>Packaged the app as a flatpak for elementary OS 6!</li>
+          <li>Fixed some theme issues</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1.0" date="2020-03-04">
       <description>
         <p>New features and polish</p>
