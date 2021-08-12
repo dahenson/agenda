@@ -68,7 +68,7 @@ namespace Agenda {
 
             while (valid) {
                 string text;
-                get (iter, 1, out text);
+                get (iter, 0, out text);
                 items += text;
                 valid = iter_next (ref iter);
             }

@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2020 Agenda Developers
+    Copyright (C) 2014-2021 Agenda Developers
 
     This file is part of Agenda.
 
@@ -25,8 +25,13 @@ using Granite;
 namespace Agenda {
 
     public class Agenda : Gtk.Application {
+        public static GLib.Settings settings;
         private static Agenda app;
         private AgendaWindow window = null;
+
+        static construct {
+            settings = new GLib.Settings ("com.github.dahenson.agenda");
+        }
 
         public Agenda () {
             Object (application_id: "com.github.dahenson.agenda",
@@ -74,7 +79,7 @@ namespace Agenda {
         }
 
         public static bool elementary_stylesheet () {
-            return Gtk.Settings.get_default ().gtk_theme_name.has_prefix
+            return Gtk.Settings.get_default ().gtk_theme_name.contains
                 ("elementary");
         }
     }
