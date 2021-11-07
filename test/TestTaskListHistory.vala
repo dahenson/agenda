@@ -28,6 +28,14 @@ public class TaskListHistoryTests : Gee.TestCase {
     private Agenda.Task test_task_1;
     private Agenda.Task test_task_2;
 
+    public static void main (string[] args) {
+        Test.init (ref args);
+
+        TestSuite.get_root ().add_suite (new TaskListHistoryTests ().get_suite ());
+
+        Test.run ();
+    }
+
     public TaskListHistoryTests () {
         base ("Agenda");
         add_test ("[TaskListHistory] test add", test_add);
@@ -64,10 +72,10 @@ public class TaskListHistoryTests : Gee.TestCase {
 
         test_list.add (list);
 
-        list.append_task (test_task_1);
+        //list.append_task (test_task_1);
         test_list.add (list);
 
-        list.append_task (test_task_2);
+        //list.append_task (test_task_2);
         test_list.add (list);
 
         assert (test_list.size == 3);

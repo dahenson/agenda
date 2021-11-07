@@ -19,38 +19,50 @@
 
 ***/
 
-using Agenda;
-
 public class TaskTests : Gee.TestCase {
 
-    private Agenda.Task test_task;
+    public static void main (string[] args) {
+        Test.init (ref args);
+
+        TestSuite.get_root ().add_suite (new TaskTests ().get_suite ());
+
+        Test.run ();
+    }
 
     public TaskTests () {
-        base ("Agenda");
-        add_test ("[Task] test construction", test_construction);
-        add_test ("[Task] test to_string", test_to_string);
+        base ("Task");
+        add_test ("with_attributes", test_with_attributes);
+        add_test ("to_string", test_to_string);
+        add_test ("equal_to", test_equal_to);
     }
 
     public override void set_up () {
-        test_task = new Agenda.Task ();
     }
 
     public override void tear_down () {
-        test_task = null;
     }
 
-    public void test_construction () {
-        assert (test_task.id == "");
-        assert (test_task.complete == false);
-        assert (test_task.text == "");
-
-        test_task = new Agenda.Task.with_attributes ("foo", true, "bar");
-        assert (test_task.id == "foo");
-        assert (test_task.complete == true);
-        assert (test_task.text == "bar");
+    public void test_with_attributes () {
+        var test_task = new Agenda.Task.with_attributes ("foo", true, "bar");
+        assert_true (test_task.id == "foo");
+        assert_true (test_task.complete == true);
+        assert_true (test_task.text == "bar");
     }
 
     public void test_to_string () {
-        assert (test_task.to_string () == "f," + test_task.text);
+        var test_task = new Agenda.Task.with_attributes ("foo", true, "bar");
+        assert_true (test_task.to_string () == "t," + test_task.text);
+    }
+
+    public void test_equal_to () {
+        var task_1 = new Agenda.Task.with_attributes ("foo", true, "bar");
+        var task_2 = new Agenda.Task.with_attributes ("baz", false, "bar");
+
+        assert_false (Agenda.Task.eq (task_1, task_2));
+
+        task_1.id = task_2.id;
+        task_1.complete = task_2.complete;
+        task_1.text = task_2.text;
+        assert_true (Agenda.Task.eq (task_1, task_2));
     }
 }
