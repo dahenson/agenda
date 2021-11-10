@@ -7,7 +7,7 @@ libtestcase = library(
 )
 
 task_test_bin = executable(
-    'test-task',
+    'Task',
     files('TestTask.vala'),
     dependencies: libagenda_deps,
     link_with: [libtestcase, libagenda],
@@ -16,8 +16,10 @@ task_test_bin = executable(
     include_directories: libagenda_dir
 )
 
+test('Task', task_test_bin)
+
 task_list_test_bin = executable(
-    'test-task-list',
+    'TaskList',
     files('TestTaskList.vala'),
     dependencies: libagenda_deps,
     link_with: [libtestcase, libagenda],
@@ -26,16 +28,4 @@ task_list_test_bin = executable(
     include_directories: libagenda_dir
 )
 
-task_list_history_test_bin = executable(
-    'test-task-list-history',
-    files('TestTaskListHistory.vala'),
-    dependencies: libagenda_deps,
-    link_with: [libtestcase, libagenda],
-    vala_args: vala_args,
-    c_args: c_args,
-    include_directories: libagenda_dir
-)
-
-test('test-task', task_test_bin)
-test('test-task-list', task_list_test_bin)
-# test('test-task-list-history', task_list_history_test_bin)
+test('TaskList', task_list_test_bin)

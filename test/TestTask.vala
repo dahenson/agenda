@@ -33,6 +33,7 @@ public class TaskTests : Gee.TestCase {
         base ("Task");
         add_test ("with_attributes", test_with_attributes);
         add_test ("to_string", test_to_string);
+        add_test ("from_string", test_from_string);
         add_test ("equal_to", test_equal_to);
     }
 
@@ -52,6 +53,13 @@ public class TaskTests : Gee.TestCase {
     public void test_to_string () {
         var test_task = new Agenda.Task.with_attributes ("foo", true, "bar");
         assert_true (test_task.to_string () == "t," + test_task.text);
+    }
+
+    public void test_from_string () {
+        var task = new Agenda.Task.from_string ("t,this is a test task");
+
+        assert_true (task.complete);
+        assert_true (task.text == "this is a test task");
     }
 
     public void test_equal_to () {

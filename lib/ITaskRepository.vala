@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2020 Agenda Developers
+    Copyright (C) 2014-2021 Agenda Developers
 
     This file is part of Agenda.
 
@@ -20,12 +20,11 @@
 ***/
 
 namespace Agenda {
-
-    public class TaskList : Gee.LinkedList<Task> {
-
-        public TaskList () {
-            base ( (Gee.EqualDataFunc) Task.eq );
-        }
-
+    public interface ITaskRepository {
+        public abstract TaskList get_all ();
+        public abstract Task get_by_id (int id);
+        public abstract void add (Task task);
+        public abstract void update (int index, Task task);
+        public abstract bool remove (Task task);
     }
 }

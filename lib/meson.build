@@ -2,16 +2,15 @@
 libagenda_dir = include_directories('.')
 
 libagenda_deps = [
-    glib,
-    gtk,
+    gio,
     gee,
 ]
 
 libagenda_sources = files(
-    'HistoryList.vala',
     'Task.vala',
     'TaskList.vala',
-    'TaskListHistory.vala',
+    'ITaskRepository.vala',
+    'TaskRepositoryFile.vala',
 )
 
 libagenda = library(

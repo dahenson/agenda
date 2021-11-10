@@ -33,6 +33,18 @@ namespace Agenda {
                 text: text);
         }
 
+        public Task.from_string (string str) {
+            var task_line = str.split (",", 2);
+
+            if (task_line[0] == "t") {
+                this.complete = true;
+            } else {
+                this.complete = false;
+            }
+
+            this.text = task_line[1];
+        }
+
         public string to_string () {
             string str;
 
