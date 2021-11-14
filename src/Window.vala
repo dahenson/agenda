@@ -23,6 +23,8 @@ namespace Agenda {
 
     const int MIN_WIDTH = 500;
     const int MIN_HEIGHT = 600;
+    // Limit for any edited text
+    const int EDITED_TEXT_MAX_LEN = 10;
 
     const string HINT_STRING = _("Add a new task…");
 
@@ -134,7 +136,7 @@ namespace Agenda {
             task_entry.name = "TaskEntry";
             task_entry.get_style_context ().add_class ("task-entry");
             task_entry.placeholder_text = HINT_STRING;
-            task_entry.max_length = 64;
+            task_entry.max_length = EDITED_TEXT_MAX_LEN;
             task_entry.hexpand = true;
             task_entry.valign = Gtk.Align.START;
             task_entry.set_icon_tooltip_text (
