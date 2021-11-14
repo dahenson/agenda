@@ -24,7 +24,7 @@ namespace Agenda {
     const int MIN_WIDTH = 500;
     const int MIN_HEIGHT = 600;
     // Limit for any edited text
-    const int EDITED_TEXT_MAX_LEN = 10;
+    const int EDITED_TEXT_MAX_LEN = 64;
 
     const string HINT_STRING = _("Add a new task…");
 
