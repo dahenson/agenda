@@ -69,6 +69,16 @@ namespace Agenda {
             header.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             this.set_titlebar (header);
 
+            var button = new Gtk.Button.from_icon_name ("user-trash-symbolic", Gtk.IconSize.BUTTON);
+            button.clicked.connect (() => {
+                // Remove completed tasks
+                if (task_list != null) {
+                     task_list.remove_completed_tasks();
+                }
+                stdout.printf ("You deleted completed tasks\n");
+            });
+            header.pack_start(button);
+
             // Set up geometry
             Gdk.Geometry geo = Gdk.Geometry ();
             geo.min_width = MIN_WIDTH;
