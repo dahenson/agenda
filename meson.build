@@ -4,6 +4,7 @@ project('com.github.dahenson.agenda', ['vala', 'c'],
 
 # dependencies
 glib    = dependency('glib-2.0')
+gio     = dependency('gio-2.0')
 gobject = dependency('gobject-2.0')
 gtk     = dependency('gtk+-3.0')
 granite = dependency('granite')
@@ -40,6 +41,7 @@ c_args = [
 
 subdir('lib')
 subdir('test')
+subdir('app')
 
 agenda_client_sources = files(
     'src/Agenda.vala',
