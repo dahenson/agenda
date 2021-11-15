@@ -241,6 +241,8 @@ namespace Agenda {
 
             task_list.append_task (task);
             history_list.add_item (task.text);
+            // When adding a new task rearrange the tasks
+            task_list.sort_tasks ();
             task_entry.text = "";
         }
 
