@@ -21,7 +21,7 @@
 
 namespace Agenda {
 
-    public class TaskRepositoryFile : ITaskRepository {
+    public class TaskRepositoryFile : GLib.Object, ITaskRepository, GLib.ListModel {
 
         private GLib.File task_file;
         private TaskList task_list;
@@ -32,21 +32,39 @@ namespace Agenda {
             this.task_list = load ();
         }
 
+        public void add (Task task) {
+            this.task_list.add (task);
+            this.save ();
+
+            items_changed (this.task_list.size - 1, 0, 1);
+        }
+
         public TaskList get_all () {
             return this.task_list;
         }
 
-        public Task get_by_id (int index) {
+        public Task? get_by_id (int index) {
+            if (index > this.task_list.size) {
+                return null;
+            }
+
             return this.task_list.@get (index);
         }
 
-        public void add (Task task) {
-            this.task_list.add (task);
-            this.save ();
+        public Object? get_item (uint position) {
+            if (position > this.task_list.size) {
+                return null;
+            }
+
+            return this.task_list.@get ((int) position);
         }
 
-        public void update (int index, Task task) {
-            this.task_list.@set(index, task);
+        public Type get_item_type () {
+            return typeof (Task);
+        }
+
+        public uint get_n_items () {
+            return (uint) this.task_list.size;
         }
 
         public bool remove (Task task) {
@@ -54,6 +72,10 @@ namespace Agenda {
             this.save ();
 
             return removed;
+        }
+
+        public void update (int index, Task task) {
+            this.task_list.@set(index, task);
         }
 
         private TaskList load () {
