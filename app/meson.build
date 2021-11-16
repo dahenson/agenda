@@ -2,6 +2,7 @@ agenda_sources = files(
     'Agenda.vala',
     'Window.vala',
     'TaskListBox.vala',
+    'TaskListBoxRow.vala',
 )
 
 executable(

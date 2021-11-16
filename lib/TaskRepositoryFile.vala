@@ -36,7 +36,7 @@ namespace Agenda {
             this.task_list.add (task);
             this.save ();
 
-            items_changed (this.task_list.size - 1, 0, 1);
+            this.items_changed (this.task_list.size - 1, 0, 1);
         }
 
         public TaskList get_all () {
@@ -69,13 +69,17 @@ namespace Agenda {
 
         public bool remove (Task task) {
             var removed = this.task_list.remove (task);
-            this.save ();
+            if (removed) {
+                this.items_changed (0, 1, 0);
+                this.save ();
+            }
 
             return removed;
         }
 
         public void update (int index, Task task) {
             this.task_list.@set(index, task);
+            this.save ();
         }
 
         private TaskList load () {

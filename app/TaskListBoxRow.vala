@@ -18,27 +18,39 @@
     along with Agenda.  If not, see <http://www.gnu.org/licenses/>.
 
 ***/
-
 namespace Agenda {
 
-    public class TaskListBox : Gtk.ListBox {
+    public class TaskListBoxRow : Gtk.ListBoxRow {
 
         public signal void task_changed (int index, Task task);
 
-        public TaskListBox (TaskRepositoryFile tasks) {
-            this.bind_model (tasks, list_box_create_widget);
-        }
+        public TaskListBoxRow (Task task) {
+            var label = new Gtk.Label.with_mnemonic (task.text);
 
-        private Gtk.Widget list_box_create_widget (GLib.Object item) {
-            Task task = item as Task;
+            var check_button = new Gtk.CheckButton ();
+            check_button.set_active (task.complete);
 
-            var row = new TaskListBoxRow (task);
+            check_button.toggled.connect (() => {
+                task.complete = check_button.active;
 
-            row.task_changed.connect ((index, task) => {
+                var index = this.get_index ();
+
                 task_changed (index, task);
             });
 
-            return row;
+            var grid = new Gtk.Grid ();
+            grid.set_margin_start (12);
+            grid.set_margin_end (12);
+            grid.set_margin_top (6);
+            grid.set_margin_bottom (6);
+            grid.set_column_spacing (12);
+
+            grid.add (check_button);
+            grid.add (label);
+
+            grid.show_all ();
+
+            this.add (grid);
         }
     }
 }

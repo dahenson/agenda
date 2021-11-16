@@ -36,7 +36,7 @@ namespace Agenda {
         private Granite.Widgets.Welcome agenda_welcome;
         private Gtk.ScrolledWindow scrolled_window;
         private Gtk.Entry task_entry;
-        private Gtk.ListBox task_list_box;
+        private Agenda.TaskListBox task_list_box;
 
         public Window (Application app) {
             Object (application: app);
@@ -100,7 +100,8 @@ namespace Agenda {
                 first ? _("(add one below)") : _("(way to go)"));
             agenda_welcome.expand = true;
 
-            task_list_box = new TaskListBox (Application.tasks);
+            task_list_box = new Agenda.TaskListBox (Application.tasks);
+            task_list_box.task_changed.connect (update_task);
 
             scrolled_window = new Gtk.ScrolledWindow (null, null);
             scrolled_window.expand = true;
@@ -160,6 +161,10 @@ namespace Agenda {
             Application.tasks.add (task);
 
             task_entry.text = "";
+        }
+
+        public void update_task (int index, Task task) {
+            Application.tasks.update (index, task);
         }
 
         public void restore_window_position () {
