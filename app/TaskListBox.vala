@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2020 Agenda Developers
+    Copyright (C) 2014-2021 Agenda Developers
 
     This file is part of Agenda.
 
@@ -19,10 +19,26 @@
 
 ***/
 
-void main (string[] args) {
-    Test.init (ref args);
+namespace Agenda {
 
-    TestSuite.get_root ().add_suite (new TaskListTests ().get_suite ());
+    public class TaskListBox : Gtk.ListBox {
 
-    Test.run ();
+        public signal void task_changed (int index, Task task);
+
+        public TaskListBox (TaskRepositoryFile tasks) {
+            this.bind_model (tasks, list_box_create_widget);
+        }
+
+        private Gtk.Widget list_box_create_widget (GLib.Object item) {
+            Task task = item as Task;
+
+            var row = new TaskListBoxRow (task);
+
+            row.task_changed.connect ((index, task) => {
+                task_changed (index, task);
+            });
+
+            return row;
+        }
+    }
 }

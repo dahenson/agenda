@@ -19,10 +19,13 @@
 
 ***/
 
-void main (string[] args) {
-    Test.init (ref args);
+namespace Agenda {
 
-    TestSuite.get_root ().add_suite (new TaskListHistoryTests ().get_suite ());
+    public class TaskList : Gee.LinkedList<Task> {
 
-    Test.run ();
+        public TaskList () {
+            base ( (Gee.EqualDataFunc) Task.eq );
+        }
+
+    }
 }
