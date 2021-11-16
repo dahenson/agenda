@@ -45,6 +45,8 @@ namespace Agenda {
             grid.add (check_button);
             grid.add (label);
 
+            grid.show_all ();
+
             return grid;
         }
     }
