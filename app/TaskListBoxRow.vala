@@ -24,17 +24,28 @@
         public signal void task_changed (int index, Task task);
 
         public TaskListBoxRow (Task task) {
-            var label = new Gtk.Label.with_mnemonic (task.text);
+<<<<<<< HEAD
+=======
+
+            var label = new Gtk.Label (task.text);
+            var strike_attr = Pango.attr_strikethrough_new (task.complete);
+            var attr_list = new Pango.AttrList ();
+            attr_list.insert ((owned) strike_attr);
+            label.set_attributes (attr_list);
+
+>>>>>>> 10ff6871a8769ef3e356b8b5e7a226626b8b9e93
             var check_button = new Gtk.CheckButton ();
 
             check_button.set_active (task.complete);
-
             check_button.toggled.connect (() => {
                 task.complete = check_button.active;
 
                 var index = this.get_index ();
-
                 task_changed (index, task);
+
+                strike_attr = Pango.attr_strikethrough_new (task.complete);
+                attr_list.insert ((owned) strike_attr);
+                label.set_attributes (attr_list);
             });
 
             var grid = new Gtk.Grid ();
