@@ -23,6 +23,8 @@ namespace Agenda {
 
     const int MIN_WIDTH = 500;
     const int MIN_HEIGHT = 600;
+    // Limit for any edited text
+    const int EDITED_TEXT_MAX_LEN = 64;
 
     const string HINT_STRING = _("Add a new task…");
 
@@ -68,6 +70,16 @@ namespace Agenda {
             header.get_style_context ().add_class ("titlebar");
             header.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             this.set_titlebar (header);
+
+            var button = new Gtk.Button.from_icon_name ("user-trash-symbolic", Gtk.IconSize.BUTTON);
+            button.clicked.connect (() => {
+                // Remove completed tasks
+                if (task_list != null) {
+                     task_list.remove_completed_tasks();
+                }
+                stdout.printf ("You deleted completed tasks\n");
+            });
+            header.pack_start(button);
 
             // Set up geometry
             Gdk.Geometry geo = Gdk.Geometry ();
@@ -134,7 +146,7 @@ namespace Agenda {
             task_entry.name = "TaskEntry";
             task_entry.get_style_context ().add_class ("task-entry");
             task_entry.placeholder_text = HINT_STRING;
-            task_entry.max_length = 64;
+            task_entry.max_length = EDITED_TEXT_MAX_LEN;
             task_entry.hexpand = true;
             task_entry.valign = Gtk.Align.START;
             task_entry.set_icon_tooltip_text (
@@ -229,6 +241,8 @@ namespace Agenda {
 
             task_list.append_task (task);
             history_list.add_item (task.text);
+            // When adding a new task rearrange the tasks
+            task_list.sort_tasks ();
             task_entry.text = "";
         }
 

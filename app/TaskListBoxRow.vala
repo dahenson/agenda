@@ -17,12 +17,12 @@
     You should have received a copy of the GNU General Public License
     along with Agenda.  If not, see <http://www.gnu.org/licenses/>.
 
-***/
-namespace Agenda {
+***/ namespace Agenda {
 
     public class TaskListBoxRow : Gtk.ListBoxRow {
 
         public signal void task_changed (int index, Task task);
+        public signal void task_deleted (int index, Task task);
 
         public TaskListBoxRow (Task task) {
 
@@ -33,6 +33,7 @@ namespace Agenda {
             label.set_attributes (attr_list);
 
             var check_button = new Gtk.CheckButton ();
+
             check_button.set_active (task.complete);
             check_button.toggled.connect (() => {
                 task.complete = check_button.active;
@@ -45,6 +46,15 @@ namespace Agenda {
                 label.set_attributes (attr_list);
             });
 
+            var delete_button = new Gtk.Button.from_icon_name ("edit-delete");
+            delete_button.halign = Gtk.Align.END;
+            delete_button.hexpand = true;
+
+            delete_button.clicked.connect (() => {
+                    var index = this.get_index ();
+                    task_deleted (index, task);
+            });
+
             var grid = new Gtk.Grid ();
             grid.set_margin_start (12);
             grid.set_margin_end (12);
@@ -54,9 +64,9 @@ namespace Agenda {
 
             grid.add (check_button);
             grid.add (label);
+            grid.add (delete_button);
 
             grid.show_all ();
-
             this.add (grid);
         }
     }
