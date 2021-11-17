@@ -69,7 +69,6 @@ namespace Agenda {
         }
 
         public bool remove (int index, Task task) {
-            stdout.printf ("Contains: %s\n", this.task_list.contains (task).to_string ());
             var removed = this.task_list.remove (task);
             if (removed) {
                 this.items_changed (index, 1, 0);

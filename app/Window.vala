@@ -172,8 +172,7 @@ namespace Agenda {
         }
 
         public void delete_task (int index, Task task) {
-            stdout.printf ("Delete task %s - %s\n", task.id, task.text);
-            bool yes = Application.tasks.remove (index, task);
+            Application.tasks.remove (index, task);
         }
 
         public void restore_window_position () {
