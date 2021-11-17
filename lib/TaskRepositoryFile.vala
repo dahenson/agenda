@@ -44,6 +44,7 @@ namespace Agenda {
         }
 
         public Task? get_by_id (int index) {
+
             if (index > this.task_list.size) {
                 return null;
             }
@@ -67,10 +68,11 @@ namespace Agenda {
             return (uint) this.task_list.size;
         }
 
-        public bool remove (Task task) {
+        public bool remove (int index, Task task) {
+            stdout.printf ("Contains: %s\n", this.task_list.contains (task).to_string ());
             var removed = this.task_list.remove (task);
             if (removed) {
-                this.items_changed (0, 1, 0);
+                this.items_changed (index, 1, 0);
                 this.save ();
             }
 

@@ -22,10 +22,9 @@
     public class TaskListBoxRow : Gtk.ListBoxRow {
 
         public signal void task_changed (int index, Task task);
+        public signal void task_deleted (int index, Task task);
 
         public TaskListBoxRow (Task task) {
-<<<<<<< HEAD
-=======
 
             var label = new Gtk.Label (task.text);
             var strike_attr = Pango.attr_strikethrough_new (task.complete);
@@ -33,7 +32,6 @@
             attr_list.insert ((owned) strike_attr);
             label.set_attributes (attr_list);
 
->>>>>>> 10ff6871a8769ef3e356b8b5e7a226626b8b9e93
             var check_button = new Gtk.CheckButton ();
 
             check_button.set_active (task.complete);
@@ -48,6 +46,15 @@
                 label.set_attributes (attr_list);
             });
 
+            var delete_button = new Gtk.Button.from_icon_name ("edit-delete");
+            delete_button.halign = Gtk.Align.END;
+            delete_button.hexpand = true;
+
+            delete_button.clicked.connect (() => {
+                    var index = this.get_index ();
+                    task_deleted (index, task);
+            });
+
             var grid = new Gtk.Grid ();
             grid.set_margin_start (12);
             grid.set_margin_end (12);
@@ -57,6 +64,7 @@
 
             grid.add (check_button);
             grid.add (label);
+            grid.add (delete_button);
 
             grid.show_all ();
             this.add (grid);

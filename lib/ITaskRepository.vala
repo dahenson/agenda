@@ -25,6 +25,6 @@ namespace Agenda {
         public abstract Task? get_by_id (int id);
         public abstract void add (Task task);
         public abstract void update (int index, Task task);
-        public abstract bool remove (Task task);
+        public abstract bool remove (int index, Task task);
     }
 }
