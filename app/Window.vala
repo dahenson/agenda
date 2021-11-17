@@ -59,6 +59,9 @@ namespace Agenda {
             this.get_style_context ().add_class ("rounded");
             this.set_size_request (MIN_WIDTH, MIN_HEIGHT);
 
+            // Recive button events
+            set_events (Gdk.EventMask.BUTTON_PRESS_MASK);
+
             var header = new Gtk.HeaderBar ();
             header.show_close_button = true;
             header.get_style_context ().add_class ("titlebar");

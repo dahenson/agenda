@@ -17,8 +17,7 @@
     You should have received a copy of the GNU General Public License
     along with Agenda.  If not, see <http://www.gnu.org/licenses/>.
 
-***/
-namespace Agenda {
+***/ namespace Agenda {
 
     public class TaskListBoxRow : Gtk.ListBoxRow {
 
@@ -26,8 +25,8 @@ namespace Agenda {
 
         public TaskListBoxRow (Task task) {
             var label = new Gtk.Label.with_mnemonic (task.text);
-
             var check_button = new Gtk.CheckButton ();
+
             check_button.set_active (task.complete);
 
             check_button.toggled.connect (() => {
@@ -49,7 +48,6 @@ namespace Agenda {
             grid.add (label);
 
             grid.show_all ();
-
             this.add (grid);
         }
     }
