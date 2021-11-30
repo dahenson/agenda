@@ -18,15 +18,22 @@
     along with Agenda.  If not, see <http://www.gnu.org/licenses/>.
 
 ***/
+
 namespace Agenda {
 
     public class TaskListBoxRow : Gtk.ListBoxRow {
 
         public signal void task_changed (int index, Task task);
+        public signal void task_removed (Task task);
 
         public TaskListBoxRow (Task task) {
 
             var label = new Gtk.Label (task.text);
+            label.set_line_wrap (true);
+            label.set_justify (Gtk.Justification.FILL);
+            label.set_halign (Gtk.Align.START);
+            label.set_hexpand (true);
+
             var strike_attr = Pango.attr_strikethrough_new (task.complete);
             var attr_list = new Pango.AttrList ();
             attr_list.insert ((owned) strike_attr);
@@ -45,6 +52,11 @@ namespace Agenda {
                 label.set_attributes (attr_list);
             });
 
+            var remove_button = new Gtk.Button.from_icon_name ("edit-delete-symbolic");
+            remove_button.clicked.connect (() => {
+                task_removed (task);
+            });
+
             var grid = new Gtk.Grid ();
             grid.set_margin_start (12);
             grid.set_margin_end (12);
@@ -54,6 +66,7 @@ namespace Agenda {
 
             grid.add (check_button);
             grid.add (label);
+            grid.add (remove_button);
 
             grid.show_all ();
 

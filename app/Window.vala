@@ -86,6 +86,7 @@ namespace Agenda {
 
             task_list_box = new Agenda.TaskListBox (Application.tasks);
             task_list_box.task_changed.connect (update_task);
+            task_list_box.task_removed.connect (remove_task);
 
             scrolled_window = new Gtk.ScrolledWindow (null, null);
             scrolled_window.expand = true;
@@ -144,10 +145,16 @@ namespace Agenda {
             Application.tasks.add (task);
 
             task_entry.text = "";
+            this.update ();
         }
 
         public void update_task (int index, Task task) {
             Application.tasks.update (index, task);
+        }
+
+        public void remove_task (Task task) {
+            Application.tasks.remove (task);
+            this.update ();
         }
 
         public void restore_window_position () {

@@ -24,6 +24,7 @@ namespace Agenda {
     public class TaskListBox : Gtk.ListBox {
 
         public signal void task_changed (int index, Task task);
+        public signal void task_removed (Task task);
 
         public TaskListBox (TaskRepositoryFile tasks) {
             this.bind_model (tasks, list_box_create_widget);
@@ -36,6 +37,10 @@ namespace Agenda {
 
             row.task_changed.connect ((index, task) => {
                 task_changed (index, task);
+            });
+
+            row.task_removed.connect ((task) => {
+                task_removed (task);
             });
 
             return row;
