@@ -21,9 +21,6 @@
 
 namespace Agenda {
 
-    const int MIN_WIDTH = 500;
-    const int MIN_HEIGHT = 600;
-
     const string HINT_STRING = _("Add a new task…");
 
     public class Window : Gtk.ApplicationWindow {
@@ -57,25 +54,12 @@ namespace Agenda {
             app.set_accels_for_action ("win.redo", {"<Ctrl>Y"});
 
             this.get_style_context ().add_class ("rounded");
-            this.set_size_request (MIN_WIDTH, MIN_HEIGHT);
 
             var header = new Gtk.HeaderBar ();
             header.show_close_button = true;
             header.get_style_context ().add_class ("titlebar");
             header.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             this.set_titlebar (header);
-
-            // Set up geometry
-            Gdk.Geometry geo = Gdk.Geometry ();
-            geo.min_width = MIN_WIDTH;
-            geo.min_height = MIN_HEIGHT;
-            geo.max_width = 1024;
-            geo.max_height = 2048;
-
-            this.set_geometry_hints (
-                null,
-                geo,
-                Gdk.WindowHints.MIN_SIZE | Gdk.WindowHints.MAX_SIZE);
 
             restore_window_position ();
 
@@ -111,7 +95,6 @@ namespace Agenda {
 
             task_entry = new Gtk.Entry ();
             task_entry.name = "TaskEntry";
-            task_entry.get_style_context ().add_class ("task-entry");
             task_entry.placeholder_text = HINT_STRING;
             task_entry.max_length = 64;
             task_entry.hexpand = true;
