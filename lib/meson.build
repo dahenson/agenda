@@ -8,7 +8,6 @@ libagenda_deps = [
 
 libagenda_sources = files(
     'Task.vala',
-    'TaskList.vala',
     'ITaskRepository.vala',
     'TaskRepositoryFile.vala',
 )
