@@ -24,7 +24,7 @@ namespace Agenda {
     public class TaskRepositoryFile : GLib.Object, ITaskRepository, GLib.ListModel {
 
         private GLib.File task_file;
-        private TaskList task_list;
+        private Gee.LinkedList<Task> task_list;
 
         public TaskRepositoryFile (GLib.File agenda_dir) {
             this.task_file = agenda_dir.get_child ("tasks");
@@ -39,7 +39,7 @@ namespace Agenda {
             this.items_changed (this.task_list.size - 1, 0, 1);
         }
 
-        public TaskList get_all () {
+        public Gee.LinkedList<Task> get_all () {
             return this.task_list;
         }
 
@@ -68,9 +68,10 @@ namespace Agenda {
         }
 
         public bool remove (Task task) {
+            var index = this.task_list.index_of (task);
             var removed = this.task_list.remove (task);
             if (removed) {
-                this.items_changed (0, 1, 0);
+                this.items_changed (index, 1, 0);
                 this.save ();
             }
 
@@ -82,8 +83,8 @@ namespace Agenda {
             this.save ();
         }
 
-        private TaskList load () {
-            var list = new TaskList ();
+        private Gee.LinkedList<Task> load () {
+            var list = new Gee.LinkedList<Task> ((Gee.EqualDataFunc) Task.eq);
 
             try {
                 string line;
