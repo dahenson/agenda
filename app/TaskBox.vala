@@ -21,26 +21,29 @@
 
 namespace Agenda {
 
-    public class TaskListBox : Gtk.ListBox {
+    public class TaskBox : Gtk.ListBox {
 
-        public signal void task_changed (int index, Task task);
-        public signal void task_removed (Task task);
+        public signal void update_task (int index, Task task);
+        public signal void remove_task (Task task);
 
-        public TaskListBox (TaskRepositoryFile tasks) {
+        public TaskBox (TaskRepositoryFile tasks) {
             this.bind_model (tasks, list_box_create_widget);
         }
 
         private Gtk.Widget list_box_create_widget (GLib.Object item) {
             Task task = item as Task;
 
-            var row = new TaskListBoxRow (task);
+            var row = new TaskRow (task.text, task.complete);
 
-            row.task_changed.connect ((index, task) => {
-                task_changed (index, task);
+            row.complete_toggled.connect ((complete) => {
+                var index = row.get_index ();
+                task.complete = complete;
+
+                update_task (index, task);
             });
 
-            row.task_removed.connect ((task) => {
-                task_removed (task);
+            row.remove_task.connect (() => {
+                remove_task (task);
             });
 
             return row;

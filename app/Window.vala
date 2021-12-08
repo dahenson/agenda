@@ -33,7 +33,7 @@ namespace Agenda {
         private Granite.Widgets.Welcome agenda_welcome;
         private Gtk.ScrolledWindow scrolled_window;
         private Gtk.Entry task_entry;
-        private Agenda.TaskListBox task_list_box;
+        private Agenda.TaskBox task_box;
 
         public Window (Application app) {
             Object (application: app);
@@ -84,15 +84,15 @@ namespace Agenda {
                 first ? _("(add one below)") : _("(way to go)"));
             agenda_welcome.expand = true;
 
-            task_list_box = new Agenda.TaskListBox (Application.tasks);
-            task_list_box.task_changed.connect (update_task);
-            task_list_box.task_removed.connect (remove_task);
+            task_box = new Agenda.TaskBox (Application.tasks);
+            task_box.update_task.connect (update_task);
+            task_box.remove_task.connect (remove_task);
 
             scrolled_window = new Gtk.ScrolledWindow (null, null);
             scrolled_window.expand = true;
             scrolled_window.set_policy (
                 Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
-            scrolled_window.add (task_list_box);
+            scrolled_window.add (task_box);
 
             task_entry = new Gtk.Entry ();
             task_entry.name = "TaskEntry";
