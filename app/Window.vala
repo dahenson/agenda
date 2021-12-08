@@ -80,28 +80,33 @@ namespace Agenda {
             }
 
             agenda_welcome = new Granite.Widgets.Welcome (
-                _("No Tasks!"),
-                first ? _("(add one below)") : _("(way to go)"));
-            agenda_welcome.expand = true;
+                _("No Tasks!"), first ? _("(add one below)") : _("(way to go)")) {
+                expand = true
+            };
 
             task_box = new Agenda.TaskBox (Application.tasks);
             task_box.update_task.connect (update_task);
             task_box.remove_task.connect (remove_task);
 
-            scrolled_window = new Gtk.ScrolledWindow (null, null);
-            scrolled_window.expand = true;
-            scrolled_window.set_policy (
-                Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
+            scrolled_window = new Gtk.ScrolledWindow (null, null) {
+                expand = true,
+                hscrollbar_policy = Gtk.PolicyType.NEVER,
+                vscrollbar_policy = Gtk.PolicyType.AUTOMATIC,
+            };
             scrolled_window.add (task_box);
 
-            task_entry = new Gtk.Entry ();
-            task_entry.name = "TaskEntry";
-            task_entry.placeholder_text = HINT_STRING;
-            task_entry.max_length = 64;
-            task_entry.hexpand = true;
-            task_entry.valign = Gtk.Align.START;
-            task_entry.set_icon_tooltip_text (
-                Gtk.EntryIconPosition.SECONDARY, _("Add to list…"));
+            task_entry = new Gtk.Entry () {
+                name = "TaskEntry",
+                placeholder_text = HINT_STRING,
+                max_length = 64,
+                hexpand = true,
+                valign = Gtk.Align.START,
+                secondary_icon_tooltip_text = _("Add to list..."),
+                margin_start = 12,
+                margin_end = 12,
+                margin_top = 12,
+                margin_bottom = 12
+            };
 
             task_entry.activate.connect (append_task);
             task_entry.icon_press.connect (append_task);
@@ -119,19 +124,16 @@ namespace Agenda {
 
             this.key_press_event.connect (key_down_event);
 
-            var grid = new Gtk.Grid ();
-            grid.expand = true;
-            grid.row_homogeneous = false;
+            var grid = new Gtk.Grid () {
+                expand = true,
+                row_homogeneous = false
+            };
+
             grid.attach (agenda_welcome, 0, 0, 1, 1);
             grid.attach (scrolled_window, 0, 1, 1, 1);
             grid.attach (task_entry, 0, 2, 1, 1);
 
             this.add (grid);
-
-            task_entry.margin_start = 12;
-            task_entry.margin_end = 12;
-            task_entry.margin_top = 12;
-            task_entry.margin_bottom = 12;
 
             task_entry.grab_focus ();
         }
