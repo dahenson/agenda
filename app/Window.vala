@@ -33,7 +33,6 @@ namespace Agenda {
         private Granite.Widgets.Welcome agenda_welcome;
         private Gtk.ScrolledWindow scrolled_window;
         private Gtk.Entry task_entry;
-        private Agenda.TaskBox task_box;
 
         public Window (Application app) {
             Object (application: app);
@@ -84,9 +83,7 @@ namespace Agenda {
                 expand = true
             };
 
-            task_box = new Agenda.TaskBox (Application.tasks);
-            task_box.update_task.connect (update_task);
-            task_box.remove_task.connect (remove_task);
+            var task_box = new Agenda.TaskBox (Application.tasks);
 
             scrolled_window = new Gtk.ScrolledWindow (null, null) {
                 expand = true,
@@ -108,22 +105,6 @@ namespace Agenda {
                 margin_bottom = 12
             };
 
-            task_entry.activate.connect (append_task);
-            task_entry.icon_press.connect (append_task);
-
-            task_entry.changed.connect (() => {
-                var str = task_entry.get_text ();
-                if ( str == "" ) {
-                    task_entry.set_icon_from_icon_name (
-                        Gtk.EntryIconPosition.SECONDARY, null);
-                } else {
-                    task_entry.set_icon_from_icon_name (
-                        Gtk.EntryIconPosition.SECONDARY, "list-add-symbolic");
-                }
-            });
-
-            this.key_press_event.connect (key_down_event);
-
             var grid = new Gtk.Grid () {
                 expand = true,
                 row_homogeneous = false
@@ -136,6 +117,30 @@ namespace Agenda {
             this.add (grid);
 
             task_entry.grab_focus ();
+
+            task_box.update_task.connect ((index, task) => {
+                Application.tasks.update (index, task);
+            });
+
+            task_box.remove_task.connect ((task) => {
+                Application.tasks.remove (task);
+                this.update ();
+            });
+
+            this.key_press_event.connect (key_down_event);
+
+            task_entry.activate.connect (append_task);
+            task_entry.icon_press.connect (append_task);
+            task_entry.changed.connect (() => {
+                var str = task_entry.get_text ();
+                if ( str == "" ) {
+                    task_entry.set_icon_from_icon_name (
+                        Gtk.EntryIconPosition.SECONDARY, null);
+                } else {
+                    task_entry.set_icon_from_icon_name (
+                        Gtk.EntryIconPosition.SECONDARY, "list-add-symbolic");
+                }
+            });
         }
 
         public void append_task () {
@@ -147,15 +152,6 @@ namespace Agenda {
             Application.tasks.add (task);
 
             task_entry.text = "";
-            this.update ();
-        }
-
-        public void update_task (int index, Task task) {
-            Application.tasks.update (index, task);
-        }
-
-        public void remove_task (Task task) {
-            Application.tasks.remove (task);
             this.update ();
         }
 
@@ -217,12 +213,12 @@ namespace Agenda {
                 hide_welcome ();
         }
 
-        void show_welcome () {
+        protected void show_welcome () {
             scrolled_window.hide ();
             agenda_welcome.show ();
         }
 
-        void hide_welcome () {
+        protected void hide_welcome () {
             agenda_welcome.hide ();
             scrolled_window.show ();
         }
