@@ -30,9 +30,8 @@ namespace Agenda {
         private GLib.Settings privacy_setting = new GLib.Settings (
             "org.gnome.desktop.privacy");
 
-        private Granite.Widgets.Welcome agenda_welcome;
-        private Gtk.ScrolledWindow scrolled_window;
         private Gtk.Entry task_entry;
+        private Gtk.Stack stack;
 
         public Window (Application app) {
             Object (application: app);
@@ -78,19 +77,18 @@ namespace Agenda {
                 Application.settings.set_boolean ("first-time", false);
             }
 
-            agenda_welcome = new Granite.Widgets.Welcome (
+            var agenda_welcome = new Granite.Widgets.Welcome (
                 _("No Tasks!"), first ? _("(add one below)") : _("(way to go)")) {
                 expand = true
             };
 
             var task_box = new Agenda.TaskBox (Application.tasks);
 
-            scrolled_window = new Gtk.ScrolledWindow (null, null) {
+            var scrolled_window = new Gtk.ScrolledWindow (null, null) {
                 expand = true,
                 hscrollbar_policy = Gtk.PolicyType.NEVER,
                 vscrollbar_policy = Gtk.PolicyType.AUTOMATIC,
             };
-            scrolled_window.add (task_box);
 
             task_entry = new Gtk.Entry () {
                 name = "TaskEntry",
@@ -105,16 +103,26 @@ namespace Agenda {
                 margin_bottom = 12
             };
 
-            var grid = new Gtk.Grid () {
+            var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0) {
                 expand = true,
-                row_homogeneous = false
+                homogeneous = false
             };
 
-            grid.attach (agenda_welcome, 0, 0, 1, 1);
-            grid.attach (scrolled_window, 0, 1, 1, 1);
-            grid.attach (task_entry, 0, 2, 1, 1);
+            stack = new Gtk.Stack () {
+                homogeneous = true,
+                transition_duration = 200,
+                transition_type = Gtk.StackTransitionType.CROSSFADE
+            };
 
-            this.add (grid);
+            scrolled_window.add (task_box);
+
+            stack.add_named (scrolled_window, "tasklist");
+            stack.add_named (agenda_welcome, "welcome");
+
+            box.add (stack);
+            box.add (task_entry);
+
+            this.add (box);
 
             task_entry.grab_focus ();
 
@@ -208,19 +216,9 @@ namespace Agenda {
 
         public void update () {
             if (Application.tasks.get_n_items () == 0)
-                show_welcome ();
+                stack.set_visible_child_name ("welcome");
             else
-                hide_welcome ();
-        }
-
-        protected void show_welcome () {
-            scrolled_window.hide ();
-            agenda_welcome.show ();
-        }
-
-        protected void hide_welcome () {
-            agenda_welcome.hide ();
-            scrolled_window.show ();
+                stack.set_visible_child_name ("tasklist");
         }
 
         public override bool configure_event (Gdk.EventConfigure event) {
