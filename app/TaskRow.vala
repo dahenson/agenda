@@ -32,6 +32,7 @@ namespace Agenda {
                 wrap = true,
                 justify = Gtk.Justification.LEFT,
                 halign = Gtk.Align.START,
+                xalign = 0,
                 hexpand = true
             };
 
@@ -47,20 +48,20 @@ namespace Agenda {
             var edit_button = new Gtk.Button.from_icon_name ("edit-symbolic");
             var remove_button = new Gtk.Button.from_icon_name ("edit-delete-symbolic");
 
-            var grid = new Gtk.Grid () {
+            var box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12) {
+                homogeneous = false,
                 margin_start = 12,
                 margin_end = 12,
                 margin_top = 6,
                 margin_bottom = 6,
-                column_spacing = 12
             };
 
-            grid.add (check_button);
-            grid.add (label);
-            grid.add (edit_button);
-            grid.add (remove_button);
+            box.add (check_button);
+            box.add (label);
+            box.add (edit_button);
+            box.add (remove_button);
 
-            this.add (grid);
+            this.add (box);
             this.show_all ();
 
             remove_button.clicked.connect (() => {
