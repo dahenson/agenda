@@ -1,16 +1,16 @@
 # Italian translation for agenda-tasks
 # Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
 # This file is distributed under the same license as the agenda-tasks package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# ALBANO BATTISTELLA <ALBANO_BATTISTELLA@HOTMAIL.COM>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-15 18:09-0600\n"
-"PO-Revision-Date: 2016-01-23 16:41+0000\n"
-"Last-Translator: Fabio Zaramella <FFabio.96.X@Gmail.com>\n"
-"Language-Team: Italian <it@li.org>\n"
+"PO-Revision-Date: 2021-12-23 17:00+0100\n"
+"Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
+"Language-Team: Italian <albano_battistella@hotmail.com>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,9 +19,8 @@ msgstr ""
 "X-Generator: Launchpad (build 17902)\n"
 
 #: src/Window.vala:27
-#, fuzzy
 msgid "Add a new task…"
-msgstr "Aggiungi una nuova attività..."
+msgstr "Aggiungi una nuova attività…"
 
 #: src/Window.vala:83
 msgid "No Tasks!"
@@ -36,21 +35,18 @@ msgid "(way to go)"
 msgstr "(sei sulla strada giusta)"
 
 #: src/Window.vala:168
-#, fuzzy
 msgid "Add to list…"
-msgstr "Aggiungi alla lista..."
+msgstr "Aggiungi alla lista…"
 
 #: src/Window.vala:194
 msgid "Clear history"
 msgstr "Cancella la cronologia"
 
-#, fuzzy
 #~ msgid "Agenda"
-#~ msgstr "Informazioni"
+#~ msgstr "Agenda"
 
-#, fuzzy
 #~ msgid "Task List"
-#~ msgstr "Compito terminato"
+#~ msgstr "Lista Attività"
 
 #~ msgid "Todo;Tasks;"
 #~ msgstr "Da fare;compiti;attività;"
