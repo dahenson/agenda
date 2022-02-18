@@ -6,15 +6,13 @@ libtestcase = library(
     dependencies: [gobject]
 )
 
-task_test_bin = executable(
-    'Task',
-    files('TestTask.vala'),
+task_test = executable(
+    'TaskTest',
+    files('TaskTest.vala'),
     dependencies: libagenda_deps,
     link_with: [libtestcase, libagenda],
-    vala_args: vala_args,
-    c_args: c_args,
     include_directories: libagenda_dir
 )
 
-test('Task', task_test_bin)
+test('TaskTest', task_test)
 
