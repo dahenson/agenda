@@ -26,8 +26,8 @@ namespace Agenda {
         private GLib.File task_file;
         private Gee.LinkedList<Task> task_list;
 
-        public TaskRepositoryFile (GLib.File agenda_dir) {
-            task_file = agenda_dir.get_child ("tasks");
+        public TaskRepositoryFile (GLib.File file) {
+            task_file = file;
 
             load ();
         }

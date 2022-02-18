@@ -31,11 +31,11 @@ namespace Agenda {
 
             settings = new GLib.Settings ("com.github.dahenson.agenda");
 
-            var dir = get_agenda_dir ();
-            tasks = new TaskRepositoryFile (dir);
+            var file = get_task_file ();
+            tasks = new TaskRepositoryFile (file);
         }
 
-        private GLib.File get_agenda_dir () {
+        private GLib.File get_task_file () {
             string user_data = Environment.get_user_data_dir ();
 
             File dir = File.new_for_path (user_data).get_child ("agenda");
@@ -51,7 +51,7 @@ namespace Agenda {
                 }
             }
 
-            return dir;
+            return dir.get_child ("tasks");
         }
 
         protected override void activate () {
