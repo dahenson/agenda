@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2021 Agenda Developers
+    Copyright (C) 2014-2022 Agenda Developers
 
     This file is part of Agenda.
 
@@ -27,36 +27,40 @@ namespace Agenda {
         private Gee.LinkedList<Task> task_list;
 
         public TaskRepositoryFile (GLib.File agenda_dir) {
-            this.task_file = agenda_dir.get_child ("tasks");
+            task_file = agenda_dir.get_child ("tasks");
 
-            this.task_list = load ();
+            load ();
+        }
+
+        construct {
+            task_list = new Gee.LinkedList<Task> ((Gee.EqualDataFunc) Task.eq);
         }
 
         public void add (Task task) {
-            this.task_list.add (task);
-            this.save ();
+            task_list.add (task);
+            save ();
 
-            this.items_changed (this.task_list.size - 1, 0, 1);
+            items_changed (task_list.size - 1, 0, 1);
         }
 
         public Gee.LinkedList<Task> get_all () {
-            return this.task_list;
+            return task_list;
         }
 
         public Task? get_by_id (int index) {
-            if (index > this.task_list.size) {
+            if (index > task_list.size) {
                 return null;
             }
 
-            return this.task_list.@get (index);
+            return task_list.@get (index);
         }
 
         public Object? get_item (uint position) {
-            if (position > this.task_list.size) {
+            if (position > task_list.size) {
                 return null;
             }
 
-            return this.task_list.@get ((int) position);
+            return task_list.@get ((int) position);
         }
 
         public Type get_item_type () {
@@ -64,15 +68,15 @@ namespace Agenda {
         }
 
         public uint get_n_items () {
-            return (uint) this.task_list.size;
+            return (uint) task_list.size;
         }
 
         public bool remove (Task task) {
-            var index = this.task_list.index_of (task);
-            var removed = this.task_list.remove (task);
+            var index = task_list.index_of (task);
+            var removed = task_list.remove (task);
             if (removed) {
-                this.items_changed (index, 1, 0);
-                this.save ();
+                items_changed (index, 1, 0);
+                save ();
             }
 
             return removed;
@@ -80,11 +84,11 @@ namespace Agenda {
 
         public void update (int index, Task task) {
             this.task_list.@set(index, task);
-            this.save ();
+            save ();
         }
 
-        private Gee.LinkedList<Task> load () {
-            var list = new Gee.LinkedList<Task> ((Gee.EqualDataFunc) Task.eq);
+        private void load () {
+            task_list.clear ();
 
             try {
                 string line;
@@ -94,7 +98,7 @@ namespace Agenda {
                 while ((line = f_dis.read_line (null)) != null) {
                     Task task = new Task.from_string (line);
 
-                    list.add (task);
+                    task_list.add (task);
                 }
             } catch (Error e) {
                 if (e is IOError.NOT_FOUND) {
@@ -103,8 +107,6 @@ namespace Agenda {
                     error ("%s", e.message);
                 }
             }
-
-            return list;
         }
 
         private void save () {
