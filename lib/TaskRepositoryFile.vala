@@ -21,10 +21,29 @@
 
 namespace Agenda {
 
+    public class Action : GLib.Object {
+        public enum Type {
+            ADD,
+            DELETE,
+            UPDATE,
+            NOOP
+        }
+
+        public Type action_type { public get; construct set; }
+        public Task? task { public get; construct set; }
+        public int index { public get; construct set; }
+
+        public Action (Type type, Task? task, int index) {
+            Object (action_type: type, task: task, index: index);
+        }
+    }
+
     public class TaskRepositoryFile : GLib.Object, ITaskRepository, GLib.ListModel {
 
         private GLib.File task_file;
         private Gee.LinkedList<Task> task_list;
+        private Gee.LinkedList<Action> action_list;
+        private Gee.BidirListIterator<Action> action_iter;
 
         public TaskRepositoryFile (GLib.File file) {
             task_file = file;
@@ -34,10 +53,20 @@ namespace Agenda {
 
         construct {
             task_list = new Gee.LinkedList<Task> ((Gee.EqualDataFunc) Task.eq);
+            action_list = new Gee.LinkedList<Action> ();
+            action_list.add (
+                new Action (Action.Type.NOOP, null, 0));
+
+            action_iter = action_list.bidir_list_iterator ();
+            action_iter.next ();
         }
 
         public void add (Task task) {
             task_list.add (task);
+            action_list.add (
+                new Action (Action.Type.ADD, task, task_list.size - 1));
+            action_iter.next ();
+
             save ();
 
             items_changed (task_list.size - 1, 0, 1);
@@ -80,6 +109,21 @@ namespace Agenda {
             }
 
             return removed;
+        }
+
+        public void undo () {
+            var action = action_iter.@get ();
+
+            switch (action.action_type) {
+                case Action.Type.ADD:
+                    task_list.remove_at (action.index);
+                    items_changed (action.index, 1, 0);
+                    break;
+                default:
+                    return;
+            }
+
+            action_iter.previous ();
         }
 
         public void update (int index, Task task) {

@@ -41,15 +41,19 @@ namespace Agenda {
 
             var close_action = new SimpleAction ("close", null);
             var quit_action = new SimpleAction ("quit", null);
+            var undo_action = new SimpleAction ("undo", null);
 
             add_action (close_action);
             add_action (quit_action);
+            add_action (undo_action);
 
             app.set_accels_for_action ("win.close", {"<Ctrl>W"});
             app.set_accels_for_action ("win.quit", {"<Ctrl>Q"});
+            app.set_accels_for_action ("win.undo", {"<Ctrl>Z"});
 
             close_action.activate.connect (this.close);
             quit_action.activate.connect (this.close);
+            undo_action.activate.connect (this.undo);
         }
 
         private void setup_ui () {
@@ -240,6 +244,10 @@ namespace Agenda {
             });
 
             return base.configure_event (event);
+        }
+
+        private void undo () {
+            Application.tasks.undo ();
         }
     }
 }
