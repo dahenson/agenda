@@ -24,7 +24,7 @@ namespace Agenda {
     public class Action : GLib.Object {
         public enum Type {
             ADD,
-            DELETE,
+            REMOVE,
             UPDATE,
             NOOP
         }
@@ -104,6 +104,10 @@ namespace Agenda {
             var index = task_list.index_of (task);
             var removed = task_list.remove (task);
             if (removed) {
+                action_list.add (
+                    new Action (Action.Type.REMOVE, task, index));
+                action_iter.next ();
+
                 items_changed (index, 1, 0);
                 save ();
             }
@@ -119,8 +123,15 @@ namespace Agenda {
                     task_list.remove_at (action.index);
                     items_changed (action.index, 1, 0);
                     break;
-                default:
+                case Action.Type.REMOVE:
+                    task_list.insert (action.index, action.task);
+                    items_changed (action.index, 0, 1);
+                    break;
+                case Action.Type.NOOP:
                     return;
+                default:
+                    warning ("Undo action not implemented.");
+                    break;
             }
 
             action_iter.previous ();

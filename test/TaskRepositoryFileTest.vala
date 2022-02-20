@@ -22,6 +22,7 @@
 public class TaskRepositoryFileTest : Gee.TestCase {
 
     private GLib.File task_file;
+    private Agenda.TaskRepositoryFile repo;
     private Agenda.Task task1;
     private Agenda.Task task2;
 
@@ -36,6 +37,7 @@ public class TaskRepositoryFileTest : Gee.TestCase {
     public TaskRepositoryFileTest () {
         base ("Task");
         add_test ("undo_add", undo_add);
+        add_test ("undo_remove", undo_remove);
     }
 
     public override void set_up () {
@@ -47,23 +49,38 @@ public class TaskRepositoryFileTest : Gee.TestCase {
             error ("%s", e.message);
         }
 
+        repo = new Agenda.TaskRepositoryFile (task_file);
+
         task1 = new Agenda.Task.with_attributes ("0", false, "Task 1");
         task2 = new Agenda.Task.with_attributes ("1", false, "Task 2");
     }
 
     public override void tear_down () {
-        task_file = null;
-        task1 = null;
         task2 = null;
+        task1 = null;
+        repo = null;
+        task_file = null;
     }
 
     public void undo_add () {
-        var repo = new Agenda.TaskRepositoryFile (task_file);
-
         repo.add (task1);
-        assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 1);
+        repo.add (task2);
+        assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 2);
 
         repo.undo ();
+        assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 1);
+
+        var remaining_task = repo.get_by_id (0);
+        assert_true (Agenda.Task.eq (task1, remaining_task));
+    }
+
+    public void undo_remove () {
+        repo.add (task1);
+
+        repo.remove (task1);
         assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 0);
+
+        repo.undo ();
+        assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 1);
     }
 }
