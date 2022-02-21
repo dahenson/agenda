@@ -39,6 +39,7 @@ public class TaskRepositoryFileTest : Gee.TestCase {
         add_test ("undo_add", undo_add);
         add_test ("undo_remove", undo_remove);
         add_test ("undo_update", undo_update);
+        add_test ("undo_after_undo", undo_after_undo);
     }
 
     public override void set_up () {
@@ -73,6 +74,23 @@ public class TaskRepositoryFileTest : Gee.TestCase {
 
         var remaining_task = repo.get_by_id (0);
         assert_true (Agenda.Task.eq (task1, remaining_task));
+    }
+
+    /**
+     * Make sure that you can undo, perform some actions, and the subsequent
+     * undos are accurate
+     */
+    public void undo_after_undo () {
+        repo.add (task1);    // [task1]
+        repo.remove (task1); // []
+        repo.undo ();        // [task1]
+        repo.add (task2);    // [task1, task2]
+        repo.undo ();        // [task1]
+
+        assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 1);
+
+        var task = repo.get_by_id (0);
+        assert_true (Agenda.Task.eq (task, task1));
     }
 
     public void undo_remove () {
