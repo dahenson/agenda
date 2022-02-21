@@ -38,6 +38,7 @@ public class TaskRepositoryFileTest : Gee.TestCase {
         base ("Task");
         add_test ("undo_add", undo_add);
         add_test ("undo_remove", undo_remove);
+        add_test ("undo_update", undo_update);
     }
 
     public override void set_up () {
@@ -82,5 +83,17 @@ public class TaskRepositoryFileTest : Gee.TestCase {
 
         repo.undo ();
         assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 1);
+    }
+
+    public void undo_update () {
+        repo.add (task1);
+        repo.update (0, task2);
+
+        var updated_task = repo.get_by_id (0);
+        assert_true (Agenda.Task.eq (updated_task, task2));
+
+        repo.undo ();
+        updated_task = repo.get_by_id (0);
+        assert_true (Agenda.Task.eq (updated_task, task1));
     }
 }

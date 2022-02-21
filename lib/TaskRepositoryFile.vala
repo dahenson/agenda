@@ -63,13 +63,9 @@ namespace Agenda {
 
         public void add (Task task) {
             task_list.add (task);
-            action_list.add (
-                new Action (Action.Type.ADD, task, task_list.size - 1));
-            action_iter.next ();
-
-            save ();
-
+            add_undo_action (Action.Type.ADD, task, task_list.size - 1);
             items_changed (task_list.size - 1, 0, 1);
+            save ();
         }
 
         public Gee.LinkedList<Task> get_all () {
@@ -104,10 +100,7 @@ namespace Agenda {
             var index = task_list.index_of (task);
             var removed = task_list.remove (task);
             if (removed) {
-                action_list.add (
-                    new Action (Action.Type.REMOVE, task, index));
-                action_iter.next ();
-
+                add_undo_action (Action.Type.REMOVE, task, index);
                 items_changed (index, 1, 0);
                 save ();
             }
@@ -127,6 +120,9 @@ namespace Agenda {
                     task_list.insert (action.index, action.task);
                     items_changed (action.index, 0, 1);
                     break;
+                case Action.Type.UPDATE:
+                    task_list.@set (action.index, action.task);
+                    break;
                 case Action.Type.NOOP:
                     return;
                 default:
@@ -138,8 +134,19 @@ namespace Agenda {
         }
 
         public void update (int index, Task task) {
+            var previous_task = task_list.@get (index);
             this.task_list.@set(index, task);
+            add_undo_action (Action.Type.UPDATE, previous_task, index);
             save ();
+        }
+
+        private void add_undo_action (Action.Type action_type, Task task, int index) {
+            while (action_iter.next ()) {
+                action_iter.remove ();
+            }
+
+            action_list.add (new Action (action_type, task, index));
+            action_iter.next ();
         }
 
         private void load () {
