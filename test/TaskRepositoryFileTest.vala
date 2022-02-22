@@ -36,6 +36,9 @@ public class TaskRepositoryFileTest : Gee.TestCase {
 
     public TaskRepositoryFileTest () {
         base ("Task");
+        add_test ("redo_add", redo_add);
+        add_test ("redo_remove", redo_remove);
+        add_test ("redo_update", redo_update);
         add_test ("undo_add", undo_add);
         add_test ("undo_remove", undo_remove);
         add_test ("undo_update", undo_update);
@@ -62,6 +65,42 @@ public class TaskRepositoryFileTest : Gee.TestCase {
         task1 = null;
         repo = null;
         task_file = null;
+    }
+
+    public void redo_add () {
+        repo.add (task1);
+        repo.undo ();
+        assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 0);
+
+        repo.redo ();
+        assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 1);
+    }
+
+    public void redo_remove () {
+        repo.add (task1);
+        repo.remove (task1);
+        repo.undo ();
+        assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 1);
+
+        repo.redo ();
+        assert_cmpint ((int) repo.get_n_items (), CompareOperator.EQ, 0);
+    }
+
+    public void redo_update () {
+        repo.add (task1);
+        repo.update (0, task2);
+        repo.undo ();
+
+        var undid_task = repo.get_by_id (0);
+        assert_true (Agenda.Task.eq (undid_task, task1));
+
+        repo.redo ();
+        undid_task = repo.get_by_id (0);
+        assert_true (Agenda.Task.eq (undid_task, task2));
+
+        repo.undo ();
+        undid_task = repo.get_by_id (0);
+        assert_true (Agenda.Task.eq (undid_task, task1));
     }
 
     public void undo_add () {

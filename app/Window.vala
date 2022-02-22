@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2021 Agenda Developers
+    Copyright (C) 2014-2022 Agenda Developers
 
     This file is part of Agenda.
 
@@ -42,18 +42,22 @@ namespace Agenda {
             var close_action = new SimpleAction ("close", null);
             var quit_action = new SimpleAction ("quit", null);
             var undo_action = new SimpleAction ("undo", null);
+            var redo_action = new SimpleAction ("redo", null);
 
             add_action (close_action);
             add_action (quit_action);
             add_action (undo_action);
+            add_action (redo_action);
 
             app.set_accels_for_action ("win.close", {"<Ctrl>W"});
             app.set_accels_for_action ("win.quit", {"<Ctrl>Q"});
             app.set_accels_for_action ("win.undo", {"<Ctrl>Z"});
+            app.set_accels_for_action ("win.redo", {"<Ctrl><Shift>Z"});
 
             close_action.activate.connect (this.close);
             quit_action.activate.connect (this.close);
             undo_action.activate.connect (this.undo);
+            redo_action.activate.connect (this.redo);
         }
 
         private void setup_ui () {
@@ -244,6 +248,10 @@ namespace Agenda {
             });
 
             return base.configure_event (event);
+        }
+
+        private void redo () {
+            Application.tasks.redo ();
         }
 
         private void undo () {

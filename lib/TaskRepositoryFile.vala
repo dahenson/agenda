@@ -96,6 +96,37 @@ namespace Agenda {
             return (uint) task_list.size;
         }
 
+        public void redo () {
+            if (!action_iter.next ()) {
+                return;
+            }
+
+            var action = action_iter.@get ();
+
+            switch (action.action_type) {
+                case Action.Type.ADD:
+                    task_list.add (action.task);
+                    items_changed (action.index, 0, 1);
+                    break;
+                case Action.Type.REMOVE:
+                    task_list.remove_at (action.index);
+                    items_changed (action.index, 1, 0);
+                    break;
+                case Action.Type.UPDATE:
+                    var task = task_list.@get (action.index);
+                    task_list.@set (action.index, action.task);
+                    action_list.@set (
+                        action_iter.index (),
+                        new Action (Action.Type.UPDATE, task, action.index));
+                    break;
+                case Action.Type.NOOP:
+                    return;
+                default:
+                    warning ("Redo action not implemented.");
+                    break;
+            }
+        }
+
         public bool remove (Task task) {
             var index = task_list.index_of (task);
             var removed = task_list.remove (task);
@@ -121,7 +152,11 @@ namespace Agenda {
                     items_changed (action.index, 0, 1);
                     break;
                 case Action.Type.UPDATE:
+                    var task = task_list.@get (action.index);
                     task_list.@set (action.index, action.task);
+                    action_list.@set (
+                        action_iter.index (),
+                        new Action (Action.Type.UPDATE, task, action.index));
                     break;
                 case Action.Type.NOOP:
                     return;
