@@ -131,7 +131,7 @@ namespace Agenda {
 
             task_box.remove_task.connect ((task) => {
                 Application.tasks.remove (task);
-                this.update ();
+                update_gui ();
             });
 
             this.key_press_event.connect (key_down_event);
@@ -159,7 +159,7 @@ namespace Agenda {
             Application.tasks.add (task);
 
             task_entry.text = "";
-            this.update ();
+            update_gui ();
         }
 
         public void restore_window_position () {
@@ -205,7 +205,7 @@ namespace Agenda {
                 case Gdk.Key.Delete:
                     if (!task_entry.has_focus) { // && !task_view.is_editing) {
                         // task_view.toggle_selected_task ();
-                        update ();
+                        update_gui ();
                     }
                     break;
             }
@@ -213,7 +213,7 @@ namespace Agenda {
             return false;
         }
 
-        public void update () {
+        public void update_gui () {
             if (Application.tasks.get_n_items () == 0)
                 stack.set_visible_child_name ("welcome");
             else
@@ -252,10 +252,12 @@ namespace Agenda {
 
         private void redo () {
             Application.tasks.redo ();
+            update_gui ();
         }
 
         private void undo () {
             Application.tasks.undo ();
+            update_gui ();
         }
     }
 }

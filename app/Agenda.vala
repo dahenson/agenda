@@ -63,7 +63,7 @@ namespace Agenda {
             window = new Agenda.Window (this);
             window.delete_event.connect (window.main_quit);
             window.show_all ();
-            window.update ();
+            window.update_gui ();
         }
 
         public static int main (string[] args) {
