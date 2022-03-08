@@ -1,8 +1,6 @@
 agenda_sources = files(
     'Agenda.vala',
-    'Window.vala',
-    'TaskBox.vala',
-    'TaskRow.vala',
+    'Window.vala'
 )
 
 executable(
@@ -11,7 +9,7 @@ executable(
     asresources,
     vala_args: vala_args,
     c_args: c_args,
-    dependencies: [glib, gtk, granite],
+    dependencies: [glib, gtk, gee],
     link_with: libagenda,
     include_directories: libagenda_dir
 )

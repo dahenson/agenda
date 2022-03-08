@@ -1,0 +1,22 @@
+[Application]
+name=com.github.dahenson.agenda
+runtime=io.elementary.Platform/x86_64/6.1
+sdk=io.elementary.Sdk/x86_64/6.1
+command=com.github.dahenson.agenda
+
+[Context]
+shared=ipc;
+sockets=x11;wayland;fallback-x11;
+
+[Extension com.github.dahenson.agenda.Locale]
+directory=share/runtime/locale
+autodelete=true
+locale-subset=true
+
+[Extension com.github.dahenson.agenda.Debug]
+directory=lib/debug
+autodelete=true
+no-autodownload=true
+
+[Build]
+built-extensions=com.github.dahenson.agenda.Locale;com.github.dahenson.agenda.Debug;

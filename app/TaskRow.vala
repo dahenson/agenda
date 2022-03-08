@@ -45,7 +45,6 @@ namespace Agenda {
                 active = complete,
             };
 
-            var edit_button = new Gtk.Button.from_icon_name ("edit-symbolic");
             var remove_button = new Gtk.Button.from_icon_name ("edit-delete-symbolic");
 
             var box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12) {
@@ -56,13 +55,12 @@ namespace Agenda {
                 margin_bottom = 6,
             };
 
-            box.add (check_button);
-            box.add (label);
-            box.add (edit_button);
-            box.add (remove_button);
+            box.append (check_button);
+            box.append (label);
+            box.append (remove_button);
 
-            this.add (box);
-            this.show_all ();
+            this.set_child (box);
+            // this.show_all ();
 
             remove_button.clicked.connect (() => {
                 remove_task ();

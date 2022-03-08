@@ -63,12 +63,9 @@ namespace Agenda {
         private void setup_ui () {
             this.set_title ("Agenda");
 
-            this.get_style_context ().add_class ("rounded");
-
-            var header = new Gtk.HeaderBar ();
-            header.show_close_button = true;
-            header.get_style_context ().add_class ("titlebar");
-            header.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+            var header = new Gtk.HeaderBar () {
+                show_title_buttons = true
+            };
             this.set_titlebar (header);
 
             var first = Application.settings.get_boolean ("first-time");
@@ -76,15 +73,18 @@ namespace Agenda {
                 Application.settings.set_boolean ("first-time", false);
             }
 
-            var agenda_welcome = new Granite.Widgets.Welcome (
+            var agenda_welcome = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            /*var agenda_welcome = new Granite.Widgets.Welcome (
                 _("No Tasks!"), first ? _("(add one below)") : _("(way to go)")) {
                 expand = true
-            };
+            };*/
 
-            var task_box = new Agenda.TaskBox (Application.tasks);
+            var list_box = new Gtk.ListBox ();
+            list_box.bind_model (Application.tasks, list_box_create_widget);
 
-            var scrolled_window = new Gtk.ScrolledWindow (null, null) {
-                expand = true,
+            var scrolled_window = new Gtk.ScrolledWindow () {
+                hexpand = true,
+                vexpand = true,
                 hscrollbar_policy = Gtk.PolicyType.NEVER,
                 vscrollbar_policy = Gtk.PolicyType.AUTOMATIC,
             };
@@ -103,38 +103,33 @@ namespace Agenda {
             };
 
             var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0) {
-                expand = true,
+                hexpand = true,
+                vexpand = true,
                 homogeneous = false
             };
 
             stack = new Gtk.Stack () {
-                homogeneous = true,
+                hhomogeneous = true,
+                vhomogeneous = true,
                 transition_duration = 200,
                 transition_type = Gtk.StackTransitionType.CROSSFADE
             };
 
-            scrolled_window.add (task_box);
+            scrolled_window.set_child (list_box);
 
             stack.add_named (scrolled_window, "tasklist");
             stack.add_named (agenda_welcome, "welcome");
 
-            box.add (stack);
-            box.add (task_entry);
+            box.append (stack);
+            box.append (task_entry);
 
-            this.add (box);
+            this.set_child (box);
 
             task_entry.grab_focus ();
 
-            task_box.update_task.connect ((index, task) => {
-                Application.tasks.update (index, task);
-            });
-
-            task_box.remove_task.connect ((task) => {
-                Application.tasks.remove (task);
-                update_gui ();
-            });
-
-            this.key_press_event.connect (key_down_event);
+            var key_events = new Gtk.EventControllerKey ();
+            key_events.key_pressed.connect (key_down_event);
+            ((Gtk.Widget) this).add_controller (key_events);
 
             task_entry.activate.connect (append_task);
             task_entry.icon_press.connect (append_task);
@@ -171,19 +166,18 @@ namespace Agenda {
                 var y = (int) position.get_child_value (1);
 
                 debug ("Moving window to coordinates %d, %d", x, y);
-                move (x, y);
+                //move (x, y);
             } else {
                 debug ("Moving window to the centre of the screen");
-                window_position = Gtk.WindowPosition.CENTER;
+                //window_position = Gtk.WindowPosition.CENTER;
             }
 
             if (size.n_children () == 2) {
-                var rect = Gtk.Allocation ();
-                rect.width = (int) size.get_child_value (0);
-                rect.height = (int) size.get_child_value (1);
+                var width = (int) size.get_child_value (0);
+                var height = (int) size.get_child_value (1);
 
-                debug ("Resizing to width and height: %d, %d", rect.width, rect.height);
-                set_allocation (rect);
+                debug ("Resizing to width and height: %d, %d", width, height);
+                set_default_size (width, height);
             } else {
                 debug ("Not resizing window");
             }
@@ -195,24 +189,6 @@ namespace Agenda {
             return false;
         }
 
-        public bool key_down_event (Gdk.EventKey e) {
-            switch (e.keyval) {
-                case Gdk.Key.Escape:
-                    if (true) { //!task_view.is_editing) {
-                        main_quit ();
-                    }
-                    break;
-                case Gdk.Key.Delete:
-                    if (!task_entry.has_focus) { // && !task_view.is_editing) {
-                        // task_view.toggle_selected_task ();
-                        update_gui ();
-                    }
-                    break;
-            }
-
-            return false;
-        }
-
         public void update_gui () {
             if (Application.tasks.get_n_items () == 0)
                 stack.set_visible_child_name ("welcome");
@@ -220,6 +196,7 @@ namespace Agenda {
                 stack.set_visible_child_name ("tasklist");
         }
 
+        /*
         public override bool configure_event (Gdk.EventConfigure event) {
             if (configure_id != 0) {
                 GLib.Source.remove (configure_id);
@@ -248,6 +225,82 @@ namespace Agenda {
             });
 
             return base.configure_event (event);
+        }
+        */
+
+        private bool key_down_event (uint keyval, uint keycode, Gdk.ModifierType state) {
+            switch (keyval) {
+                case Gdk.Key.Escape:
+                    if (true) { //!task_view.is_editing) {
+                        main_quit ();
+                    }
+                    break;
+                case Gdk.Key.Delete:
+                    if (!task_entry.has_focus) { // && !task_view.is_editing) {
+                        // task_view.toggle_selected_task ();
+                        update_gui ();
+                    }
+                    break;
+            }
+
+            return false;
+        }
+
+        private Gtk.Widget list_box_create_widget (GLib.Object item) {
+            Task task = item as Task;
+
+            var row = new Gtk.ListBoxRow ();
+
+            var label = new Gtk.Label (task.text) {
+                wrap = true,
+                justify = Gtk.Justification.LEFT,
+                halign = Gtk.Align.START,
+                xalign = 0,
+                hexpand = true
+            };
+
+            var strike_attr = Pango.attr_strikethrough_new (task.complete);
+            var attr_list = new Pango.AttrList ();
+            attr_list.insert ((owned) strike_attr);
+            label.set_attributes (attr_list);
+
+            var check_button = new Gtk.CheckButton () {
+                active = task.complete,
+            };
+
+            var remove_button = new Gtk.Button.from_icon_name ("edit-delete-symbolic");
+
+            var box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12) {
+                homogeneous = false,
+                margin_start = 12,
+                margin_end = 12,
+                margin_top = 6,
+                margin_bottom = 6,
+            };
+
+            box.append (check_button);
+            box.append (label);
+            box.append (remove_button);
+
+            row.set_child (box);
+
+            remove_button.clicked.connect (() => {
+                Application.tasks.remove (task);
+                update_gui ();
+            });
+
+            check_button.toggled.connect (() => {
+                task.complete = check_button.active;
+
+                strike_attr = Pango.attr_strikethrough_new (task.complete);
+                attr_list.insert ((owned) strike_attr);
+                label.set_attributes (attr_list);
+
+                var index = row.get_index ();
+                Application.tasks.update (index, task);
+            });
+
+            return row;
         }
 
         private void redo () {

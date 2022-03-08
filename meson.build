@@ -6,8 +6,8 @@ project('com.github.dahenson.agenda', ['vala', 'c'],
 glib    = dependency('glib-2.0')
 gio     = dependency('gio-2.0')
 gobject = dependency('gobject-2.0')
-gtk     = dependency('gtk+-3.0')
-granite = dependency('granite')
+gtk     = dependency('gtk4')
+#granite = dependency('granite')
 gee     = dependency('gee-0.8')
 
 gnome = import('gnome')
@@ -42,36 +42,7 @@ c_args = [
 subdir('lib')
 subdir('test')
 subdir('app')
-
-agenda_client_sources = files(
-    'src/Agenda.vala',
-    'src/Window.vala',
-    'src/Widgets/TaskView.vala',
-    'src/Backend/BackendInterface.vala',
-    'src/Backend/FileBackend.vala',
-    'src/Models/HistoryList.vala',
-    'src/Models/TaskListHistory.vala',
-    'src/Models/TaskList.vala',
-    'src/Models/Task.vala',
-)
-
-agenda_deps = [
-    glib,
-    gtk,
-    granite
-]
-
-executable(
-    meson.project_name(),
-    agenda_client_sources,
-    asresources,
-    vala_args: vala_args,
-    c_args: c_args,
-    dependencies: agenda_deps,
-    install : true,
-)
-
-meson.add_install_script('meson/post_install.py')
-
 subdir('data')
 subdir('po')
+
+meson.add_install_script('meson/post_install.py')

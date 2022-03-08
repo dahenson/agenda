@@ -61,8 +61,8 @@ namespace Agenda {
             }
 
             window = new Agenda.Window (this);
-            window.delete_event.connect (window.main_quit);
-            window.show_all ();
+            window.close_request.connect (window.main_quit);
+            window.show ();
             window.update_gui ();
         }
 

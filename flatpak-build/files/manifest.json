@@ -1,0 +1,26 @@
+{
+  "id" : "com.github.dahenson.agenda",
+  "runtime" : "io.elementary.Platform",
+  "runtime-version" : "6.1",
+  "runtime-commit" : "be2732301d0dd5a06606da0111e8ff52a340b4c68bee26be818df2dc590854c0",
+  "sdk" : "io.elementary.Sdk",
+  "sdk-commit" : "5129d7fb659e4fdb3f5f82529b2df4c9312c95aeb37b8663d1a81707484507f4",
+  "command" : "com.github.dahenson.agenda",
+  "modules" : [
+    {
+      "name" : "agenda",
+      "buildsystem" : "meson",
+      "sources" : [
+        {
+          "path" : ".",
+          "type" : "dir"
+        }
+      ]
+    }
+  ],
+  "finish-args" : [
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland"
+  ]
+}
