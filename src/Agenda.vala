@@ -1,6 +1,6 @@
 /***
 
-    Copyright (C) 2014-2021 Agenda Developers
+    Copyright (C) 2014-2022 Agenda Developers
 
     This file is part of Agenda.
 
@@ -49,7 +49,15 @@ namespace Agenda {
             window.show_all ();
             window.update ();
 
-            if (elementary_stylesheet ()) {
+            var gtk_settings = Gtk.Settings.get_default ();
+            gtk_settings.set_property ("gtk-icon-theme-name", "elementary");
+
+            if (!has_elementary_stylesheet (gtk_settings)) {
+                gtk_settings.set_property ("gtk-theme-name",
+                                           "io.elementary.stylesheet.blueberry");
+            }
+
+            if (has_elementary_stylesheet (gtk_settings)) {
                 var elementary_provider = new Gtk.CssProvider ();
                 elementary_provider.load_from_resource (
                     "com/github/dahenson/agenda/Agenda.css");
@@ -78,9 +86,8 @@ namespace Agenda {
             return app.run (args);
         }
 
-        public static bool elementary_stylesheet () {
-            return Gtk.Settings.get_default ().gtk_theme_name.contains
-                ("elementary");
+        public static bool has_elementary_stylesheet (Gtk.Settings settings) {
+            return settings.gtk_theme_name.has_prefix ("io.elementary.stylesheet.");
         }
     }
 }
