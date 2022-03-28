@@ -1,42 +1,27 @@
-test_task_source = files(
-    'TestCase.vala',
-    'TestTask.vala',
-    'TestTaskMain.vala'
+test_deps = []
+
+libtestcase = library(
+    'testcase',
+    files('TestCase.vala'),
+    dependencies: [gobject]
 )
 
-test_task_list_source = files(
-    'TestCase.vala',
-    'TestTaskList.vala',
-    'TestTaskListMain.vala'
+task_test = executable(
+    'TaskTest',
+    files('TaskTest.vala'),
+    dependencies: libagenda_deps,
+    link_with: [libtestcase, libagenda],
+    include_directories: libagenda_dir
 )
 
-test_task_list_history_source = files(
-    'TestCase.vala',
-    'TestTaskListHistory.vala',
-    'TestTaskListHistoryMain.vala'
+task_repository_file_test = executable(
+    'TaskRepositoryFileTest',
+    files('TaskRepositoryFileTest.vala'),
+    dependencies: libagenda_deps,
+    link_with: [libtestcase, libagenda],
+    include_directories: libagenda_dir
 )
 
-task_test_bin = executable('test-task',
-    test_task_source + agenda_model_sources,
-    dependencies: agenda_deps,
-    vala_args: vala_args,
-    c_args: c_args,
-)
+test('TaskRepositoryFileTest', task_repository_file_test)
+test('TaskTest', task_test)
 
-task_list_test_bin = executable('test-task-list',
-    test_task_list_source + agenda_model_sources,
-    dependencies: agenda_deps,
-    vala_args: vala_args,
-    c_args: c_args,
-)
-
-task_list_history_test_bin = executable('test-task-list-history',
-    test_task_list_history_source + agenda_model_sources,
-    dependencies: agenda_deps,
-    vala_args: vala_args,
-    c_args: c_args,
-)
-
-test('test-task', task_test_bin)
-test('test-task-list', task_list_test_bin)
-test('test-task-list-history', task_list_history_test_bin)

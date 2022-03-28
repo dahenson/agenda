@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2021 Dane Henson <thegreatdane@gmail.com>-->
+<component type="desktop">
+  <id>com.github.dahenson.agenda</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Agenda</name>
+  <name xml:lang="pt">Agenda</name>
+  <name xml:lang="nl">Agenda</name>
+  <name xml:lang="ja">Agenda</name>
+  <summary>Get things done</summary>
+  <summary xml:lang="pt">Faça as suas coisas</summary>
+  <summary xml:lang="nl">Rond taken af</summary>
+  <summary xml:lang="ja">タスクを完了しましょう</summary>
+  <developer_name>Dane Henson</developer_name>
+  <developer_name xml:lang="pt">Dane Henson</developer_name>
+  <developer_name xml:lang="nl">Dane Henson</developer_name>
+  <developer_name xml:lang="ja">Dane Henson</developer_name>
+  <url type="homepage">http://brainofdane.com</url>
+  <url type="bugtracker">https://github.com/dahenson/agenda/issues</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot_welcome.png</image>
+    </screenshot>
+  </screenshots>
+  <description>
+    <p>
+      A task manager to help you keep track of the tasks that matter most.
+    </p>
+    <p xml:lang="pt">Um gestor de tarefas que o ajuda a manter o controle das tarefas que são mais importantes.</p>
+    <p xml:lang="nl">Een taakbeheerder die u helpt de belangrijkste taken bij te houden.</p>
+    <p xml:lang="ja">最も重要なタスクの記録に便利な、タスク管理アプリです。</p>
+    <p>
+      Sometimes, you just need a task list to keep you motivated. Agenda provides a way to write down your tasks and tick them off as you complete them. The list is saved automatically, so you can close the list to get it out of the way without losing your place.
+    </p>
+    <p xml:lang="pt">Às vezes, você só precisa precisa de uma lista de tarefas para o manter motivado. O Agenda proporciona uma forma de escrever as suas tarefas e ir assinalando aquelas que vai completando. A lista é gravada automaticamente, para que a possa fechar e tira-la do seu caminho sem que se perca.</p>
+    <p xml:lang="nl">Soms heeft u een taak nodig om u bezig te houden. Agenda biedt de mogelijkheid uw taken te noteren en ze nadien af te vinken. De lijst wordt automatisch opgeslagen, dus u kunt de lijst sluiten zonder uw taken kwijt te raken.</p>
+    <p xml:lang="ja">モチベーションを維持するために、タスクリストが必要なときはありませんか。Agenda を使えば、タスクを登録して、終わったらチェックマークをつけていくことができます。リストは自動的に保存されるので、最新の状態を失うことなくリストを閉じられます。</p>
+    <p>Key Features:</p>
+    <p xml:lang="pt">Funcionalidades principais:</p>
+    <p xml:lang="nl">Kenmerken:</p>
+    <p xml:lang="ja">主な機能:</p>
+    <ul>
+      <li>Saves your task list automatically</li>
+      <li xml:lang="pt">Guarda a sua lista de tarefas automaticamente</li>
+      <li xml:lang="nl">Slaat uw taken automatisch op</li>
+      <li xml:lang="ja">タスクリストを自動的に保存します</li>
+      <li>See your completed tasks until you choose to delete them</li>
+      <li xml:lang="pt">Veja as suas tarefas completadas até decidir apaga-las</li>
+      <li xml:lang="nl">Bekijk uw afgeronde taken totdat u besluit ze te verwijderen</li>
+      <li xml:lang="ja">完了したタスクは、削除しない限り確認できます</li>
+      <li>Autocompletion for previously added tasks</li>
+      <li xml:lang="pt">Preenchimento automático para tarefas adicionadas anteriormente</li>
+      <li xml:lang="nl">Taaknamen worden automatisch aangevuld</li>
+      <li xml:lang="ja">以前に追加したタスクを自動補完します</li>
+      <li>Undo/Redo with Ctrl-Z and Ctrl-Y</li>
+      <li>Quit with the Esc key</li>
+      <li xml:lang="pt">Fechar com a tecla Esc</li>
+      <li xml:lang="nl">Sluit af met de Esc-toets</li>
+      <li xml:lang="ja">Esc キーで終了できます</li>
+    </ul>
+  </description>
+  <releases>
+    <release version="1.1.2" date="2021-07-27">
+      <description>
+        <p>Bug Fixes</p>
+        <ul>
+          <li>Fixed the issue where the task list is not saved on unexpected quit</li>
+          <li>Fixed the issue where the window position and size are not saved on unexpected quit</li>
+          <li>Added Ctrl-Q and Ctrl-W keyboard shortcuts for closing the window</li>
+          <li>Packaged the app as a flatpak for elementary OS 6!</li>
+          <li>Fixed some theme issues</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.1.0" date="2020-03-04">
+      <description>
+        <p>New features and polish</p>
+        <ul>
+          <li>Added Undo/Redo feature to save you from yourself</li>
+          <li>Restored first-run message</li>
+          <li>Tons of code refactoring for stability</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.12" date="2018-09-14">
+      <description>
+        <p>Visual updates and code fixes</p>
+        <p xml:lang="pt">Atualizações visuais e correções de código</p>
+        <p xml:lang="nl">Visuele en codeverbeteringen</p>
+        <ul>
+          <li>Tiny tweaks for a debut release on elementary OS 5.0</li>
+          <li xml:lang="pt">Pequenos ajustes para um lançamento de depuração no Elementary OS 5.0</li>
+          <li xml:lang="nl">Kleine aanpassingen voor elementary OS 5.0</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.11" date="2018-08-14">
+      <description>
+        <p>Visual updates and code fixes</p>
+        <p xml:lang="pt">Atualizações visuais e correções de código</p>
+        <p xml:lang="nl">Visuele en codeverbeteringen</p>
+        <ul>
+          <li>Cleaned up the list icons to only show on hover or select</li>
+          <li xml:lang="pt">Lista de ícones limpa para somente a mostrar quando passa o rato ou ao selecionar</li>
+          <li xml:lang="nl">De lijstpictogrammen worden voortaan alleen getoond na aanwijzen of selecteren</li>
+          <li>Tweaks to the overall visual style.</li>
+          <li xml:lang="pt">Ajustes gerais ao estilo visual.</li>
+          <li xml:lang="nl">Aanpassingen aan de visuele stijl.</li>
+          <li>General code cleanup</li>
+          <li xml:lang="pt">Correções gerais ao código</li>
+          <li xml:lang="nl">Algemene code-opruiming</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.9" date="2017-11-27">
+      <description>
+        <p>Small bugfixes and a new icon</p>
+        <p xml:lang="pt">Pequenas correções e um novo ícone</p>
+        <p xml:lang="nl">Kleine foutoplossingen en een nieuw pictogram</p>
+        <ul>
+          <li>Updated the icon with a fresh new look (Thanks, Harvey)</li>
+          <li xml:lang="pt">Atualização do ícone com um novo visual fresco (Obrigado, Harvey)</li>
+          <li xml:lang="nl">Pictogram bijgewerkt met een frisse, nieuwe stijl (met dan aan Harvey)</li>
+          <li>Pressing Esc no longer closes Agenda while editing a task</li>
+          <li xml:lang="pt">Ao pressionar Esc já não fecha o Agenda enquanto está a editar uma tarefa</li>
+          <li xml:lang="nl">Esc sluit voortaan Agenda niet meer af tijdens het bewerken van een taak</li>
+          <li>Pressing Delete no longer crashes Agenda while editing a task</li>
+          <li xml:lang="pt">Ao pressionar Delete já não bloqueia o Agenda enquanto está a editar uma tarefa</li>
+          <li xml:lang="nl">Delete laat voortaan Agenda niet meer crashen tijdens het bewerken van een taak</li>
+          <li>Metadata installs to the correct folder</li>
+          <li xml:lang="pt">A metadata instala agora na pasta correta</li>
+          <li xml:lang="nl">Metagegevens worden voortaan in de juiste map geïnstalleerd</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.8" date="2017-06-08">
+      <description>
+        <p>Small Fixes</p>
+        <p xml:lang="pt">Pequenas correções</p>
+        <p xml:lang="nl">Kleine fouten opgelost</p>
+        <ul>
+          <li>Fixed style issues for dark and light variants</li>
+          <li xml:lang="pt">Problemas de estilo corrigidos para as variantes escuro e claro</li>
+          <li xml:lang="nl">Stijlproblemen met lichte en donkere thema's opgelost</li>
+          <li>Looks good, and feels good!</li>
+          <li xml:lang="pt">Parece bom e é bom!</li>
+          <li xml:lang="nl">Ziet er goed uit werkt ook goed!</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="violence-sexual">none</content_attribute>
+    <content_attribute id="violence-desecration">none</content_attribute>
+    <content_attribute id="violence-slavery">none</content_attribute>
+    <content_attribute id="violence-worship">none</content_attribute>
+    <content_attribute id="drugs-alcohol">none</content_attribute>
+    <content_attribute id="drugs-narcotics">none</content_attribute>
+    <content_attribute id="drugs-tobacco">none</content_attribute>
+    <content_attribute id="sex-nudity">none</content_attribute>
+    <content_attribute id="sex-themes">none</content_attribute>
+    <content_attribute id="sex-homosexuality">none</content_attribute>
+    <content_attribute id="sex-prostitution">none</content_attribute>
+    <content_attribute id="sex-adultery">none</content_attribute>
+    <content_attribute id="sex-appearance">none</content_attribute>
+    <content_attribute id="language-profanity">none</content_attribute>
+    <content_attribute id="language-humor">none</content_attribute>
+    <content_attribute id="language-discrimination">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="social-location">none</content_attribute>
+    <content_attribute id="social-contacts">none</content_attribute>
+    <content_attribute id="money-purchasing">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+  </content_rating>
+  <custom>
+    <value key="x-appcenter-suggested-price">3</value>
+    <value key="x-appcenter-stripe">pk_live_ABkBJVNQ8dmHcOYBGYqJFVTj</value>
+  </custom>
+</component>

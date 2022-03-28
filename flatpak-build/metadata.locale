@@ -1,0 +1,5 @@
+[Runtime]
+name=com.github.dahenson.agenda.Locale
+
+[ExtensionOf]
+ref=app/com.github.dahenson.agenda/x86_64/master

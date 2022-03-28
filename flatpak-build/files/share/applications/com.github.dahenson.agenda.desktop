@@ -1,0 +1,24 @@
+[Desktop Entry]
+Type=Application
+Name[ja]=Agenda
+Name[nl]=Agenda
+Name[pt]=Agenda
+Name=Agenda
+Comment[ja]=タスクを完了しましょう
+Comment[nl]=Rond taken af
+Comment[pt]=Faça as suas coisas
+Comment=Get things done
+GenericName[ja]=タスクリスト
+GenericName[nl]=Takenlijst
+GenericName[pt]=Lista de tarefas
+GenericName=Task List
+Exec=com.github.dahenson.agenda
+Icon=com.github.dahenson.agenda
+Terminal=false
+X-GNOME-Gettext-Domain=agenda
+X-GNOME-UsesNotifications=true
+Categories=Utility;Office;ProjectManagement;
+Keywords[ja]=Todo;Tasks;やること;タスク;
+Keywords[nl]=Taak;Taken;
+Keywords[pt]=Fazer;Tarefas;
+Keywords=Todo;Tasks;
