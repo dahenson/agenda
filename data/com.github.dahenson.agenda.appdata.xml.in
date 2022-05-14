@@ -9,6 +9,7 @@
   <developer_name>Dane Henson</developer_name>
   <url type="homepage">http://brainofdane.com</url>
   <url type="bugtracker">https://github.com/dahenson/agenda/issues</url>
+  <launchable type="desktop-id">com.github.dahenson.agenda.desktop</launchable>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/dahenson/agenda/master/data/screenshot.png</image>
