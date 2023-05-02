@@ -1,0 +1,43 @@
+# Czech Translation
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.dahenson.agenda package.
+# FIRST AUTHOR <ondrejtucek9@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.dahenson.agenda\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-15 18:09-0600\n"
+"PO-Revision-Date: 2023-05-02 13:58+0200\n"
+"Last-Translator: Ondřej Tuček <ondrejtucek9@gmail.com>\n"
+"Language-Team: \n"
+"Language: cs_CZ\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: src/Window.vala:27
+msgid "Add a new task…"
+msgstr "Přidej nový úkol…"
+
+#: src/Window.vala:83
+msgid "No Tasks!"
+msgstr "Žádné Úkoly!"
+
+#: src/Window.vala:84
+msgid "(add one below)"
+msgstr "(přidej jeden níže)"
+
+#: src/Window.vala:84
+msgid "(way to go)"
+msgstr "(Jen tak dál)"
+
+#: src/Window.vala:168
+msgid "Add to list…"
+msgstr "Přidat na list…"
+
+#: src/Window.vala:194
+msgid "Clear history"
+msgstr "Smazat Historii"
