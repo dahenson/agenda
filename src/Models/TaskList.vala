@@ -276,6 +276,57 @@ namespace Agenda {
             list_changed ();
         }
 
+	private void begin_print (Gtk.PrintOperation print, Gtk.PrintContext context) {
+		print.set_n_pages(1);
+	}
+
+	private void draw_page (Gtk.PrintOperation print, Gtk.PrintContext context, int page_nr) {
+		var cairo = context.get_cairo_context ();
+		cairo.set_source_rgb (0, 0, 0);
+		cairo.set_line_width (1);
+
+		var layout = context.create_pango_layout ();
+		var desc = new Pango.FontDescription ();
+		desc.set_family ("sans");
+		desc.set_size (14 * Pango.SCALE);
+		layout.set_font_description (desc);
+
+		layout.set_width ((int) (context.get_width () * Pango.SCALE));
+		layout.set_height ((int) (context.get_height () * Pango.SCALE));
+		layout.set_alignment (Pango.Alignment.LEFT);
+		layout.set_ellipsize (Pango.EllipsizeMode.END);
+
+		string text = "";
+
+		Task[] tasks = get_all_tasks ();
+		foreach (Task t in tasks) {
+			string item = "";
+
+			if (t.complete) {
+				item = "☑\t" + t.text;
+			} else {
+				item = "☐\t" + t.text;
+			}
+
+			text += item + "\n";
+		}
+
+		layout.set_text (text, text.length);
+		Pango.cairo_show_layout (cairo, layout);
+	}
+
+        public void print () {
+		Gtk.PrintOperation print = new Gtk.PrintOperation ();
+		print.begin_print.connect (this.begin_print);
+		print.draw_page.connect (this.draw_page);
+		try {
+			var res = print.run (Gtk.PrintOperationAction.PRINT_DIALOG, null);
+			debug ("print res: %d\n", res);
+		} catch (Error e) {
+			error (e.message);
+		}
+	}
+
         public void redo () {
             var state = undo_list.get_next_state ();
 
