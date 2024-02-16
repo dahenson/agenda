@@ -276,11 +276,11 @@ namespace Agenda {
             list_changed ();
         }
 
-	private void begin_print (Gtk.PrintOperation print, Gtk.PrintContext context) {
+	public void begin_print (Gtk.PrintOperation print, Gtk.PrintContext context) {
 		print.set_n_pages(1);
 	}
 
-	private void draw_page (Gtk.PrintOperation print, Gtk.PrintContext context, int page_nr) {
+	public void draw_page (Gtk.PrintOperation print, Gtk.PrintContext context, int page_nr) {
 		var cairo = context.get_cairo_context ();
 		cairo.set_source_rgb (0, 0, 0);
 		cairo.set_line_width (1);
@@ -313,18 +313,6 @@ namespace Agenda {
 
 		layout.set_text (text, text.length);
 		Pango.cairo_show_layout (cairo, layout);
-	}
-
-        public void print () {
-		Gtk.PrintOperation print = new Gtk.PrintOperation ();
-		print.begin_print.connect (this.begin_print);
-		print.draw_page.connect (this.draw_page);
-		try {
-			var res = print.run (Gtk.PrintOperationAction.PRINT_DIALOG, null);
-			debug ("print res: %d\n", res);
-		} catch (Error e) {
-			error (e.message);
-		}
 	}
 
         public void redo () {

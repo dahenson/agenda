@@ -110,7 +110,7 @@ namespace Agenda {
             app_quit_action.activate.connect (this.close);
             undo_action.activate.connect (task_list.undo);
             redo_action.activate.connect (task_list.redo);
-            print_action.activate.connect (task_list.print);
+            print_action.activate.connect (this.print);
         }
 
         private void load_list () {
@@ -341,6 +341,18 @@ namespace Agenda {
             });
 
             return base.configure_event (event);
+        }
+
+        public void print () {
+                Gtk.PrintOperation print = new Gtk.PrintOperation ();
+                print.begin_print.connect (task_list.begin_print);
+                print.draw_page.connect (task_list.draw_page);
+                try {
+                        var res = print.run (Gtk.PrintOperationAction.PRINT_DIALOG, this);
+                        debug ("print res: %d\n", res);
+                } catch (Error e) {
+                        error (e.message);
+                }
         }
     }
 }
