@@ -2,5 +2,6 @@
 <gresources>
   <gresource prefix="/com/github/dahenson/agenda">
     <file alias="Agenda.css" compressed="true">Agenda.css</file>
+    <file alias="shortcuts.ui" compressed="true">shortcuts.ui</file>
   </gresource>
 </gresources>

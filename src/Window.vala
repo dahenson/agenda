@@ -54,6 +54,7 @@ namespace Agenda {
             var print_action = new SimpleAction ("print", null);
             var purge_action = new SimpleAction ("remove_completed", null);
             var sort_action = new SimpleAction ("sort_completed", null);
+            var help_action = new SimpleAction ("help", null);
 
             add_action (window_close_action);
             add_action (app_quit_action);
@@ -62,6 +63,7 @@ namespace Agenda {
             add_action (print_action);
             add_action (purge_action);
             add_action (sort_action);
+            add_action (help_action);
 
             app.set_accels_for_action ("win.close", {"<Ctrl>W"});
             app.set_accels_for_action ("win.quit", {"<Ctrl>Q"});
@@ -70,6 +72,7 @@ namespace Agenda {
             app.set_accels_for_action ("win.print", {"<Ctrl>P"});
             app.set_accels_for_action ("win.remove_completed", {"<Ctrl>R"});
             app.set_accels_for_action ("win.sort_completed", {"<Ctrl>S"});
+            app.set_accels_for_action ("win.help", {"<Ctrl>H"});
 
             this.get_style_context ().add_class ("rounded");
             this.set_size_request (MIN_WIDTH, MIN_HEIGHT);
@@ -121,6 +124,7 @@ namespace Agenda {
             print_action.activate.connect (this.print);
             purge_action.activate.connect (task_list.remove_completed_tasks);
             sort_action.activate.connect (task_list.sort_tasks);
+            help_action.activate.connect (this.help);
         }
 
         private void load_list () {
@@ -366,6 +370,19 @@ namespace Agenda {
                 } catch (Error e) {
                         error (e.message);
                 }
+        }
+
+        public void help () {
+            var builder = new Gtk.Builder ();
+            try {
+                builder.add_from_resource ("/com/github/dahenson/agenda/shortcuts.ui");
+                var window = builder.get_object ("shortcuts-agenda") as Gtk.ShortcutsWindow;
+                window.view_name = null;
+                window.set_transient_for (this);
+                window.show_all ();
+            } catch (Error e) {
+                error (e.message);
+            }
         }
     }
 }
