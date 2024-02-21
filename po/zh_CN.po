@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-15 18:09-0600\n"
+"POT-Creation-Date: 2024-02-21 19:41+0100\n"
 "PO-Revision-Date: 2016-02-24 22:54+0000\n"
 "Last-Translator: Mingye Wang <arthur2e5@aosc.xyz>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -18,31 +18,80 @@ msgstr ""
 "X-Launchpad-Export-Date: 2016-02-25 05:17+0000\n"
 "X-Generator: Launchpad (build 17925)\n"
 
-#: src/Window.vala:27
+#: src/Window.vala:29
 #, fuzzy
 msgid "Add a new task…"
 msgstr "新增任务…"
 
-#: src/Window.vala:83
+#: src/Window.vala:102
 msgid "No Tasks!"
 msgstr "无任务！"
 
-#: src/Window.vala:84
+#: src/Window.vala:103
 msgid "(add one below)"
 msgstr "(在下面加入一个)"
 
-#: src/Window.vala:84
+#: src/Window.vala:103
 msgid "(way to go)"
 msgstr "(加油)"
 
-#: src/Window.vala:168
+#: src/Window.vala:159
 #, fuzzy
 msgid "Add to list…"
 msgstr "加入列表…"
 
-#: src/Window.vala:194
+#: src/Window.vala:185
 msgid "Clear history"
 msgstr "清除历史"
+
+#: data/shortcuts.ui:4
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: data/shortcuts.ui:12
+#, fuzzy
+msgid "Tasks"
+msgstr "无任务！"
+
+#: data/shortcuts.ui:17
+msgid "Sort completed tasks"
+msgstr ""
+
+#: data/shortcuts.ui:24
+msgid "Remove completed tasks"
+msgstr ""
+
+#: data/shortcuts.ui:32
+msgid "Editing"
+msgstr ""
+
+#: data/shortcuts.ui:37
+msgid "Undo task modification"
+msgstr ""
+
+#: data/shortcuts.ui:44
+msgid "Redo task modification"
+msgstr ""
+
+#: data/shortcuts.ui:52
+msgid "Miscellaneous"
+msgstr ""
+
+#: data/shortcuts.ui:57
+msgid "Print tasks list"
+msgstr ""
+
+#: data/shortcuts.ui:64
+msgid "Close tasks window"
+msgstr ""
+
+#: data/shortcuts.ui:71
+msgid "Quit application"
+msgstr ""
+
+#: data/shortcuts.ui:78
+msgid "Show this help window"
+msgstr ""
 
 #, fuzzy
 #~ msgid "Agenda"
