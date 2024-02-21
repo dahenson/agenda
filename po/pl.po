@@ -21,7 +21,7 @@ msgstr ""
 #: src/Window.vala:27
 #, fuzzy
 msgid "Add a new task…"
-msgstr "Dodaj nowe zadanie..."
+msgstr "Dodaj nowe zadanie…"
 
 #: src/Window.vala:83
 msgid "No Tasks!"
@@ -29,16 +29,16 @@ msgstr "Brak zadań!"
 
 #: src/Window.vala:84
 msgid "(add one below)"
-msgstr "(dodaj jedno poniżej)"
+msgstr "(dodaj jakieś poniżej)"
 
 #: src/Window.vala:84
 msgid "(way to go)"
-msgstr "(do końca)"
+msgstr "(tak trzymaj)"
 
 #: src/Window.vala:168
 #, fuzzy
 msgid "Add to list…"
-msgstr "Dodaj do listy..."
+msgstr "Dodaj do listy…"
 
 #: src/Window.vala:194
 msgid "Clear history"

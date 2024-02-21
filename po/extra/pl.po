@@ -1,0 +1,129 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the extra package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: extra\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-19 21:05+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:7
+#: data/com.github.dahenson.agenda.desktop.in:4
+msgid "Agenda"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:8
+#: data/com.github.dahenson.agenda.desktop.in:5
+msgid "Get things done"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:9
+msgid "Dane Henson"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:24
+msgid "A task manager to help you keep track of the tasks that matter most."
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:27
+msgid ""
+"Sometimes, you just need a task list to keep you motivated. Agenda provides "
+"a way to write down your tasks and tick them off as you complete them. The "
+"list is saved automatically, so you can close the list to get it out of the "
+"way without losing your place."
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:30
+msgid "Key Features:"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:32
+msgid "Saves your task list automatically"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:33
+msgid "See your completed tasks until you choose to delete them"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:34
+msgid "Autocompletion for previously added tasks"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:35
+msgid "Quit with the Esc key"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:42
+#: data/com.github.dahenson.agenda.appdata.xml.in:50
+msgid "Visual updates and code fixes"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:44
+msgid "Tiny tweaks for a debut release on elementary OS 5.0"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:52
+msgid "Cleaned up the list icons to only show on hover or select"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:53
+msgid "Tweaks to the overall visual style."
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:54
+msgid "General code cleanup"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:60
+msgid "Small bugfixes and a new icon"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:62
+msgid "Updated the icon with a fresh new look (Thanks, Harvey)"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:63
+msgid "Pressing Esc no longer closes Agenda while editing a task"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:64
+msgid "Pressing Delete no longer crashes Agenda while editing a task"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:65
+msgid "Metadata installs to the correct folder"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:71
+msgid "Small Fixes"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:73
+msgid "Fixed style issues for dark and light variants"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:74
+msgid "Looks good, and feels good!"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.desktop.in:6
+msgid "Task List"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.desktop.in:8
+msgid "com.github.dahenson.agenda"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.desktop.in:13
+msgid "Todo;Tasks;"
+msgstr "Do zrobienia;Zadania;"
