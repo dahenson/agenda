@@ -154,7 +154,7 @@ namespace Agenda {
                 return;
             }
             if (edited_text.length > EDITED_TEXT_MAX_LEN) {
-                string new_cut_text = edited_text.slice(0, EDITED_TEXT_MAX_LEN);
+                string new_cut_text = edited_text.slice (0, EDITED_TEXT_MAX_LEN);
                 task_list.set_task_text (path, new_cut_text);
             } else {
                 task_list.set_task_text (path, edited_text);
