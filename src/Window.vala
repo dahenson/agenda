@@ -66,7 +66,7 @@ namespace Agenda {
             app.set_accels_for_action ("win.close", {"<Ctrl>W"});
             app.set_accels_for_action ("win.quit", {"<Ctrl>Q"});
             app.set_accels_for_action ("win.undo", {"<Ctrl>Z"});
-            app.set_accels_for_action ("win.redo", {"<Ctrl>Y"});
+            app.set_accels_for_action ("win.redo", {"<Ctrl><Shift>Z"});
             app.set_accels_for_action ("win.print", {"<Ctrl>P"});
             app.set_accels_for_action ("win.remove_completed", {"<Ctrl>R"});
             app.set_accels_for_action ("win.sort_completed", {"<Ctrl>S"});
