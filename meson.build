@@ -6,7 +6,7 @@ gnome = import('gnome')
 i18n = import('i18n')
 
 asresources = gnome.compile_resources(
-    'as-resources', 'data/css.gresource.xml',
+    'as-resources', 'data/com.github.dahenson.agenda.gresources.xml',
     source_dir: 'data',
     c_name: 'as'
 )
