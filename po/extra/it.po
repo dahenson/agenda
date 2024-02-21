@@ -1,0 +1,132 @@
+# ITALIAN TRANSLATION FOR AGENDA.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the extra package.
+# ALBANO BATTISTELLA <ALBANO_BATTISTELLA@HOTMAIL.COM>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: extra\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-19 21:05+0900\n"
+"PO-Revision-Date: 2021-12-23 19:43+0100\n"
+"Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
+"Language-Team: ITALIAN <LL@li.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:7
+#: data/com.github.dahenson.agenda.desktop.in:4
+msgid "Agenda"
+msgstr "Agenda"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:8
+#: data/com.github.dahenson.agenda.desktop.in:5
+msgid "Get things done"
+msgstr "Fare le cose"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:9
+msgid "Dane Henson"
+msgstr "Dane Henson"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:24
+msgid "A task manager to help you keep track of the tasks that matter most."
+msgstr "Un task manager per aiutarti a tenere traccia delle attività che contano di più."
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:27
+msgid ""
+"Sometimes, you just need a task list to keep you motivated. Agenda provides "
+"a way to write down your tasks and tick them off as you complete them. The "
+"list is saved automatically, so you can close the list to get it out of the "
+"way without losing your place."
+msgstr ""
+"A volte, hai solo bisogno di un elenco di attività per mantenerti motivato. Agenda fornisce "
+"un modo per annotare i tuoi compiti e spuntarli mentre li completi. "
+"L'elenco viene salvato automaticamente, quindi puoi chiudere l'elenco per estrarlo in "
+"modo senza perdere il tuo posto."
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:30
+msgid "Key Features:"
+msgstr "Caratteristiche principali:"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:32
+msgid "Saves your task list automatically"
+msgstr "Salva automaticamente l'elenco delle attività"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:33
+msgid "See your completed tasks until you choose to delete them"
+msgstr "Visualizza le tue attività completate finché non scegli di eliminarle"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:34
+msgid "Autocompletion for previously added tasks"
+msgstr "Completamento automatico per attività aggiunte in precedenza"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:35
+msgid "Quit with the Esc key"
+msgstr "Esci con il tasto Esc"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:42
+#: data/com.github.dahenson.agenda.appdata.xml.in:50
+msgid "Visual updates and code fixes"
+msgstr "Aggiornamenti visivi e correzioni del codice"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:44
+msgid "Tiny tweaks for a debut release on elementary OS 5.0"
+msgstr "Piccole modifiche per una versione di debutto su elementary OS 5.0"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:52
+msgid "Cleaned up the list icons to only show on hover or select"
+msgstr "Ripulite le icone dell'elenco per mostrarle solo al passaggio del mouse o selezionare"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:53
+msgid "Tweaks to the overall visual style."
+msgstr "Modifiche allo stile visivo generale."
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:54
+msgid "General code cleanup"
+msgstr "Pulizia generale del codice"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:60
+msgid "Small bugfixes and a new icon"
+msgstr "Piccole correzioni di bug e una nuova icona"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:62
+msgid "Updated the icon with a fresh new look (Thanks, Harvey)"
+msgstr "Aggiornata l'icona con un nuovo look (grazie, Harvey)"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:63
+msgid "Pressing Esc no longer closes Agenda while editing a task"
+msgstr "Premendo Esc non si chiude più Agenda durante la modifica di un'attività"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:64
+msgid "Pressing Delete no longer crashes Agenda while editing a task"
+msgstr "Premendo Elimina non si blocca più Agenda durante la modifica di un'attività"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:65
+msgid "Metadata installs to the correct folder"
+msgstr "I metadati vengono installati nella cartella corretta"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:71
+msgid "Small Fixes"
+msgstr "Piccole correzioni"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:73
+msgid "Fixed style issues for dark and light variants"
+msgstr "Risolti problemi di stile per le varianti scure e chiare"
+
+#: data/com.github.dahenson.agenda.appdata.xml.in:74
+msgid "Looks good, and feels good!"
+msgstr ""
+
+#: data/com.github.dahenson.agenda.desktop.in:6
+msgid "Task List"
+msgstr "Elenco Attività"
+
+#: data/com.github.dahenson.agenda.desktop.in:8
+msgid "com.github.dahenson.agenda"
+msgstr "com.github.dahenson.agenda"
+
+#: data/com.github.dahenson.agenda.desktop.in:13
+msgid "Todo;Tasks;"
+msgstr "cose da fare;compiti;"
