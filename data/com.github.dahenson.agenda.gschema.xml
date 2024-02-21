@@ -2,12 +2,23 @@
 	<schema id="com.github.dahenson.agenda" path="/com/github/dahenson/agenda/" gettext-domain="agenda">
         <key name="window-position" type="ai">
             <default>[]</default>
+            <summary>Window position</summary>
+            <description>Window position (x and y).</description>
         </key>
         <key name="window-size" type="ai">
+            <summary>Window size</summary>
+            <description>Window size (width and height).</description>
             <default>[]</default>
         </key>
         <key name="first-time" type="b">
+            <summary>First time usage</summary>
+            <description>Whether the application is used for the first time.</description>
             <default>true</default>
         </key>
+	<key name="print-font-desc" type="s">
+            <summary>Printing font description</summary>
+            <description>The description of the font used for printing.</description>
+            <default>"Sans 14"</default>
+	</key>
 	</schema>
 </schemalist>

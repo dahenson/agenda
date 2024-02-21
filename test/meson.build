@@ -18,6 +18,7 @@ test_task_list_history_source = files(
 
 task_test_bin = executable('test-task',
     test_task_source + agenda_model_sources,
+    include_directories: config_h_dir,
     dependencies: agenda_deps,
     vala_args: vala_args,
     c_args: c_args,
@@ -25,6 +26,7 @@ task_test_bin = executable('test-task',
 
 task_list_test_bin = executable('test-task-list',
     test_task_list_source + agenda_model_sources,
+    include_directories: config_h_dir,
     dependencies: agenda_deps,
     vala_args: vala_args,
     c_args: c_args,
@@ -32,6 +34,7 @@ task_list_test_bin = executable('test-task-list',
 
 task_list_history_test_bin = executable('test-task-list-history',
     test_task_list_history_source + agenda_model_sources,
+    include_directories: config_h_dir,
     dependencies: agenda_deps,
     vala_args: vala_args,
     c_args: c_args,

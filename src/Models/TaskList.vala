@@ -22,6 +22,7 @@
 namespace Agenda {
 
     public class TaskList : Gtk.ListStore {
+        public static GLib.Settings settings;
 
         public signal void list_changed ();
 
@@ -48,6 +49,8 @@ namespace Agenda {
         }
 
         construct {
+            settings = new GLib.Settings (Build.APPNAME);
+
             undo_list = new TaskListHistory ();
 
             Type[] types = {
@@ -320,9 +323,8 @@ namespace Agenda {
             cairo.set_line_width (1);
 
             var layout = context.create_pango_layout ();
-            var desc = new Pango.FontDescription ();
-            desc.set_family ("sans");
-            desc.set_size (14 * Pango.SCALE);
+            var font = settings.get_string ("print-font-desc");
+            var desc = Pango.FontDescription.from_string (font);
             layout.set_font_description (desc);
 
             layout.set_width ((int) (context.get_width () * Pango.SCALE));
