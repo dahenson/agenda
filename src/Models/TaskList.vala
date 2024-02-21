@@ -277,7 +277,7 @@ namespace Agenda {
         }
 
         public void begin_print (Gtk.PrintOperation print, Gtk.PrintContext context) {
-            print.set_n_pages(1);
+            print.set_n_pages (1);
         }
 
         public void draw_page (Gtk.PrintOperation print, Gtk.PrintContext context, int page_nr) {
