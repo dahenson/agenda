@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: agenda-tasks\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-15 18:09-0600\n"
+"POT-Creation-Date: 2024-02-21 04:46+0100\n"
 "PO-Revision-Date: 2016-02-21 20:50+0000\n"
 "Last-Translator: Jean-Marc <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -18,39 +18,29 @@ msgstr ""
 "X-Launchpad-Export-Date: 2016-02-22 05:52+0000\n"
 "X-Generator: Launchpad (build 17925)\n"
 
-#: src/Window.vala:27
-#, fuzzy
+#: src/Window.vala:29
 msgid "Add a new task…"
 msgstr "Ajouter une nouvelle tâche…"
 
-#: src/Window.vala:83
+#: src/Window.vala:96
 msgid "No Tasks!"
 msgstr "Aucune tâche !"
 
-#: src/Window.vala:84
+#: src/Window.vala:97
 msgid "(add one below)"
 msgstr "(en ajouter une ci-dessous)"
 
-#: src/Window.vala:84
+#: src/Window.vala:97
 msgid "(way to go)"
 msgstr "(bien joué)"
 
-#: src/Window.vala:168
-#, fuzzy
+#: src/Window.vala:151
 msgid "Add to list…"
-msgstr "Ajouter à la liste..."
+msgstr "Ajouter à la liste…"
 
-#: src/Window.vala:194
+#: src/Window.vala:177
 msgid "Clear history"
 msgstr "Effacer l'historique"
-
-#, fuzzy
-#~ msgid "Agenda"
-#~ msgstr "À propos d'Agenda"
-
-#, fuzzy
-#~ msgid "Task List"
-#~ msgstr "Tâche terminée"
 
 #~ msgid "Todo;Tasks;"
 #~ msgstr "À faire;Todo;Tâches"
