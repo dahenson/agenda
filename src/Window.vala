@@ -49,16 +49,19 @@ namespace Agenda {
             var app_quit_action = new SimpleAction ("quit", null);
             var undo_action = new SimpleAction ("undo", null);
             var redo_action = new SimpleAction ("redo", null);
+            var purge_action = new SimpleAction ("remove_completed", null);
 
             add_action (window_close_action);
             add_action (app_quit_action);
             add_action (undo_action);
             add_action (redo_action);
+            add_action (purge_action);
 
             app.set_accels_for_action ("win.close", {"<Ctrl>W"});
             app.set_accels_for_action ("win.quit", {"<Ctrl>Q"});
             app.set_accels_for_action ("win.undo", {"<Ctrl>Z"});
             app.set_accels_for_action ("win.redo", {"<Ctrl>Y"});
+            app.set_accels_for_action ("win.remove_completed", {"<Ctrl>R"});
 
             this.get_style_context ().add_class ("rounded");
             this.set_size_request (MIN_WIDTH, MIN_HEIGHT);
@@ -107,6 +110,7 @@ namespace Agenda {
             app_quit_action.activate.connect (this.close);
             undo_action.activate.connect (task_list.undo);
             redo_action.activate.connect (task_list.redo);
+            purge_action.activate.connect (task_list.remove_completed_tasks);
         }
 
         private void load_list () {
