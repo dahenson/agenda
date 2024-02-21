@@ -276,6 +276,45 @@ namespace Agenda {
             list_changed ();
         }
 
+        public void begin_print (Gtk.PrintOperation print, Gtk.PrintContext context) {
+            print.set_n_pages (1);
+        }
+
+        public void draw_page (Gtk.PrintOperation print, Gtk.PrintContext context, int page_nr) {
+            var cairo = context.get_cairo_context ();
+            cairo.set_source_rgb (0, 0, 0);
+            cairo.set_line_width (1);
+
+            var layout = context.create_pango_layout ();
+            var desc = new Pango.FontDescription ();
+            desc.set_family ("sans");
+            desc.set_size (14 * Pango.SCALE);
+            layout.set_font_description (desc);
+
+            layout.set_width ((int) (context.get_width () * Pango.SCALE));
+            layout.set_height ((int) (context.get_height () * Pango.SCALE));
+            layout.set_alignment (Pango.Alignment.LEFT);
+            layout.set_ellipsize (Pango.EllipsizeMode.END);
+
+            string text = "";
+
+            Task[] tasks = get_all_tasks ();
+            foreach (Task t in tasks) {
+                string item = "";
+
+                if (t.complete) {
+                    item = "☑\t" + t.text;
+                } else {
+                    item = "☐\t" + t.text;
+                }
+
+                text += item + "\n";
+            }
+
+            layout.set_text (text, text.length);
+            Pango.cairo_show_layout (cairo, layout);
+        }
+
         public void redo () {
             var state = undo_list.get_next_state ();
 
