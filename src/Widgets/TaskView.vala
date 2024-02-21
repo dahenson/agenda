@@ -21,6 +21,7 @@
 
 namespace Agenda {
 
+
     public class TaskView : Gtk.TreeView {
 
         private TaskList task_list;
@@ -58,6 +59,8 @@ namespace Agenda {
             text.ypad = 6;
             text.editable = true;
             text.max_width_chars = 10;
+            text.wrap_width = 50;
+            text.wrap_mode = Pango.WrapMode.WORD_CHAR;
             text.ellipsize_set = true;
             text.ellipsize = Pango.EllipsizeMode.END;
 
@@ -82,6 +85,7 @@ namespace Agenda {
             set_tooltip_column (TaskList.Columns.TEXT);
 
             text.editing_started.connect ( (editable, path) => {
+                debug ("Editing started");
                 is_editing = true;
             });
 
@@ -144,10 +148,17 @@ namespace Agenda {
 
         private void text_edited (string path, string edited_text) {
             /* If the user accidentally blanks a task, abort the edit */
+
+            debug ("String: %s length: %d", edited_text, edited_text.length);
             if (task_is_empty (edited_text)) {
                 return;
             }
-            task_list.set_task_text (path, edited_text);
+            if (edited_text.length > EDITED_TEXT_MAX_LEN) {
+                string new_cut_text = edited_text.slice(0, EDITED_TEXT_MAX_LEN);
+                task_list.set_task_text (path, new_cut_text);
+            } else {
+                task_list.set_task_text (path, edited_text);
+            }
             is_editing = false;
         }
     }
