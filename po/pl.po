@@ -29,11 +29,11 @@ msgstr "Brak zadań!"
 
 #: src/Window.vala:84
 msgid "(add one below)"
-msgstr "(dodaj jedno poniżej)"
+msgstr "(dodaj jakieś poniżej)"
 
 #: src/Window.vala:84
 msgid "(way to go)"
-msgstr "(do końca)"
+msgstr "(tak trzymaj)"
 
 #: src/Window.vala:168
 #, fuzzy
