@@ -232,6 +232,9 @@ namespace Agenda {
         }
 
         public void append_task () {
+            if (task_entry.text == "")
+                return;
+
             Task task = new Task.with_attributes (
                 "",
                 false,
