@@ -34,7 +34,7 @@ namespace Agenda {
         }
 
         public Agenda () {
-            Object (application_id: "com.github.dahenson.agenda",
+            Object (application_id: Build.APPNAME == "agenda" ? null : Build.APPNAME,
             flags: ApplicationFlags.FLAGS_NONE);
         }
 
@@ -69,6 +69,10 @@ namespace Agenda {
         }
 
         public static int main (string[] args) {
+            Intl.setlocale (GLib.LocaleCategory.ALL, "");
+            Intl.bindtextdomain (Build.APPNAME, Build.PREFIX + "/share/locale");
+            Intl.textdomain (Build.APPNAME);
+
             app = new Agenda ();
 
             if (args[1] == "-s") {

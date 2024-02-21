@@ -17,6 +17,8 @@ conf = configuration_data()
 conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('PKGDATADIR', join_paths(get_option('datadir'), meson.project_name()))
+conf.set_quoted('PREFIX', get_option('prefix'))
+conf.set_quoted('APPNAME', meson.project_name())
 configure_file(output: 'config.h', configuration: conf)
 config_h_dir = include_directories('.')
 
