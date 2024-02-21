@@ -89,6 +89,40 @@ namespace Agenda {
             list_changed ();
         }
 
+        /*
+         *  Sort the tasks so finished tasks are at bottom
+         */
+        public void sort_tasks () {
+            Gtk.TreeIter iter;
+            bool valid = get_iter_first (out iter);
+            Task[] tasks = {};
+            Task[] completed = {};
+
+            while (valid) {
+                Task task = get_task (iter);
+                if (task.complete) {
+                    completed += task;
+                } else {
+                    tasks += task;
+                }
+
+                valid = iter_next (ref iter);
+            }
+
+            clear ();
+
+            int i;
+            for (i = 0; i < tasks.length; i++) {
+                append_task (tasks[i]);
+            }
+
+            for (i = 0; i < completed.length; i++) {
+                append_task (completed[i]);
+            }
+
+            list_changed ();
+        }
+
         public void clear_undo () {
             undo_list = new TaskListHistory ();
             undo_list.add (this);
