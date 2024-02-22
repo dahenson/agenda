@@ -116,13 +116,23 @@ namespace Agenda {
 
             clear ();
 
-            int i;
-            for (i = 0; i < tasks.length; i++) {
-                append_task (tasks[i]);
+            /* stacked arrays are not supported */
+            Task[] sort0, sort1;
+            var upward = settings.get_boolean ("sort-up");
+            if (upward) {
+                sort0 = completed;
+                sort1 = tasks;
+            } else {
+                sort0 = tasks;
+                sort1 = completed;
             }
 
-            for (i = 0; i < completed.length; i++) {
-                append_task (completed[i]);
+            for (int i = 0; i < sort0.length; i++) {
+                append_task (sort0[i]);
+            }
+
+            for (int i = 0; i < sort1.length; i++) {
+                append_task (sort1[i]);
             }
 
             list_changed ();
