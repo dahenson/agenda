@@ -38,6 +38,8 @@ namespace Agenda {
 
         private TaskListHistory undo_list;
 
+        private int lines_per_page;
+
         private bool record_undo_enable {
             private get;
             private set;
@@ -314,7 +316,31 @@ namespace Agenda {
         }
 
         public void begin_print (Gtk.PrintOperation print, Gtk.PrintContext context) {
-            print.set_n_pages (1);
+            var layout = context.create_pango_layout ();
+            var font = settings.get_string ("print-font-desc");
+            var desc = Pango.FontDescription.from_string (font);
+            layout.set_font_description (desc);
+
+            layout.set_width ((int) context.get_width () * Pango.SCALE);
+            layout.set_height ((int) context.get_height () * Pango.SCALE);
+            layout.set_alignment (Pango.Alignment.LEFT);
+            layout.set_ellipsize (Pango.EllipsizeMode.END);
+
+            layout.set_text ("X", 1);
+
+            Pango.Rectangle ink_rect, logical_rect;
+            Pango.LayoutLine line = layout.get_line (0);
+            line.get_extents (out ink_rect, out logical_rect);
+            var line_height = logical_rect.height / Pango.SCALE;
+
+            /* find n_pages */
+            this.lines_per_page = (int) context.get_height () / line_height;
+            var n_pages = this.size / this.lines_per_page;
+            /* do not forget trailing lines  */
+            n_pages += (this.size  % this.lines_per_page) > 0 ? 1 : 0;
+
+            debug ("Setting number of pages to %d", n_pages);
+            print.set_n_pages (n_pages);
         }
 
         public void draw_page (Gtk.PrintOperation print, Gtk.PrintContext context, int page_nr) {
@@ -334,9 +360,13 @@ namespace Agenda {
 
             string text = "";
 
+            /* page_nr starts with 0 */
+            uint cur_index = page_nr * this.lines_per_page;
+
             Task[] tasks = get_all_tasks ();
-            foreach (Task t in tasks) {
+            while (cur_index < this.lines_per_page * (page_nr + 1) && cur_index < this.size) {
                 string item = "";
+                var t = tasks[cur_index];
 
                 if (t.complete) {
                     item = "☑\t" + t.text;
@@ -345,6 +375,8 @@ namespace Agenda {
                 }
 
                 text += item + "\n";
+
+                cur_index += 1;
             }
 
             layout.set_text (text, text.length);
