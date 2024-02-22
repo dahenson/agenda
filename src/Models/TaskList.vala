@@ -337,7 +337,7 @@ namespace Agenda {
             this.lines_per_page = (int) context.get_height () / line_height;
             var n_pages = this.size / this.lines_per_page;
             /* do not forget trailing lines  */
-            n_pages += (this.size  % this.lines_per_page) > 0 ? 1 : 0;
+            n_pages += (this.size % this.lines_per_page) > 0 ? 1 : 0;
 
             debug ("Setting number of pages to %d", n_pages);
             print.set_n_pages (n_pages);
