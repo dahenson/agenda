@@ -354,7 +354,7 @@ namespace Agenda {
             layout.set_font_description (desc);
 
             layout.set_width ((int) (context.get_width () * Pango.SCALE));
-            layout.set_height ((int) (context.get_height () * Pango.SCALE));
+            /* do not set heigth to allow ellipsize */
             layout.set_alignment (Pango.Alignment.LEFT);
             layout.set_ellipsize (Pango.EllipsizeMode.END);
 
