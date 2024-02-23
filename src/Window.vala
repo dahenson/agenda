@@ -55,6 +55,7 @@ namespace Agenda {
             var purge_action = new SimpleAction ("remove_completed", null);
             var sort_action = new SimpleAction ("sort_completed", null);
             var help_action = new SimpleAction ("help", null);
+            var prefs_action = new SimpleAction ("prefs", null);
 
             add_action (window_close_action);
             add_action (app_quit_action);
@@ -64,6 +65,7 @@ namespace Agenda {
             add_action (purge_action);
             add_action (sort_action);
             add_action (help_action);
+            add_action (prefs_action);
 
             app.set_accels_for_action ("win.close", {"<Ctrl>W"});
             app.set_accels_for_action ("win.quit", {"<Ctrl>Q"});
@@ -82,6 +84,23 @@ namespace Agenda {
             header.get_style_context ().add_class ("titlebar");
             header.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             this.set_titlebar (header);
+
+            GLib.Menu menu = new GLib.Menu ();
+            menu.append (_("Preferences"), "win.prefs");
+            GLib.Menu section = new GLib.Menu ();
+            section.append (_("Print task list"), "win.print");
+            section.append (_("Remove completed"), "win.remove_completed");
+            section.append (_("Sort completed"), "win.sort_completed");
+            menu.insert_section (1, null, section);
+            section = new GLib.Menu ();
+            section.append (_("Help"), "win.help");
+            section.append (_("_Quit"), "win.quit");
+            menu.insert_section (4, null, section);
+
+            Gtk.MenuButton burger = new Gtk.MenuButton ();
+            burger.direction = Gtk.ArrowType.NONE;
+            burger.menu_model = menu;
+            header.pack_end(burger);
 
             // Set up geometry
             Gdk.Geometry geo = Gdk.Geometry ();
@@ -125,6 +144,7 @@ namespace Agenda {
             purge_action.activate.connect (task_list.remove_completed_tasks);
             sort_action.activate.connect (task_list.sort_tasks);
             help_action.activate.connect (this.help);
+            prefs_action.activate.connect (this.open_prefs_window);
         }
 
         private void load_list () {
@@ -383,6 +403,11 @@ namespace Agenda {
             } catch (Error e) {
                 error (e.message);
             }
+        }
+
+        void open_prefs_window () {
+            PrefsWindow w = new PrefsWindow (this);
+            w.show_all ();
         }
     }
 }
