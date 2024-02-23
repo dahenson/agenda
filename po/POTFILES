@@ -1,2 +1,3 @@
 src/Window.vala
+src/Prefs.vala
 data/shortcuts.ui
