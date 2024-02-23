@@ -100,7 +100,7 @@ namespace Agenda {
             Gtk.MenuButton burger = new Gtk.MenuButton ();
             burger.direction = Gtk.ArrowType.NONE;
             burger.menu_model = menu;
-            header.pack_end(burger);
+            header.pack_end (burger);
 
             // Set up geometry
             Gdk.Geometry geo = Gdk.Geometry ();

@@ -78,15 +78,15 @@ namespace Agenda {
             buttonbox.add (cancel);
             buttonbox.add (ok);
 
-            var vbox =  new Gtk.Box (Gtk.Orientation.VERTICAL, 3);
+            var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 3);
             vbox.spacing = 6;
             vbox.margin = 6;
             vbox.add (font_hbox);
             vbox.add (sort_hbox);
             vbox.add (buttonbox);
 
-            ok.clicked.connect(this.on_ok);
-            cancel.clicked.connect(this.on_cancel);
+            ok.clicked.connect (this.on_ok);
+            cancel.clicked.connect (this.on_cancel);
             this.add (vbox);
         }
 
