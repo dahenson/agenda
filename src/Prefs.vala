@@ -24,7 +24,7 @@ namespace Agenda {
     public class PrefsWindow : Gtk.Window {
         public static GLib.Settings settings;
         Gtk.FontButton font_button;
-        Gtk.CheckButton sort_checkbox;
+        Gtk.Switch sort_switch;
 
         public PrefsWindow (AgendaWindow win) {
             Object ();
@@ -59,12 +59,12 @@ namespace Agenda {
             Gtk.Label sort_label = new Gtk.Label (_("Sort completed tasks upward"));
             sort_label.hexpand = true;
 
-            this.sort_checkbox = new Gtk.CheckButton ();
-            sort_checkbox.set_active (settings.get_boolean ("sort-up"));
+            this.sort_switch = new Gtk.Switch ();
+            sort_switch.set_active (settings.get_boolean ("sort-up"));
 
             sort_hbox.spacing = 6;
             sort_hbox.add (sort_label);
-            sort_hbox.add (sort_checkbox);
+            sort_hbox.add (sort_switch);
 
             var buttonbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
             buttonbox.homogeneous = true;
@@ -92,7 +92,7 @@ namespace Agenda {
 
         void on_ok () {
             settings.set_string ("print-font-desc", font_button.get_font ());
-            settings.set_boolean ("sort-up", sort_checkbox.get_active ());
+            settings.set_boolean ("sort-up", sort_switch.get_active ());
             this.destroy ();
         }
 
