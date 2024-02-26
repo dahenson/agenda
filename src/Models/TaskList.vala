@@ -118,7 +118,7 @@ namespace Agenda {
 
             /* stacked arrays are not supported */
             Task[] sort0, sort1;
-            var upward = settings.get_boolean ("sort-up");
+            var upward = settings.get_boolean ("sort-completed-upward");
             if (upward) {
                 sort0 = completed;
                 sort1 = tasks;
@@ -327,7 +327,7 @@ namespace Agenda {
 
         public void begin_print (Gtk.PrintOperation print, Gtk.PrintContext context) {
             var layout = context.create_pango_layout ();
-            var font = settings.get_string ("print-font-desc");
+            var font = settings.get_string ("print-font-description");
             var desc = Pango.FontDescription.from_string (font);
             layout.set_font_description (desc);
 
@@ -359,7 +359,7 @@ namespace Agenda {
             cairo.set_line_width (1);
 
             var layout = context.create_pango_layout ();
-            var font = settings.get_string ("print-font-desc");
+            var font = settings.get_string ("print-font-description");
             var desc = Pango.FontDescription.from_string (font);
             layout.set_font_description (desc);
 

@@ -49,7 +49,7 @@ namespace Agenda {
             font_label.hexpand = true;
 
             this.font_button = new Gtk.FontButton ();
-            font_button.set_font (settings.get_string ("print-font-desc"));
+            font_button.set_font (settings.get_string ("print-font-description"));
 
             font_hbox.spacing = 6;
             font_hbox.add (font_label);
@@ -60,7 +60,7 @@ namespace Agenda {
             sort_label.hexpand = true;
 
             this.sort_switch = new Gtk.Switch ();
-            sort_switch.set_active (settings.get_boolean ("sort-up"));
+            sort_switch.set_active (settings.get_boolean ("sort-completed-upward"));
 
             sort_hbox.spacing = 6;
             sort_hbox.add (sort_label);
@@ -91,8 +91,8 @@ namespace Agenda {
         }
 
         void on_ok () {
-            settings.set_string ("print-font-desc", font_button.get_font ());
-            settings.set_boolean ("sort-up", sort_switch.get_active ());
+            settings.set_string ("print-font-description", font_button.get_font ());
+            settings.set_boolean ("sort-completed-upward", sort_switch.get_active ());
             this.destroy ();
         }
 

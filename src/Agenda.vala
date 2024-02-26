@@ -85,7 +85,7 @@ namespace Agenda {
 
             app = new Agenda ();
 
-            if (args[1] == "-s") {
+            if (args.length == 2 && args[1] == "-s") {
                 return 0;
             }
 

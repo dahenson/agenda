@@ -15,12 +15,12 @@
             <description>Whether the application is used for the first time.</description>
             <default>true</default>
         </key>
-        <key name="print-font-desc" type="s">
+        <key name="print-font-description" type="s">
           <summary>Printing font description</summary>
           <description>The description of the font used for printing.</description>
           <default>"Sans 14"</default>
         </key>
-        <key name="sort-up" type="b">
+        <key name="sort-completed-upward" type="b">
           <summary>Sort completed tasks upward</summary>
           <description>Whether the are sorted upward or downward.</description>
           <default>false</default>
