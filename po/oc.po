@@ -1,0 +1,131 @@
+# Occitan translation file.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.dahenson.agenda package.
+# Quentin PAGÈS, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.dahenson.agenda\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-23 20:16+0100\n"
+"PO-Revision-Date: 2024-03-03 00:26+0100\n"
+"Last-Translator: Quentin PAGÈS\n"
+"Language-Team: \n"
+"Language: oc\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: src/Window.vala:29
+msgid "Add a new task…"
+msgstr "Apondre un prètzfach novèl…"
+
+#: src/Window.vala:89 src/Prefs.vala:45
+msgid "Preferences"
+msgstr "Preferéncias"
+
+#: src/Window.vala:91
+msgid "Print task list"
+msgstr "Imprimir la lista de prètzfach"
+
+#: src/Window.vala:92
+msgid "Remove completed"
+msgstr "Supression terminada"
+
+#: src/Window.vala:93
+msgid "Sort completed"
+msgstr "Triada terminada"
+
+#: src/Window.vala:96
+msgid "Help"
+msgstr "Ajuda"
+
+#: src/Window.vala:97
+msgid "_Quit"
+msgstr "_Quitar"
+
+#: src/Window.vala:121
+msgid "No Tasks!"
+msgstr "Cap de prètzfach !"
+
+#: src/Window.vala:122
+msgid "(add one below)"
+msgstr "(ajustatz-ne un çai-jos)"
+
+#: src/Window.vala:122
+msgid "(way to go)"
+msgstr "(coma cal)"
+
+#: src/Window.vala:179
+msgid "Add to list…"
+msgstr "Ajustar a la lista…"
+
+#: src/Window.vala:205
+msgid "Clear history"
+msgstr "Escafar l’istoric"
+
+#: src/Prefs.vala:48
+msgid "Printing font"
+msgstr "Polissa d’impression"
+
+#: src/Prefs.vala:59
+msgid "Sort completed tasks upward"
+msgstr "Triar los prètzfaches per òrdre creissent"
+
+#: src/Prefs.vala:73
+msgid "Cancel"
+msgstr "Anullar"
+
+#: src/Prefs.vala:75
+msgid "OK"
+msgstr "D'acòrdi"
+
+#: data/shortcuts.ui:4
+msgid "Keyboard shortcuts"
+msgstr "Acorchis clavièr"
+
+#: data/shortcuts.ui:12
+msgid "Tasks"
+msgstr "Prètzfaches"
+
+#: data/shortcuts.ui:17
+msgid "Sort completed tasks"
+msgstr "Triar los prètzfaches acabats"
+
+#: data/shortcuts.ui:24
+msgid "Remove completed tasks"
+msgstr "Suprimir los prètzfaches acabats"
+
+#: data/shortcuts.ui:32
+msgid "Editing"
+msgstr "Edicion"
+
+#: data/shortcuts.ui:37
+msgid "Undo task modification"
+msgstr "Desfar las modificacion del prètzfach"
+
+#: data/shortcuts.ui:44
+msgid "Redo task modification"
+msgstr "Refar las modificacion del prètzfach"
+
+#: data/shortcuts.ui:52
+msgid "Miscellaneous"
+msgstr "Divèrs"
+
+#: data/shortcuts.ui:57
+msgid "Print tasks list"
+msgstr "Imprimir la lista de prètzfaches"
+
+#: data/shortcuts.ui:64
+msgid "Close tasks window"
+msgstr "Tampar la fenèstra de prètzfaches"
+
+#: data/shortcuts.ui:71
+msgid "Quit application"
+msgstr "Quitar l’aplicacion"
+
+#: data/shortcuts.ui:78
+msgid "Show this help window"
+msgstr "Mostrar aquesta fenèstra d’ajuda"
