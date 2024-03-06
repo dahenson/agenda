@@ -6,7 +6,7 @@
   <project_license>GPL-3.0+</project_license>
   <name>Agenda</name>
   <summary>Get things done</summary>
-  <developer>
+  <developer id="com.brainofdane">
     <name>Dane Henson</name>
   </developer>
   <url type="homepage">https://brainofdane.com</url>
