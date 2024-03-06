@@ -6,7 +6,9 @@
   <project_license>GPL-3.0+</project_license>
   <name>Agenda</name>
   <summary>Get things done</summary>
-  <developer_name>Dane Henson</developer_name>
+  <developer id="com.brainofdane">
+    <name>Dane Henson</name>
+  </developer>
   <url type="homepage">https://brainofdane.com</url>
   <url type="bugtracker">https://github.com/dahenson/agenda/issues</url>
   <screenshots>
