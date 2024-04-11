@@ -96,17 +96,29 @@ namespace Agenda {
             text.edited.connect (text_edited);
             toggle.toggled.connect (toggle_clicked);
             row_activated.connect (list_row_activated);
-            button_press_event.connect ((event) => {
-                Gtk.TreePath p = new Gtk.TreePath ();
-                get_path_at_pos ((int) event.x, (int) event.y, out p, null, null, null);
-                if (p == null) {
-                    get_selection ().unselect_all ();
-                    p.free ();
-                    return true;
-                }
-                p.free ();
-                return false;
-            });
+
+            Gtk.EventControllerFocus focus = new Gtk.EventControllerFocus ();
+            focus.leave.connect (leave_event);
+            add_controller (focus);
+
+            Gtk.GestureClick button_press = new Gtk.GestureClick ();
+            button_press.released.connect (on_click);
+            add_controller (button_press);
+        }
+
+        private void on_click (Gtk.GestureClick gesture, int n_press, double x, double y) {
+            Gtk.TreePath p = new Gtk.TreePath ();
+            if (!get_path_at_pos ((int) x, (int) y, out p, null, null, null)) {
+                get_selection ().unselect_all ();
+            }
+
+            p.free ();
+        }
+
+        private void leave_event (Gtk.EventControllerFocus focus) {
+            Gtk.TreeSelection selected;
+            selected = get_selection ();
+            selected.unselect_all ();
         }
 
         public void toggle_selected_task () {
@@ -122,7 +134,7 @@ namespace Agenda {
             path.free ();
         }
 
-        private void list_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
+        private void list_row_activated (Gtk.TreeView view, Gtk.TreePath path, Gtk.TreeViewColumn? column) {
             if (column.title == "Delete") {
                 task_list.remove_task (path);
             }

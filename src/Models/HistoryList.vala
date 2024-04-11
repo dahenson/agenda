@@ -45,9 +45,10 @@ namespace Agenda {
 #else
                         remove (iter);
 #endif
+                        valid = iter_is_valid (iter);
+                    } else {
+                        valid = iter_next (ref iter);
                     }
-
-                    valid = iter_next (ref iter);
                 }
 
                 append (out iter);

@@ -48,8 +48,8 @@ agenda_client_sources = files(
 
 # dependencies
 glib = dependency('glib-2.0')
-gtk = dependency('gtk+-3.0')
-granite = dependency('granite')
+gtk = dependency('gtk4')
+granite = dependency('granite-7')
 
 agenda_deps = [
     glib,

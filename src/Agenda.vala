@@ -55,16 +55,15 @@ namespace Agenda {
             });
 
             window = new AgendaWindow (this);
-            window.delete_event.connect (window.main_quit);
-            window.show_all ();
+            window.present ();
             window.update ();
 
             if (elementary_stylesheet ()) {
                 var elementary_provider = new Gtk.CssProvider ();
                 elementary_provider.load_from_resource (
                     "com/github/dahenson/agenda/Agenda.css");
-                Gtk.StyleContext.add_provider_for_screen (
-                    Gdk.Screen.get_default (),
+                Gtk.StyleContext.add_provider_for_display (
+                    Gdk.Display.get_default (),
                     elementary_provider,
                     Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             }

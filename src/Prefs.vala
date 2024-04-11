@@ -52,8 +52,8 @@ namespace Agenda {
             font_button.set_font (settings.get_string ("print-font-description"));
 
             font_hbox.spacing = 6;
-            font_hbox.add (font_label);
-            font_hbox.add (font_button);
+            font_hbox.append (font_label);
+            font_hbox.append (font_button);
 
             var sort_hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
             Gtk.Label sort_label = new Gtk.Label (_("Sort completed tasks upward"));
@@ -63,8 +63,8 @@ namespace Agenda {
             sort_switch.set_active (settings.get_boolean ("sort-completed-upward"));
 
             sort_hbox.spacing = 6;
-            sort_hbox.add (sort_label);
-            sort_hbox.add (sort_switch);
+            sort_hbox.append (sort_label);
+            sort_hbox.append (sort_switch);
 
             var buttonbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
             buttonbox.homogeneous = true;
@@ -75,19 +75,19 @@ namespace Agenda {
             Gtk.Button ok = new Gtk.Button.with_label (_("OK"));
             ok.halign = Gtk.Align.END;
 
-            buttonbox.add (cancel);
-            buttonbox.add (ok);
+            buttonbox.append (cancel);
+            buttonbox.append (ok);
 
             var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 3);
             vbox.spacing = 6;
-            vbox.margin = 6;
-            vbox.add (font_hbox);
-            vbox.add (sort_hbox);
-            vbox.add (buttonbox);
+            vbox.margin_end = vbox.margin_start = vbox.margin_top = vbox.margin_bottom = 6;
+            vbox.append (font_hbox);
+            vbox.append (sort_hbox);
+            vbox.append (buttonbox);
 
             ok.clicked.connect (this.on_ok);
             cancel.clicked.connect (this.on_cancel);
-            this.add (vbox);
+            this.set_child (vbox);
         }
 
         void on_ok () {

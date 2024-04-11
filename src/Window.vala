@@ -30,14 +30,12 @@ namespace Agenda {
 
     public class AgendaWindow : Gtk.ApplicationWindow {
 
-        private uint configure_id;
-
         private GLib.Settings privacy_setting = new GLib.Settings (
             "org.gnome.desktop.privacy");
 
         private FileBackend backend;
 
-        private Granite.Widgets.Welcome agenda_welcome;
+        private Granite.Placeholder agenda_welcome;
         private TaskView task_view;
         private TaskList task_list;
         private Gtk.ScrolledWindow scrolled_window;
@@ -53,6 +51,7 @@ namespace Agenda {
             var redo_action = new SimpleAction ("redo", null);
             var print_action = new SimpleAction ("print", null);
             var purge_action = new SimpleAction ("remove_completed", null);
+            var clear_history_action = new SimpleAction ("clear_history", null);
             var sort_action = new SimpleAction ("sort_completed", null);
             var help_action = new SimpleAction ("help", null);
             var prefs_action = new SimpleAction ("prefs", null);
@@ -63,6 +62,7 @@ namespace Agenda {
             add_action (redo_action);
             add_action (print_action);
             add_action (purge_action);
+            add_action (clear_history_action);
             add_action (sort_action);
             add_action (help_action);
             add_action (prefs_action);
@@ -80,9 +80,7 @@ namespace Agenda {
             this.set_size_request (MIN_WIDTH, MIN_HEIGHT);
 
             var header = new Gtk.HeaderBar ();
-            header.show_close_button = true;
             header.get_style_context ().add_class ("titlebar");
-            header.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             this.set_titlebar (header);
 
             GLib.Menu menu = new GLib.Menu ();
@@ -103,26 +101,19 @@ namespace Agenda {
             header.pack_end (burger);
 
             // Set up geometry
-            Gdk.Geometry geo = Gdk.Geometry ();
-            geo.min_width = MIN_WIDTH;
-            geo.min_height = MIN_HEIGHT;
-            geo.max_width = 1024;
-            geo.max_height = 2048;
-
-            this.set_geometry_hints (
-                null,
-                geo,
-                Gdk.WindowHints.MIN_SIZE | Gdk.WindowHints.MAX_SIZE);
-
             restore_window_position ();
 
             var first = Agenda.settings.get_boolean ("first-time");
-            agenda_welcome = new Granite.Widgets.Welcome (
-                _("No Tasks!"),
-                first ? _("(add one below)") : _("(way to go)"));
+            agenda_welcome = new Granite.Placeholder (_("No Tasks!")) {
+                description = first ? _("(add one below)") : _("(way to go)")
+            };
+
+            agenda_welcome.vexpand = true;
+            agenda_welcome.hexpand = true;
+
             task_list = new TaskList ();
             task_view = new TaskView.with_list (task_list);
-            scrolled_window = new Gtk.ScrolledWindow (null, null);
+            scrolled_window = new Gtk.ScrolledWindow ();
             task_entry = new Gtk.Entry ();
 
             history_list = new HistoryList ();
@@ -136,12 +127,13 @@ namespace Agenda {
             load_list ();
             setup_ui ();
 
-            window_close_action.activate.connect (this.close);
-            app_quit_action.activate.connect (this.close);
+            window_close_action.activate.connect (this.main_quit);
+            app_quit_action.activate.connect (this.main_quit);
             undo_action.activate.connect (task_list.undo);
             redo_action.activate.connect (task_list.redo);
             print_action.activate.connect (this.print);
             purge_action.activate.connect (task_list.remove_completed_tasks);
+            clear_history_action.activate.connect (this.clear_history);
             sort_action.activate.connect (task_list.sort_tasks);
             help_action.activate.connect (this.help);
             prefs_action.activate.connect (this.open_prefs_window);
@@ -168,6 +160,7 @@ namespace Agenda {
 
         private void setup_ui () {
             this.set_title ("Agenda");
+            close_request.connect(() => { main_quit (); return false; });
 
             task_entry.name = "TaskEntry";
             task_entry.get_style_context ().add_class ("task-entry");
@@ -184,6 +177,8 @@ namespace Agenda {
 
             task_entry.set_completion (completion);
 
+            setup_ctx_menu ();
+
             task_entry.activate.connect (append_task);
             task_entry.icon_press.connect (append_task);
 
@@ -198,58 +193,30 @@ namespace Agenda {
                 }
             });
 
-            task_entry.populate_popup.connect ((menu) => {
-                Gtk.TreeIter iter;
-                bool valid = history_list.get_iter_first (out iter);
-                var separator = new Gtk.SeparatorMenuItem ();
-                var item_clear_history = new Gtk.MenuItem.with_label (_("Clear history"));
-
-                menu.insert (separator, 6);
-                menu.insert (item_clear_history, 7);
-
-                item_clear_history.activate.connect (() => {
-                    history_list.clear ();
-                });
-
-                if (valid) {
-                    item_clear_history.set_sensitive (true);
-                } else {
-                    item_clear_history.set_sensitive (false);
-                }
-
-                menu.show_all ();
-            });
-
-            task_view.focus_out_event.connect ((e) => {
-                Gtk.TreeSelection selected;
-                selected = task_view.get_selection ();
-                selected.unselect_all ();
-                return false;
-            });
-
             task_list.list_changed.connect (() => {
                 backend.save_tasks (task_list.get_all_tasks ());
                 update ();
             });
 
-            this.key_press_event.connect (key_down_event);
+            var key_event_controller = new Gtk.EventControllerKey ();
+            key_event_controller.key_pressed.connect (key_pressed);
+            ((Gtk.Widget) this).add_controller ((Gtk.EventController) key_event_controller);
 
-            task_view.expand = true;
-            scrolled_window.expand = true;
+            task_view.hexpand = true;
+            scrolled_window.hexpand = true;
+            scrolled_window.vexpand = true;
             scrolled_window.set_policy (
                 Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
-            scrolled_window.add (task_view);
-
-            agenda_welcome.expand = true;
+            scrolled_window.set_child (task_view);
 
             var grid = new Gtk.Grid ();
-            grid.expand = true;
+            grid.hexpand = true;
             grid.row_homogeneous = false;
             grid.attach (agenda_welcome, 0, 0, 1, 1);
             grid.attach (scrolled_window, 0, 1, 1, 1);
             grid.attach (task_entry, 0, 2, 1, 1);
 
-            this.add (grid);
+            this.set_child (grid);
 
             task_entry.margin_start = 10;
             task_entry.margin_end = 10;
@@ -257,6 +224,17 @@ namespace Agenda {
             task_entry.margin_bottom = 10;
 
             task_entry.grab_focus ();
+        }
+
+        private void setup_ctx_menu () {
+            GLib.Menu menu = new GLib.Menu ();
+            GLib.Menu section = new GLib.Menu ();
+            GLib.MenuItem item = new GLib.MenuItem (_("Clear history"), "win.clear_history");
+            section.append_item (item);
+
+            menu.append_section (null, section);
+
+            task_entry.extra_menu = menu;
         }
 
         public void append_task () {
@@ -284,39 +262,43 @@ namespace Agenda {
             var size = Agenda.settings.get_value ("window-size");
             var position = Agenda.settings.get_value ("window-position");
 
+            /* positionning no longer possible in gtk4 */
             if (position.n_children () == 2) {
                 var x = (int) position.get_child_value (0);
                 var y = (int) position.get_child_value (1);
-
                 debug ("Moving window to coordinates %d, %d", x, y);
+                /*
                 move (x, y);
+                */
             } else {
                 debug ("Moving window to the centre of the screen");
+                /*
                 window_position = Gtk.WindowPosition.CENTER;
+                */
             }
 
             if (size.n_children () == 2) {
-                var rect = Gtk.Allocation ();
-                rect.width = (int) size.get_child_value (0);
-                rect.height = (int) size.get_child_value (1);
+                int width = (int) size.get_child_value (0);
+                int height = (int) size.get_child_value (1);
 
-                debug ("Resizing to width and height: %d, %d", rect.width, rect.height);
-                set_allocation (rect);
+                debug ("Resizing to width and height: %d, %d", width, height);
+                this.set_default_size (width, height);
             } else {
+                this.set_default_size (MIN_WIDTH, MIN_HEIGHT);
                 debug ("Not resizing window");
             }
         }
 
-        public bool main_quit () {
+        public void main_quit () {
             backend.save_tasks (task_list.get_all_tasks ());
             backend.save_history (history_list.get_all_tasks ());
-            this.destroy ();
-
-            return false;
+            save_geometry ();
+            close ();
         }
 
-        public bool key_down_event (Gdk.EventKey e) {
-            switch (e.keyval) {
+        public bool key_pressed (Gtk.EventControllerKey controller, uint keyval, uint keycode,
+                                 Gdk.ModifierType state) {
+            switch (keyval) {
                 case Gdk.Key.Escape:
                     if (!task_view.is_editing) {
                         main_quit ();
@@ -350,34 +332,28 @@ namespace Agenda {
             scrolled_window.show ();
         }
 
-        public override bool configure_event (Gdk.EventConfigure event) {
-            if (configure_id != 0) {
-                GLib.Source.remove (configure_id);
-            }
+        void save_geometry () {
+            //int x, y;
+            Gdk.Rectangle rect;
 
-            configure_id = Timeout.add (100, () => {
-                configure_id = 0;
+            /* no more get_position in gtk4 */
+            //get_position (out x, out y);
+            get_allocation (out rect);
 
-                int x, y;
-                Gdk.Rectangle rect;
+            /*
+            debug ("Saving window position to %d, %d", x, y);
+            Agenda.settings.set_value (
+                "window-position", new int[] { x, y });
+            */
+            debug (
+                "Saving window size of width and height: %d, %d",
+                rect.width, rect.height);
+            Agenda.settings.set_value (
+                "window-size", new int[] { rect.width, rect.height });
+        }
 
-                get_position (out x, out y);
-                get_allocation (out rect);
-
-                debug ("Saving window position to %d, %d", x, y);
-                Agenda.settings.set_value (
-                    "window-position", new int[] { x, y });
-
-                debug (
-                    "Saving window size of width and height: %d, %d",
-                    rect.width, rect.height);
-                Agenda.settings.set_value (
-                    "window-size", new int[] { rect.width, rect.height });
-
-                return false;
-            });
-
-            return base.configure_event (event);
+        void clear_history () {
+            history_list.clear ();
         }
 
         public void print () {
@@ -399,7 +375,7 @@ namespace Agenda {
                 var window = builder.get_object ("shortcuts-agenda") as Gtk.ShortcutsWindow;
                 window.view_name = null;
                 window.set_transient_for (this);
-                window.show_all ();
+                window.present ();
             } catch (Error e) {
                 error (e.message);
             }
@@ -407,7 +383,7 @@ namespace Agenda {
 
         void open_prefs_window () {
             PrefsWindow w = new PrefsWindow (this);
-            w.show_all ();
+            w.present ();
         }
     }
 }
