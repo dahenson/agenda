@@ -160,7 +160,7 @@ namespace Agenda {
 
         private void setup_ui () {
             this.set_title ("Agenda");
-            close_request.connect(() => { main_quit (); return false; });
+            close_request.connect (() => { main_quit (); return false; });
 
             task_entry.name = "TaskEntry";
             task_entry.get_style_context ().add_class ("task-entry");
