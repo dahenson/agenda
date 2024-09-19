@@ -1,14 +1,14 @@
 # Japanese translations for com.github.dahenson.agenda package.
 # Copyright (C) 2020 THE com.github.dahenson.agenda'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.dahenson.agenda package.
-# Ryo Nakano <ryonakaknock3@gmail.com>, 2020.
+# Ryo Nakano <ryonakaknock3@gmail.com>, 2020, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dahenson.agenda\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-23 20:16+0100\n"
-"PO-Revision-Date: 2020-02-08 07:57+0900\n"
+"PO-Revision-Date: 2024-09-19 22:22+0900\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -18,48 +18,46 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/Window.vala:29
-#, fuzzy
 msgid "Add a new task…"
 msgstr "新しいタスクを追加…"
 
 #: src/Window.vala:89 src/Prefs.vala:45
 msgid "Preferences"
-msgstr ""
+msgstr "設定"
 
 #: src/Window.vala:91
 msgid "Print task list"
-msgstr ""
+msgstr "タスクリストを印刷"
 
 #: src/Window.vala:92
 msgid "Remove completed"
-msgstr ""
+msgstr "完了したタスクを削除"
 
 #: src/Window.vala:93
 msgid "Sort completed"
-msgstr ""
+msgstr "完了したタスクで並べ替え"
 
 #: src/Window.vala:96
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 #: src/Window.vala:97
 msgid "_Quit"
-msgstr ""
+msgstr "終了(_Q)"
 
 #: src/Window.vala:121
 msgid "No Tasks!"
-msgstr "タスクがありません！"
+msgstr "タスクがありません!"
 
 #: src/Window.vala:122
 msgid "(add one below)"
-msgstr "(追加してください)"
+msgstr "(下で追加してください)"
 
 #: src/Window.vala:122
 msgid "(way to go)"
-msgstr "(お疲れさまです)"
+msgstr "(その調子)"
 
 #: src/Window.vala:179
-#, fuzzy
 msgid "Add to list…"
 msgstr "リストに追加…"
 
@@ -69,65 +67,64 @@ msgstr "履歴を消去"
 
 #: src/Prefs.vala:48
 msgid "Printing font"
-msgstr ""
+msgstr "印刷用のフォント"
 
 #: src/Prefs.vala:59
 msgid "Sort completed tasks upward"
-msgstr ""
+msgstr "完了したタスクを上に並べる"
 
 #: src/Prefs.vala:73
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: src/Prefs.vala:75
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: data/shortcuts.ui:4
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "キーボードショートカット"
 
 #: data/shortcuts.ui:12
-#, fuzzy
 msgid "Tasks"
-msgstr "タスクがありません！"
+msgstr "タスク"
 
 #: data/shortcuts.ui:17
 msgid "Sort completed tasks"
-msgstr ""
+msgstr "完了したタスクで並べ替える"
 
 #: data/shortcuts.ui:24
 msgid "Remove completed tasks"
-msgstr ""
+msgstr "完了したタスクを削除する"
 
 #: data/shortcuts.ui:32
 msgid "Editing"
-msgstr ""
+msgstr "編集"
 
 #: data/shortcuts.ui:37
 msgid "Undo task modification"
-msgstr ""
+msgstr "タスクの変更を元に戻す"
 
 #: data/shortcuts.ui:44
 msgid "Redo task modification"
-msgstr ""
+msgstr "タスクの変更をやり直す"
 
 #: data/shortcuts.ui:52
 msgid "Miscellaneous"
-msgstr ""
+msgstr "その他"
 
 #: data/shortcuts.ui:57
 msgid "Print tasks list"
-msgstr ""
+msgstr "タスクリストを印刷する"
 
 #: data/shortcuts.ui:64
 msgid "Close tasks window"
-msgstr ""
+msgstr "タスクウィンドウを閉じる"
 
 #: data/shortcuts.ui:71
 msgid "Quit application"
-msgstr ""
+msgstr "アプリケーションを終了する"
 
 #: data/shortcuts.ui:78
 msgid "Show this help window"
-msgstr ""
+msgstr "このヘルプウィンドウを表示する"
