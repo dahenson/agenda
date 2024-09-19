@@ -1,5 +1,6 @@
 project('com.github.dahenson.agenda', ['vala', 'c'],
-    version: '1.2.0'
+    version: '1.2.0',
+    meson_version: '>= 0.59.0'
 )
 
 gnome = import('gnome')
@@ -64,10 +65,14 @@ executable(
     vala_args: vala_args,
     c_args: c_args,
     dependencies: agenda_deps,
-    install : true
+    install: true
 )
 
-meson.add_install_script('meson/post_install.py')
+gnome.post_install(
+    glib_compile_schemas: true,
+    gtk_update_icon_cache: true,
+    update_desktop_database: true
+)
 
 subdir('data')
 subdir('po')
