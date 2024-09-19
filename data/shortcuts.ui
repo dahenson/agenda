@@ -43,8 +43,8 @@
                 <property name="accelerator">&lt;ctrl&gt;&lt;shift&gt;Z</property>
                 <property name="title" translatable="yes">Redo task modification</property>
                 <property name="visible">true</property>
-	      </object>
-	    </child>
+              </object>
+            </child>
           </object>
         </child>
         <child>
