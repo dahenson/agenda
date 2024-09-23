@@ -3,6 +3,43 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+
+  flatpak:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        arch: [x86_64, aarch64]
+      # Don't fail the whole workflow if one architecture fails
+      fail-fast: false
+
+    container:
+      image: ghcr.io/elementary/flatpak-platform/runtime:8-${{ matrix.arch }}
+      options: --privileged
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU for aarch64 emulation
+        if: ${{ matrix.arch != 'x86_64' }}
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Build
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: agenda.flatpak
+          manifest-path: com.github.dahenson.agenda.yml
+
+          run-tests: true
+
+          repository-name: appcenter
+          repository-url: https://flatpak.elementary.io/repo.flatpakrepo
+          cache-key: "flatpak-builder-${{ github.sha }}"
+          arch: ${{ matrix.arch }}
+
   lint:
 
     runs-on: ubuntu-latest
@@ -11,6 +48,6 @@ jobs:
       image: valalang/lint
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Lint
       run: io.elementary.vala-lint -d ./src/
