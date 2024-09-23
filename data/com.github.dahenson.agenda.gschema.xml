@@ -1,5 +1,5 @@
 <schemalist>
-	<schema id="com.github.dahenson.agenda" path="/com/github/dahenson/agenda/" gettext-domain="agenda">
+    <schema id="com.github.dahenson.agenda" path="/com/github/dahenson/agenda/" gettext-domain="agenda">
         <key name="window-position" type="ai">
             <default>[]</default>
             <summary>Window position</summary>
@@ -25,5 +25,5 @@
           <description>Whether the are sorted upward or downward.</description>
           <default>false</default>
         </key>
-	</schema>
+    </schema>
 </schemalist>
