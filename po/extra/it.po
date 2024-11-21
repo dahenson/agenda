@@ -8,12 +8,12 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-19 21:05+0900\n"
-"PO-Revision-Date: 2021-12-23 19:43+0100\n"
-"Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
+"PO-Revision-Date: 2024-11-21 19:43+0100\n"
+"Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: ITALIAN <LL@li.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/com.github.dahenson.agenda.appdata.xml.in:7
@@ -117,7 +117,7 @@ msgstr "Risolti problemi di stile per le varianti scure e chiare"
 
 #: data/com.github.dahenson.agenda.appdata.xml.in:74
 msgid "Looks good, and feels good!"
-msgstr ""
+msgstr "Ha un bell'aspetto e ti sente bene!"
 
 #: data/com.github.dahenson.agenda.desktop.in:6
 msgid "Task List"
