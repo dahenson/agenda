@@ -98,6 +98,7 @@ namespace Agenda {
             menu.insert_section (4, null, section);
 
             Gtk.MenuButton burger = new Gtk.MenuButton ();
+            burger.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             burger.direction = Gtk.ArrowType.NONE;
             burger.menu_model = menu;
             header.pack_end (burger);
