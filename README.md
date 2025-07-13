@@ -41,11 +41,13 @@ To install, use `ninja install`, then execute with `com.github.dahenson.agenda`
     com.github.dahenson.agenda
 
 ## Arch Linux
-Arch Linux users can find Agenda under the name [agenda-git](https://aur.archlinux.org/packages/agenda-git/) in the **AUR**:
 
+Arch Linux users can find Agenda as git and stable version under the names [agenda](https://aur.archlinux.org/packages/agenda/) and [agenda-git](https://aur.archlinux.org/packages/agenda-git/) in the **AUR**:
+
+`$ aurman -S agenda`
 `$ aurman -S agenda-git`
 
-Supported by: @btd1337
+Supported by: @kleintux & @btd1337
 
 ## Other Platforms
 
