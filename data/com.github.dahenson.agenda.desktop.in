@@ -8,5 +8,6 @@ Icon=com.github.dahenson.agenda
 Terminal=false
 X-GNOME-Gettext-Domain=agenda
 X-GNOME-UsesNotifications=true
+StartupNotify=true
 Categories=Utility;Office;ProjectManagement;
 Keywords=Todo;Tasks;
